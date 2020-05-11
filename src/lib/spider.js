@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import cheerio from 'cheerio';
+import { database_pool } from './database.js';
 
 
 async function spider(start_url) {
@@ -60,16 +61,16 @@ async function spider_data_set(url, url_history) {
         let out = {
             'url': json['url'],
             'name': json['name'],
-            'data-urls': {}
+            'data_urls': []
         }
 
          if ('distribution' in json && Array.isArray(json['distribution'])) {
             for (var idx in json['distribution']) {
-                out['data-urls'][json['distribution'][idx]['name']] = json['distribution'][idx]['contentUrl'];
+                out['data_urls'].push({'name':json['distribution'][idx]['name'], 'url':json['distribution'][idx]['contentUrl']});
             }
         }
 
-        console.log(out);
+        await write_publisher(out);
     } catch(error) {
         console.error("ERROR spider_data_set");
         console.error(url_history);
@@ -77,6 +78,40 @@ async function spider_data_set(url, url_history) {
         console.error(error);
     }
 }
+
+async function write_publisher(data) {
+    const client = await database_pool.connect();
+    try {
+        // Publisher
+        const res_find_publisher = await client.query('SELECT * FROM publisher WHERE url = $1', [data.url]);
+        let publisher_id;
+        if (res_find_publisher.rowCount == 0) {
+            const res_add_publisher = await client.query('INSERT INTO publisher (name, url) VALUES ($1, $2) RETURNING id', [data.name, data.url]);
+            publisher_id = res_add_publisher.rows[0].id;
+        } else {
+            publisher_id = res_find_publisher.rows[0].id;
+        }
+        // TODO store url_history for debugging purposes to
+        // Publisher Feed
+        for (var idx in data.data_urls) {
+            const res_find_feed = await client.query('SELECT * FROM publisher_feed WHERE url = $1', [data.data_urls[idx].url]);
+            if (res_find_feed.rowCount == 0) {
+                const res_add_feed = await client.query('INSERT INTO publisher_feed (publisher_id, name, url) VALUES ($1, $2, $3) RETURNING id', [publisher_id, data.data_urls[idx].name, data.data_urls[idx].url]);
+            }
+        }
+
+    } catch(error) {
+        console.error("ERROR write_publisher");
+        console.error(data);
+        console.error(error);
+
+    } finally {
+        // Make sure to release the client before any error handling,
+        // just in case the error handling itself throws an error.
+        client.release()
+    }
+
+};
 
 export {
   spider,

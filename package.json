@@ -19,6 +19,8 @@
   "homepage": "https://github.com/openactive/feed-normaliser#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "pg": "^8.1.0",
+    "postgres-migrations": "^4.0.3"
   }
 }
