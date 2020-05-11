@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Harvests and normalises OpenActive Opportunity feeds to a common representation",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/openactive/feed-normaliser/issues"
   },
-  "homepage": "https://github.com/openactive/feed-normaliser#readme"
+  "homepage": "https://github.com/openactive/feed-normaliser#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "node-fetch": "^2.6.0"
+  }
 }
