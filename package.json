@@ -22,5 +22,8 @@
     "node-fetch": "^2.6.0",
     "pg": "^8.1.0",
     "postgres-migrations": "^4.0.3"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.2"
   }
 }
