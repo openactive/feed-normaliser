@@ -45,10 +45,10 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
                 ];
 
                 await client.query(
-                    'INSERT INTO raw_data (publisher_feed_id, data_id, data_deleted, data_kind, data_modified, data) ' +
-                    'VALUES ($1, $2, $3, $4, $5, $6) ' +
+                    'INSERT INTO raw_data (publisher_feed_id, data_id, data_deleted, data_kind, data_modified, data, normalised) ' +
+                    'VALUES ($1, $2, $3, $4, $5, $6, \'f\') ' +
                     'ON CONFLICT (publisher_feed_id, data_id) DO UPDATE SET ' +
-                    'data_deleted=$3, data_modified=$5, data=NULL, updated_at=(now() at time zone \'utc\')'  ,
+                    'data_deleted=$3, data_modified=$5, data=$6, updated_at=(now() at time zone \'utc\'), normalised=\'f\''  ,
                     query_data
                 );
 

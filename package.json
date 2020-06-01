@@ -20,6 +20,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "node-fetch": "^2.6.0",
+    "object-hash": "^2.0.3",
     "pg": "^8.1.0",
     "postgres-migrations": "^4.0.3"
   },

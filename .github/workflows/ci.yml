@@ -4,9 +4,19 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     strategy:
       matrix:
         node-version: [13.x]
@@ -19,4 +29,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: ./node_modules/mocha/bin/mocha
+    - run: node ./test-database/run.js
+      env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+
 

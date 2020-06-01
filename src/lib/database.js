@@ -18,9 +18,24 @@ async function migrate_database() {
 }
 
 
+async function delete_database() {
+    var client;
+    try {
+        client = await database_pool.connect();
+        await client.query('DROP TABLE IF EXISTS normalised_data CASCADE');
+        await client.query('DROP TABLE IF EXISTS raw_data CASCADE');
+        await client.query('DROP TABLE IF EXISTS publisher_feed CASCADE');
+        await client.query('DROP TABLE IF EXISTS publisher CASCADE');
+        await client.query('DROP TABLE IF EXISTS migrations CASCADE');
+    } finally {
+        await client.end();
+    }
+}
+
 export {
   database_pool,
   migrate_database,
+  delete_database,
 };
 
 export default migrate_database;
