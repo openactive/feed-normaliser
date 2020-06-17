@@ -11,14 +11,14 @@ class TestPipe extends Pipe {
       let normalisedEvent1 = new NormalisedEvent({
         "test": 1,
         "data": this.rawData.data
-        });
+        }, "TestKind");
 
       this.normalisedEvents.push(normalisedEvent1);
 
       let normalisedEvent2 = new NormalisedEvent({
         "test": 2,
         "data": this.rawData.data
-        });
+        }, "TestKind");
       this.normalisedEvents.push(normalisedEvent2 );
 
       resolve(this.normalisedEvents);

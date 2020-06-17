@@ -4,8 +4,11 @@ import hash from 'object-hash';
 Pipelines can create any number of these as they process data.
 **/
 class NormalisedEvent {
-  constructor(data) {
+  constructor(data, kind) {
     this.data = data;
+    // Is it always possible to extract Kind from data?
+    // For now, to be very robust, require the pipe that creates this to set Kind too.
+    this.kind = kind;
   }
 
   id(){
