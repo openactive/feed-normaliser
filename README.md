@@ -49,6 +49,14 @@ To run this:
 
 `$ node ./src/bin/normalise-data.js`
 
+### Provide API's
+
+There is a webserver that provides data as API's.
+
+To run this:
+
+`$ node ./src/bin/web-server.js`
+
 ## Install
 
 `$ npm install`
