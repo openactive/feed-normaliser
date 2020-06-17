@@ -1,11 +1,23 @@
 import express from 'express'
 import Settings from './settings.js';
+import rpde_query from './web-rpde-query.js';
 
 const web_server_app = express()
 
 web_server_app.get('/', (req, res) => {
     res.json(
         { "open_active": "https://github.com/openactive/conformance-services" }
+    );
+});
+
+web_server_app.get('/normalised_data/all', async (req, res) => {
+    const query = new rpde_query(req.query.afterTimestamp, req.query.afterId, req.query.limit)
+    await query.run();
+    res.json(
+        {
+            "next": "/normalised_data/all?" + query.get_next_get_params_string(),
+            "items": query.get_data()
+        }
     );
 });
 
