@@ -1,5 +1,23 @@
 # Open Active Conformance Services
 
+Various tools for harvesting and normalising OpenActive Opportunity feeds to a common representation
+
+These tools are developed and tested using `node` version `13.9`
+
+## Install
+
+`$ npm install`
+
+## Database connection
+
+The supported database server is Postgresql.
+
+The database connection can be specified using the environment variable `DATABASE_URL`
+
+`$ export DATABASE_URL=postgres://user:pass@host:port/database`
+
+The default value is `postgres://app:app@localhost:5432/app`. See src/lib/settings.py.
+
 ## Stages
 
 ### Migrate database
@@ -56,10 +74,3 @@ There is a webserver that provides data as API's.
 To run this:
 
 `$ node ./src/bin/web-server.js`
-
-## Install
-
-`$ npm install`
-
-A Postgres database is needed.
-
