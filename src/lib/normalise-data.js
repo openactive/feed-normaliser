@@ -24,6 +24,35 @@ async function normalise_data_all_publisher_feeds() {
 
 }
 
+async function store_deleted_callback(raw_data_id) {
+
+    const client = await database_pool.connect();
+    try {
+
+        // TODO
+        // In this case, can we always assume we should mark as deleted all normalised_data that comes from this raw data object?
+        // If so, this should be an easy SQL UPDATE to run.
+        // UPDATE normalised_data SET data_deleted='t', data=NULL , updated=NOW WHERE raw_data_id=$1
+
+        // But we do want to mark the fact that we have processed this raw_data item, so we don't want try to process it again
+        await client.query(
+            'UPDATE raw_data SET normalised=\'t\' WHERE id=$1'  ,
+            [raw_data_id]
+        );
+
+    } catch(error) {
+        console.error("ERROR download_raw_all_publisher_feeds");
+        console.error(raw_data_id);
+        console.error(normalised_events);
+        console.error(error);
+
+    } finally {
+        // Make sure to release the client before any error handling,
+        // just in case the error handling itself throws an error.
+        client.release()
+    }
+}
+
 async function store_normalised_callback(raw_data_id, normalised_events) {
 
     const client = await database_pool.connect();
@@ -83,10 +112,8 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
                 break;
             }
             for (var raw_data of res_find_raw_data.rows) {
-                if (raw_data.deleted) {
-                    // TODO
-                    // In this case, can we always assume we should mark as deleted all normalised_data that comes from this raw data object?
-                    // If so, this should be a second call back. This should be an easy SQL UPDATE to run.
+                if (raw_data.data_deleted) {
+                    await store_deleted_callback(raw_data.id);
                 } else {
                     const pipeLine = new PipeLine(raw_data, pipes_to_call, store_normalised_callback);
                     await pipeLine.run();
