@@ -1,0 +1,28 @@
+version: "3"
+services:
+  app:
+    build: .
+    command: node /home/app/src/bin/web-server.js
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgres://app:app@postgres:5432/app
+    volumes:
+      - .:/home/app/
+      - /home/app/node_modules
+
+  postgres:
+    image: postgres:11.2-alpine
+    volumes:
+      - "postgres-data:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_PASSWORD: app
+      POSTGRES_USER: app
+
+volumes:
+  postgres-data:
+    driver: local
