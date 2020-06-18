@@ -12,13 +12,8 @@ web_server_app.get('/', (req, res) => {
 
 web_server_app.get('/normalised_data/all', async (req, res) => {
     const query = new RPDEQuery(req.query.afterTimestamp, req.query.afterId, req.query.limit)
-    await query.run();
-    res.json(
-        {
-            "next": "/normalised_data/all?" + query.get_next_get_params_string(),
-            "items": query.get_data()
-        }
-    );
+    const out = await query.run_and_get_api_response("/normalised_data/all");
+    res.json(out);
 });
 
 async function start_web_server() {

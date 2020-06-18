@@ -6,6 +6,7 @@ import { database_pool } from './database.js';
 
 class RPDEQuery {
   constructor(afterTimestamp, afterId, limit) {
+    // Note things like  afterTimestamp and afterId are not done with underscores deliberately - we want them to match what the RPDE spec says.
     this.afterTimestamp = Number(afterTimestamp) > 0 ? Number(afterTimestamp) : null;
     this.afterId = afterId;
     this.limit = Number(limit) > 0 ? Number(limit) : Settings.rpdeDefaultLimit;
@@ -15,6 +16,9 @@ class RPDEQuery {
     this.dont_serve_data_until_seconds_old = Settings.rpdeDontServeDataUntilSecondsOld;
   }
 
+  /** Runs query, stores results on objects for getter methods to use.
+    * Most users should not use this directly, but should instead use get_api_response()
+    */
   async run() {
     // ----- Build SQL
     // Postgres will compare by microseconds if we let it. To make sure paging work correctly, we must compare by seconds only. Hence "extract(epoch" stuff.
@@ -58,11 +62,17 @@ class RPDEQuery {
 
   }
 
+  /** Gets data after run() is called.
+    * Most users should not use this directly, but should instead use get_api_response()
+    */
   get_data() {
        return this.rows;
   }
 
-  // This should be returned already URL encoded
+  /** Gets data after run() is called.
+    * Most users should not use this directly, but should instead use get_api_response()
+    * This should be returned already URL encoded
+    */
   get_next_get_params_string() {
     if (this.next_afterTimestamp && this.next_afterId) {
         // In this case, we found some new data! Return the values from the last data item we found.
@@ -75,6 +85,20 @@ class RPDEQuery {
         return "";
     }
   }
+
+  /** Runs query, formats data for API response, returns it.
+    * Because we need extra info here that isn't applicable to the query (like base_url and probably license later)
+    *   it's a separate method, and that extra info needs to be passed to this method.
+    */
+  async run_and_get_api_response(base_url) {
+    await this.run();
+    return {
+        "next": base_url + "?" + this.get_next_get_params_string(),
+        "items": this.get_data()
+    }
+  }
+
+
 
 }
 
