@@ -75,6 +75,10 @@ To run this:
 
 `$ node ./src/bin/web-server.js`
 
+RPDE APIs are meant to be called directly by users. They are:
+
+* `/normalised_data/all` - call to get all processed data in system. 
+
 ## Docker for development
 
 The Dockerfile and docker-compose are configured for development purposes only, not intended for use in production.
