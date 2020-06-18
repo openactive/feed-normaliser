@@ -67,7 +67,7 @@ To run this:
 
 `$ node ./src/bin/normalise-data.js`
 
-### Provide APIs
+## Provided APIs
 
 There is a webserver that provides data as API's.
 
@@ -77,7 +77,11 @@ To run this:
 
 RPDE APIs are meant to be called directly by users. They are:
 
-* `/normalised_data/all` - call to get all processed data in system. 
+* `/normalised_data/all` - call to get all processed data in system.
+
+Publisher status information:
+
+* `/publishers/status`
 
 ## Docker for development
 
