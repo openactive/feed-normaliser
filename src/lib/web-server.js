@@ -17,7 +17,7 @@ web_server_app.get('/normalised_data/all', async (req, res) => {
 });
 
 async function start_web_server() {
-    web_server_app.listen(Settings.webServerPort, () => { console.log("started http://locahost:" + Settings.webServerPort); } );
+    web_server_app.listen(Settings.webServerPort, () => { console.log("started http://localhost:" + Settings.webServerPort); } );
 }
 
 export default start_web_server;
