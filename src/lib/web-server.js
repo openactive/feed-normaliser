@@ -1,12 +1,23 @@
 import express from 'express'
 import Settings from './settings.js';
 import RPDEQuery from './web-rpde-query.js';
+import PublisherStatus from './web-publisher-status.js';
 
 const web_server_app = express()
+
 
 web_server_app.get('/', (req, res) => {
     res.json(
         { "open_active": "https://github.com/openactive/conformance-services" }
+    );
+});
+
+web_server_app.get('/publishers/status', async (req, res) => {
+    const latestInfo = await PublisherStatus.getLatestInfo();
+    res.json(
+      {
+        "publishers": latestInfo,
+      }
     );
 });
 
