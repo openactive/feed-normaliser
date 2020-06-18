@@ -43,7 +43,7 @@ async function store_normalised_callback(raw_data_id, normalised_events) {
                 'INSERT INTO normalised_data (raw_data_id, data_id, data_deleted, data, data_kind) ' +
                 'VALUES ($1, $2, \'t\', $3, $4) ' +
                 'ON CONFLICT (data_id) DO UPDATE SET ' +
-                'raw_data_id=$1, data_id=$2, data=$3, data_kind=$4, updated_at=(now() at time zone \'utc\'), data_deleted=\'f\''  ,
+                'raw_data_id=$1, data_id=$2, data=$3, data_kind=$4, updated_at=(now() at time zone \'utc\'), data_deleted=\'f\', validation_done=\'f\', validation_results=null  ,
                 query_data
             );
 

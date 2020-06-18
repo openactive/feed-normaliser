@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/openactive/feed-normaliser#readme",
   "dependencies": {
+    "@openactive/data-model-validator": "^2.0.25",
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
     "node-fetch": "^2.6.0",

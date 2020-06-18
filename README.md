@@ -67,6 +67,15 @@ To run this:
 
 `$ node ./src/bin/normalise-data.js`
 
+### Validate Normalised Data
+
+This will validate the normalised data using the standard https://github.com/openactive/data-model-validator library
+and save the results back in the database in the`normalised_data` table. 
+
+To run this:
+
+`$ node ./src/bin/validate-normalised-data.js`
+
 ## Provided APIs
 
 There is a webserver that provides data as API's.
