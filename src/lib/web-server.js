@@ -1,6 +1,6 @@
 import express from 'express'
 import Settings from './settings.js';
-import rpde_query from './web-rpde-query.js';
+import RPDEQuery from './web-rpde-query.js';
 
 const web_server_app = express()
 
@@ -11,7 +11,7 @@ web_server_app.get('/', (req, res) => {
 });
 
 web_server_app.get('/normalised_data/all', async (req, res) => {
-    const query = new rpde_query(req.query.afterTimestamp, req.query.afterId, req.query.limit)
+    const query = new RPDEQuery(req.query.afterTimestamp, req.query.afterId, req.query.limit)
     await query.run();
     res.json(
         {

@@ -4,31 +4,31 @@ import { database_pool } from './database.js';
 
 
 
-class rpde_query {
+class RPDEQuery {
   constructor(afterTimestamp, afterId, limit) {
-    this.afterTimestamp = parseInt(afterTimestamp) > 0 ? parseInt(afterTimestamp) : null;
+    this.afterTimestamp = Number(afterTimestamp) > 0 ? Number(afterTimestamp) : null;
     this.afterId = afterId;
-    this.limit = parseInt(limit) > 0 ? parseInt(limit) : Settings.rpdeDefaultLimit;
-    this.nextAfterTimestamp = null;
-    this.nextAfterId = null;
+    this.limit = Number(limit) > 0 ? Number(limit) : Settings.rpdeDefaultLimit;
+    this.next_afterTimestamp = null;
+    this.next_afterId = null;
     this.rows = []
-    this.dontServeDataUntilSecondsOld = Settings.rpdeDontServeDataUntilSecondsOld;
+    this.dont_serve_data_until_seconds_old = Settings.rpdeDontServeDataUntilSecondsOld;
   }
 
   async run() {
     // ----- Build SQL
     // Postgres will compare by microseconds if we let it. To make sure paging work correctly, we must compare by seconds only. Hence "extract(epoch" stuff.
     let sql = "SELECT * FROM normalised_data ";
+    let params = [this.limit];
     // This is to deal with the race condition described at https://developer.openactive.io/publishing-data/data-feeds/implementing-rpde-feeds#transactions-preventing-delayed-item-interleaving
-    sql += " WHERE updated_at < ((now() at time zone 'utc') - interval '"+ this.dontServeDataUntilSecondsOld +" seconds') ";
+    sql += " WHERE updated_at < ((now() at time zone 'utc') - interval '"+ this.dont_serve_data_until_seconds_old +" seconds') ";
     // Now if user has specified after, add those
-    let params = [];
     if (this.afterTimestamp && this.afterId) {
-       sql += " AND ( ( extract(epoch from updated_at)::int = $1 AND data_id > $2) OR (extract(epoch from updated_at)::int > $1)) ";
-       params = [this.afterTimestamp, this.afterId];
+       sql += " AND ( ( extract(epoch from updated_at)::int = $2 AND data_id > $3) OR (extract(epoch from updated_at)::int > $2)) ";
+       params.push(this.afterTimestamp, this.afterId);
     }
     // Finally order and limit
-    sql += "ORDER BY extract(epoch from updated_at)::int ASC, data_id ASC LIMIT " + this.limit
+    sql += "ORDER BY extract(epoch from updated_at)::int ASC, data_id ASC LIMIT $1";
     // ----- Run Query, store results
     const client = await database_pool.connect();
     try {
@@ -44,8 +44,8 @@ class rpde_query {
                 item.data = database_data.data;
             }
             this.rows.push(item);
-            this.nextAfterId = database_data.data_id;
-            this.nextAfterTimestamp = database_data.updated_at;
+            this.next_afterId = database_data.data_id;
+            this.next_afterTimestamp = database_data.updated_at;
         }
     } catch(error) {
         console.error("ERROR rpde_query->run");
@@ -64,9 +64,9 @@ class rpde_query {
 
   // This should be returned already URL encoded
   get_next_get_params_string() {
-    if (this.nextAfterTimestamp && this.nextAfterId) {
+    if (this.next_afterTimestamp && this.next_afterId) {
         // In this case, we found some new data! Return the values from the last data item we found.
-        return "afterTimestamp=" + encodeURIComponent(Math.round(this.nextAfterTimestamp.getTime() / 1000)) + "&afterId=" + encodeURIComponent(this.nextAfterId);
+        return "afterTimestamp=" + encodeURIComponent(Math.round(this.next_afterTimestamp.getTime() / 1000)) + "&afterId=" + encodeURIComponent(this.next_afterId);
     } else if (this.afterTimestamp && this.afterId) {
         // We were passed some values, but found no new data. Return exactly the same values.
         return "afterTimestamp=" + encodeURIComponent(this.afterTimestamp) + "&afterId=" + encodeURIComponent(this.afterId);
@@ -78,4 +78,4 @@ class rpde_query {
 
 }
 
-export default rpde_query;
+export default RPDEQuery;
