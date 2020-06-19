@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import { database_pool } from './database.js';
 import Utils from './utils.js';
+import Settings from './settings.js';
 
 async function download_raw_all_publisher_feeds() {
 
@@ -8,6 +9,9 @@ async function download_raw_all_publisher_feeds() {
     try {
         const res_find_publisher_feeds = await client.query('SELECT * FROM publisher_feed');
         for (var idx in res_find_publisher_feeds.rows) {
+            if (Settings.sleepWhileDownloadRawSeconds > 0) {
+                await Utils.sleep("download_raw_all_publisher_feeds", Settings.sleepWhileDownloadRawSeconds);
+            }
             // Not await - we want the event loop of Node to run all feeds at once
             download_raw_publisher_feed(res_find_publisher_feeds.rows[idx], store_raw_callback);
         }
@@ -87,8 +91,9 @@ async function download_raw_publisher_feed(publisher_feed, callback) {
 
     /* Traverse all the pages available since our last run */
     while (true) {
-        /* Sleep - avoid hitting publisher's api too hard */
-        await Utils.sleep("oa-rpde-page-iter", 1);
+        if (Settings.sleepWhileDownloadRawSeconds > 0) {
+            await Utils.sleep("download_raw_publisher_feed", Settings.sleepWhileDownloadRawSeconds);
+        }
 
         try {
           let res = await fetch(nextURL);

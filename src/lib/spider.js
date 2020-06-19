@@ -1,7 +1,8 @@
 import fetch from 'node-fetch';
 import cheerio from 'cheerio';
 import { database_pool } from './database.js';
-
+import Settings from './settings.js';
+import Utils from './utils.js';
 
 async function spider(start_url) {
 
@@ -24,17 +25,21 @@ async function spider_data_catalog(url, url_history) {
 
         if ('hasPart' in json && Array.isArray(json['hasPart'])) {
             for (var idx in json['hasPart']) {
-                // TODO If I take these await's out I start seeing random errors loading actual data sets.
-                // 403 on legendonlineservices.co.uk. Rate Limited?
-                await spider_data_catalog(json['hasPart'][idx], new_url_history);
+                if (Settings.sleepWhileSpiderDataCatalogSeconds > 0) {
+                    await Utils.sleep("spider_data_catalog", Settings.sleepWhileSpiderDataCatalogSeconds);
+                }
+                // not await - we want several spidering operations to run at once.
+                spider_data_catalog(json['hasPart'][idx], new_url_history);
             }
         }
 
         if ('dataset' in json && Array.isArray(json['dataset'])) {
             for (var idx in json['dataset']) {
-                // TODO If I take these await's out I start seeing random errors loading actual data sets.
-                // 403 on legendonlineservices.co.uk. Rate Limited?
-                await spider_data_set(json['dataset'][idx], new_url_history);
+                if (Settings.sleepWhileSpiderDataCatalogSeconds > 0) {
+                    await Utils.sleep("spider_data_catalog", Settings.sleepWhileSpiderDataCatalogSeconds);
+                }
+                // not await - we want several spidering operations to run at once.
+                spider_data_set(json['dataset'][idx], new_url_history);
             }
         }
     } catch(error) {
