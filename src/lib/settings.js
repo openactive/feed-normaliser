@@ -9,7 +9,12 @@ const Settings = {
   "rpdeDefaultLimit": 500,
 
   // This is to deal with the race condition described at https://developer.openactive.io/publishing-data/data-feeds/implementing-rpde-feeds#transactions-preventing-delayed-item-interleaving
-  "rpdeDontServeDataUntilSecondsOld": 5
+  "rpdeDontServeDataUntilSecondsOld": 5,
+
+  // sleep is a crude solution to avoid rate limiting
+  "sleepWhileSpiderDataCatalogSeconds": 1,
+  "sleepWhileDownloadRawSeconds": 1,
+
 }
 
 export default Settings;
