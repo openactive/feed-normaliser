@@ -1,0 +1,13 @@
+{
+  "$id": "https://example.com/place.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Place",
+  "type": "object",
+  "required": [ "dogs" ],
+  "properties": {
+    "dogs": {
+      "type": "string",
+      "description": "Are Dogs Allowed?"
+    }
+  }
+}

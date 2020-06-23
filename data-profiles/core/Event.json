@@ -1,0 +1,13 @@
+{
+  "$id": "https://example.com/event.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Event",
+  "type": "object",
+  "required": [ "cats" ],
+  "properties": {
+    "cats": {
+      "type": "string",
+      "description": "How many cats will be at the event."
+    }
+  }
+}
