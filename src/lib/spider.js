@@ -66,6 +66,7 @@ async function spider_data_set(url, url_history) {
         let out = {
             'url': json['url'],
             'name': json['name'],
+            'data': json,
             'data_urls': []
         }
 
@@ -91,10 +92,17 @@ async function write_publisher(data) {
         const res_find_publisher = await client.query('SELECT * FROM publisher WHERE url = $1', [data.url]);
         let publisher_id;
         if (res_find_publisher.rowCount == 0) {
-            const res_add_publisher = await client.query('INSERT INTO publisher (name, url) VALUES ($1, $2) RETURNING id', [data.name, data.url]);
+            const res_add_publisher = await client.query(
+                'INSERT INTO publisher (name, url, data) VALUES ($1, $2, $3) RETURNING id',
+                [data.name, data.url, data.data]
+            );
             publisher_id = res_add_publisher.rows[0].id;
         } else {
             publisher_id = res_find_publisher.rows[0].id;
+            const res_add_publisher = await client.query(
+                'UPDATE publisher SET name=$1, url=$2, data=$3 WHERE id=$4',
+                [data.name, data.url, data.data, publisher_id]
+            );
         }
         // TODO store url_history for debugging purposes to
         // Publisher Feed

@@ -1,0 +1,1 @@
+ALTER TABLE publisher ADD data JSONB NULL;
