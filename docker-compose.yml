@@ -13,7 +13,7 @@ services:
       DATABASE_URL: postgres://app:app@postgres:5432/app
     volumes:
       - .:/home/app/
-      - /home/app/node_modules
+      - "node-modules:/home/app/node_modules"
 
   postgres:
     image: postgres:11.2-alpine
@@ -25,4 +25,6 @@ services:
 
 volumes:
   postgres-data:
+    driver: local
+  node-modules:
     driver: local
