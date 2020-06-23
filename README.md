@@ -48,6 +48,15 @@ To run this:
 
 `$ node ./src/bin/download-raw.js`
 
+### Validate Raw Data
+
+This will validate the raw data using the standard https://github.com/openactive/data-model-validator library
+and save the results back in the database in the`raw_data` table. 
+
+To run this:
+
+`$ node ./src/bin/validate-raw-data.js`
+
 ### Normalise Data
 
 The tool will normalise raw data by passing it through a series of pipes.

@@ -52,7 +52,7 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
                     'INSERT INTO raw_data (publisher_feed_id, data_id, data_deleted, data_kind, data_modified, data, normalised) ' +
                     'VALUES ($1, $2, $3, $4, $5, $6, \'f\') ' +
                     'ON CONFLICT (publisher_feed_id, data_id) DO UPDATE SET ' +
-                    'data_deleted=$3, data_modified=$5, data=$6, updated_at=(now() at time zone \'utc\'), normalised=\'f\''  ,
+                    'data_deleted=$3, data_modified=$5, data=$6, updated_at=(now() at time zone \'utc\'), normalised=\'f\', validation_done=\'f\', validation_passed=\'f\', validation_results=NULL'  ,
                     query_data
                 );
 
