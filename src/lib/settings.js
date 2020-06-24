@@ -1,3 +1,5 @@
+import path from 'path';
+
 const Settings = {
   "spiderDataCatalogStartURL": process.env.SPIDER_DATA_CATALOG_START_URL || 'https://www.openactive.io/data-catalogs/data-catalog-collection.jsonld',
 
@@ -14,6 +16,9 @@ const Settings = {
   // sleep is a crude solution to avoid rate limiting
   "sleepWhileSpiderDataCatalogSeconds": 1,
   "sleepWhileDownloadRawSeconds": 1,
+
+  // this is in cwd() and not /tmp so it works well on Heroku
+  "dataModelValidatorRemoteJsonCachePath": path.join(process.cwd(), 'dataModelValidatorRemoteJsonCache'),
 
 }
 
