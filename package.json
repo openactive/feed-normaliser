@@ -4,6 +4,9 @@
   "description": "Harvests and normalises OpenActive Opportunity feeds to a common representation",
   "main": "index.js",
   "type": "module",
+  "engines": {
+    "node": "13.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
