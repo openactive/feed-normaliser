@@ -8,7 +8,8 @@
     "node": "13.9.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start-webserver": "node ./src/bin/web-server.js",
+    "start-webserver-dev": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,14 @@
     "postgres-migrations": "^4.0.3"
   },
   "devDependencies": {
-    "mocha": "^7.1.2"
+    "mocha": "^7.1.2",
+    "nodemon": "^2.0.4"
+  },
+  "nodemonConfig": {
+    "exec": "npm run start-webserver",
+    "watch": [
+      "lib/*",
+      "bin/*"
+    ]
   }
 }
