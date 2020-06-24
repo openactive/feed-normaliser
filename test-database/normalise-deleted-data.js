@@ -4,7 +4,7 @@ import { database_pool } from '../src/lib/database.js';
 import { normalise_data_publisher_feed } from '../src/lib/normalise-data.js';
 import TestPipe from '../src/lib/pipes/test-pipe.js';
 
-async function testNormaliseDataWithTestPipe() {
+async function testNormaliseDeletedData() {
 
     let client;
     await delete_database();
@@ -23,7 +23,7 @@ async function testNormaliseDataWithTestPipe() {
         const res_select_publisher_feed = await client.query('SELECT * FROM publisher_feed');
         publisher_feed = res_select_publisher_feed.rows[0];
         // Raw data
-        const res_add_raw = await client.query('INSERT INTO raw_data (publisher_feed_id, data_id, data_deleted, data_kind, data_modified, data) VALUES ($1, $2, $3, $4, $5, $6)', [publisher_feed_id, "D1",false, "CATS", "1", {test:true}]);
+        const res_add_raw = await client.query('INSERT INTO raw_data (publisher_feed_id, data_id, data_deleted, data_kind, data_modified, data) VALUES ($1, $2, $3, $4, $5, $6)', [publisher_feed_id, "D1",true, "CATS", "1", null]);
 
     } catch(error) {
         console.error("ERROR in test");
@@ -36,6 +36,7 @@ async function testNormaliseDataWithTestPipe() {
     }
 
     //--------------------------------------------------- Process!
+    // We are going to pass TestPipe but actually I think it makes no difference to this test
     await normalise_data_publisher_feed(publisher_feed, [TestPipe]);
 
     //--------------------------------------------------- Check Results
@@ -53,9 +54,7 @@ async function testNormaliseDataWithTestPipe() {
         await client.release()
     }
 
-    assert.equal(results.length,2);
-    assert.deepEqual(results[0].data,{ test: 1, data: { test: true } });
-    assert.deepEqual(results[1].data,{ test: 2, data: { test: true } });
+    assert.equal(results.length,0);
 
     // Raw data - is normalised flag set?
     client = await database_pool.connect();
@@ -79,5 +78,5 @@ async function testNormaliseDataWithTestPipe() {
 
 
 export {
-  testNormaliseDataWithTestPipe,
+  testNormaliseDeletedData,
 };
