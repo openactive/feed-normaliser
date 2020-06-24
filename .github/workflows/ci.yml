@@ -29,7 +29,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: ./node_modules/mocha/bin/mocha
-    - run: node ./test-database/run.js
       env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
 
