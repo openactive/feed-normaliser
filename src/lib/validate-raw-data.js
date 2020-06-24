@@ -1,11 +1,26 @@
 import { database_pool } from './database.js';
 import validator from '@openactive/data-model-validator';
+import Settings from './settings.js';
+import fs from 'fs';
+
+const validate_options = {
+    loadRemoteJson: true,
+    remoteJsonCachePath: Settings.dataModelValidatorRemoteJsonCachePath,
+};
+
+async function set_up_for_validation() {
+    if (!fs.existsSync(validate_options.remoteJsonCachePath)) {
+         await fs.promises.mkdir(validate_options.remoteJsonCachePath, {recursive:true});
+    }
+}
 
 /*
  * TODO This will run only one check at a time - add something so it runs several at once!
  * But I want to discuss with others best way to do that first
  */
 async function validate_raw_data_all() {
+
+    await set_up_for_validation();
 
     const client = await database_pool.connect();
     try {
@@ -31,7 +46,7 @@ async function validate_raw_data_all() {
 
 async function validate_raw_data(raw_data) {
 
-    const result = await validator.validate(raw_data.data);
+    const result = await validator.validate(raw_data.data, validate_options);
     const result_filtered = result.filter(r => r.severity === "failure");
 
     const client = await database_pool.connect();
