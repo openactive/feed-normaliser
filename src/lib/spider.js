@@ -99,8 +99,8 @@ async function write_publisher(data) {
             publisher_id = res_add_publisher.rows[0].id;
         } else {
             publisher_id = res_find_publisher.rows[0].id;
-            const res_add_publisher = await client.query(
-                'UPDATE publisher SET name=$1, url=$2, data=$3 WHERE id=$4',
+            await client.query(
+                'UPDATE publisher SET name=$1, url=$2, data=$3, updated_at=(now() at time zone \'utc\') WHERE id=$4',
                 [data.name, data.url, data.data, publisher_id]
             );
         }
@@ -110,6 +110,12 @@ async function write_publisher(data) {
             const res_find_feed = await client.query('SELECT * FROM publisher_feed WHERE url = $1', [data.data_urls[idx].url]);
             if (res_find_feed.rowCount == 0) {
                 const res_add_feed = await client.query('INSERT INTO publisher_feed (publisher_id, name, url) VALUES ($1, $2, $3) RETURNING id', [publisher_id, data.data_urls[idx].name, data.data_urls[idx].url]);
+            } else {
+                const publisher_feed_id = res_find_feed.rows[0].id;
+                await client.query(
+                    'UPDATE publisher_feed SET name=$1, updated_at=(now() at time zone \'utc\') WHERE id=$2',
+                    [data.data_urls[idx].name, publisher_feed_id]
+                );
             }
         }
 
