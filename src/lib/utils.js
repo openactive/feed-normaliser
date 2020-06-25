@@ -1,3 +1,5 @@
+import { promises as fs } from 'fs';
+
 
 class Utils {
 
@@ -22,8 +24,17 @@ class Utils {
 
   }
 
-}
+  static async readJson(path) {
+    try {
+      return JSON.parse(
+        await fs.readFile(path, {encoding: 'utf8'})
+      );
+    } catch (error){
+        console.error(error);
+    }
+  }
 
+}
 
 export {
   Utils,
