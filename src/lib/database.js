@@ -22,6 +22,7 @@ async function delete_database() {
     var client;
     try {
         client = await database_pool.connect();
+        await client.query('DROP TABLE IF EXISTS spider_data_catalog_error CASCADE');
         await client.query('DROP TABLE IF EXISTS normalised_data CASCADE');
         await client.query('DROP TABLE IF EXISTS raw_data CASCADE');
         await client.query('DROP TABLE IF EXISTS publisher_feed CASCADE');
