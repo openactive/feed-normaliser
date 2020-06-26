@@ -47,6 +47,7 @@ async function spider_data_catalog(url, url_history) {
         console.error(url_history);
         console.error(url);
         console.error(error);
+        spider_data_catalog_error(url, error, url_history)
     }
 
 }
@@ -82,6 +83,7 @@ async function spider_data_set(url, url_history) {
         console.error(url_history);
         console.error(url);
         console.error(error);
+        spider_data_catalog_error(url, error, url_history)
     }
 }
 
@@ -131,6 +133,23 @@ async function write_publisher(data) {
     }
 
 };
+
+async function spider_data_catalog_error(url, error, found_via) {
+    const client = await database_pool.connect();
+    try {
+        await client.query(
+            'INSERT INTO  spider_data_catalog_error (url, error, found_via) VALUES ($1, $2, $3)',
+            [url, error, {"trail":found_via}]
+        );
+    } catch(error) {
+        console.error("ERROR spider_data_catalog_error");
+        console.error(error);
+    } finally {
+        // Make sure to release the client before any error handling,
+        // just in case the error handling itself throws an error.
+        client.release()
+    }
+}
 
 export {
   spider,
