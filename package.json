@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start-webserver": "node ./src/bin/web-server.js",
-    "start-webserver-dev": "nodemon"
+    "start-webserver-dev": "nodemon",
     "test": "mocha"
   },
   "repository": {
