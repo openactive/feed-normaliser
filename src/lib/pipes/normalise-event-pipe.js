@@ -8,8 +8,8 @@ class NormaliseEventPipe extends Pipe {
 
       let normalisedEvent1 = new NormalisedEvent({
         }, "Event");
-
-      this.normalisedEvents.push(normalisedEvent1);
+      console.log(this.rawData.data);
+      // this.normalisedEvents.push(normalisedEvent1);
 
       resolve(this.normalisedEvents);
     });
