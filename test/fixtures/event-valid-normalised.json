@@ -9,8 +9,8 @@
   },
   "data": {
     "@context": [
-      "https://www.openactive.io/ns/oa.jsonld",
-      "https://www.openactive.io/ns-beta/oa.jsonld"
+      "https://openactive.io/",
+      "https://openactive.io/ns-beta/"
     ],
     "type": "Event",
     "organizer": {
