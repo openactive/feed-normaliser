@@ -22,9 +22,26 @@ class Pipe {
 
   doCleanup(){
     this.fixContext();
+    this.fixId();
+    this.fixType();
     this.fixInvalidData();
     this.expandObjects();
     this.addProvenanceInformation();
+  }
+
+  fixId(){
+    if(typeof this.rawData.id === 'undefined' && typeof this.rawData["@id"] !== 'undefined'){
+      this.rawData.id = this.rawData["@id"];
+      delete this.rawData["@id"];
+    }
+  }
+
+  fixType(){
+    // TODO what if type is an array
+    if(typeof this.rawData.type === 'undefined' && typeof this.rawData["@type"] !== 'undefined'){
+      this.rawData.type = this.rawData["@type"];
+      delete this.rawData["@type"];
+    }
   }
 
   fixContext(){
@@ -100,12 +117,12 @@ class Pipe {
     let programme = event.programme;
     let activity = event.activity;
 
-    if(organizer !== 'undefined'){
+    if(typeof organizer !== 'undefined'){
       organizer = this.expandLogo(organizer);
       event.organizer = organizer;
     }
     // programme
-    if(programme !== 'undefined'){
+    if(typeof programme !== 'undefined'){
       if(typeof programme === 'string'){
         programme = {
           "@type": "Brand",
@@ -117,7 +134,7 @@ class Pipe {
     }
 
     // activity
-    if(activity !== 'undefined'){
+    if(typeof activity !== 'undefined'){
       let activities = [];
       if(Array.isArray(activity)){
         for(let anActivity of activity){
