@@ -1,0 +1,68 @@
+{
+  "state": "updated",
+  "kind": "Event",
+  "id": "83969-A",
+  "modified": 1586026287080,
+  "provenanceInformation" : {
+    "feedUrl" : ["https://playwaze.com/Book/"],
+    "publisherName": "Playwaze",
+    "parentId":["https://playwaze.com/Book/83969-A"]
+  },
+  "data": {
+    "@context": [
+      "https://openactive.io/",
+      "https://openactive.io/ns-beta"
+    ],
+    "type": "OnDemandEvent",
+    "identifier": "83969-A",
+    "name": "Otsimo Special Education",
+    "description": "Access gamified and personalised curriculum, just for your little hero.    Get into engaging speech therapy sessions, right at your fingertips.    Download for free",
+    "activity": [{
+      "@type": "Concept",
+      "prefLabel": "learning"
+    }],
+    "workFeatured": {
+      "@type": "MediaObject",
+      "name": "Website",
+      "url": "https://otsimo.com/en/"
+    },
+    "genderRestriction": "https://openactive.io/NoRestriction",
+    "image": [{
+      "@type": "ImageObject",
+      "url": "https://playcaddy.blob.core.windows.net/news/4cbbf46c-8252-4d14-84eb-1dbcf5d22fb1?sv=2018-03-28&sr=b&sig=3psmolPunZ4jC%2BBh0Cho7w7Tu1RM8rigkMrGFm6DoFQ%3D&se=2020-06-25T17%3A08%3A42Z&sp=r&rscd=attachment%3B%20filename%3Dunnamed.png"
+    }],
+    "isAccessibleForFree": true,
+    "level": [
+      "Beginner"
+    ],
+    "offers": [{
+      "@type": "Offer",
+      "@id": "https://playwaze.com/Book/83969-A&Source=OA&free=true",
+      "name": "Free option available",
+      "price": 0,
+      "priceCurrency": "GBP",
+      "url": "https://playwaze.com/Book/83969-A&Source=OA"
+    }],
+    "organizer": {
+      "@type": "Organization",
+      "@id": "https://playwaze.com/brumtogether/lixsvwc39xhcommunity-details",
+      "name": "#BrumTogether",
+      "url": "https://playwaze.com/brumtogether/lixsvwc39xh/community-about"
+    },
+    "url": "https://playwaze.com/brumtogether/lixsvwc39xh/groupplaymanager-display/gvfxx16toupd5n",
+    "beta:virtualLocation": {
+      "@type": "VirtualLocation",
+      "name": "Website",
+      "url": "https://otsimo.com/en/"
+    },
+    "beta:affiliatedLocation": {
+      "@type": "Place",
+      "name": "Birmingham, UK",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 52.486243,
+        "longitude": -1.890401
+      }
+    }
+  }
+}

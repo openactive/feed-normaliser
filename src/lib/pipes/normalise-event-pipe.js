@@ -7,13 +7,14 @@ class NormaliseEventPipe extends Pipe {
     return new Promise(async resolve => {
 
         this.doCleanup();
+        let type = this.rawData.type;
 
-        if (this.rawData.type == 'Event' || this.rawData.type == 'OnDemandEvent'){
+        if (type == 'Event' || type == 'OnDemandEvent'){
             // The top level event is the Event
 
             let processedEvent = this.rawMeta;
             let processedEventData = this.parseEvent(this.rawData);
-            processedEvent.kind = processedEventData.type;
+            processedEvent.kind = "Event";
             processedEvent.data = processedEventData;
             let normalisedEvent = new NormalisedEvent(processedEvent, processedEvent.kind);
 
