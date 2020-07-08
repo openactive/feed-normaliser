@@ -1,4 +1,5 @@
 import { promises as fs } from 'fs';
+import path from 'path';
 
 
 class Utils {
@@ -32,6 +33,10 @@ class Utils {
     } catch (error){
         console.error(error);
     }
+  }
+
+  static async getContext(){
+    return await Utils.readJson(path.resolve(path.resolve(), './src/lib/oa.jsonld'));
   }
 
 }
