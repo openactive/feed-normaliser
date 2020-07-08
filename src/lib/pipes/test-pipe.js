@@ -8,6 +8,8 @@ class TestPipe extends Pipe {
   run(){
     return new Promise(async resolve => {
 
+      console.log(`Running ${this.rawData.id} (${this.rawData.type}) through ${this.constructor.name}`);
+
       let normalisedEvent1 = new NormalisedEvent({
         "test": 1,
         "data": this.rawData.data

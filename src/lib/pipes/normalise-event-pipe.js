@@ -9,6 +9,8 @@ class NormaliseEventPipe extends Pipe {
         this.doCleanup();
         let type = this.rawData.type;
 
+        console.log(`Running ${this.rawData.id} (${this.rawData.type}) through ${this.constructor.name}`);
+
         if (type == 'Event' || type == 'OnDemandEvent'){
             // The top level event is the Event
 
