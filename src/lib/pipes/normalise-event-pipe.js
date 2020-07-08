@@ -6,13 +6,33 @@ class NormaliseEventPipe extends Pipe {
   run(){
     return new Promise(async resolve => {
 
-      let normalisedEvent1 = new NormalisedEvent({
-        }, "Event");
-      console.log(this.rawData.data);
-      // this.normalisedEvents.push(normalisedEvent1);
+        this.doCleanup();
 
-      resolve(this.normalisedEvents);
+        if (this.rawData.type == 'Event' || this.rawData.type == 'OnDemandEvent'){
+            // The top level event is the Event
+
+            let processedEvent = this.rawMeta;
+            let processedEventData = this.parseEvent(this.rawData);
+            processedEvent.kind = processedEventData.type;
+            processedEvent.data = processedEventData;
+            let normalisedEvent = new NormalisedEvent(processedEvent, processedEvent.kind);
+
+            this.normalisedEvents.push(normalisedEvent);
+
+            // TODO: in theory regular Events might have subEvent or superEvent
+
+        }else{
+            // The top level event is something else, but it has subEvents
+            // so we're converting them into flat Events
+        }
+
+        resolve(this.normalisedEvents);
     });
+  }
+
+  parseEvent(eventData, parentEvent){
+    // TODO
+    return eventData;
   }
 }
 

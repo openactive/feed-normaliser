@@ -1,0 +1,79 @@
+{
+  "state": "updated",
+  "kind": "Event",
+  "id": 616,
+  "modified": "2014-09-15T09:12:51.706+01:00",
+  "provenanceInformation": {
+    "feedUrl": ["https://www.goodgym.org/api/happenings"],
+    "publisherName": "GoodGym"
+  },
+  "data": {
+    "@context": [
+      "https://www.openactive.io/ns/oa.jsonld",
+      "https://www.openactive.io/ns-beta/oa.jsonld"
+    ],
+    "type": "Event",
+    "organizer": {
+      "type": "Organization",
+      "url": "http://www.goodgym.org/?utm_medium=openactive&utm_source=default",
+      "name": "GoodGym",
+      "telephone": "0203 432 3920",
+      "email": "getinvolved@goodgym.org",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.goodgym.org/assets/goodgym_red-688adde9f7d011eb16c0cafa461d8f214e93fdefe2044d10f6cf68fee52c1584.png"
+      }
+    },
+    "name": "Hill Session with Tom",
+    "identifier": 616,
+    "id": "http://www.goodgym.org/api/happenings/hill-session-with-tom",
+    "url": "http://www.goodgym.org/happenings/hill-session-with-tom?utm_medium=openactive&utm_source=default",
+    "description": "Come along for a challenging but rewarding interval session with Tom!\nAfter a warm up and running drills we'll be getting stuck into sets or short, fast hills that help develop speed and power, mixing these with race effort running. Come along, get fitter, simple!\nThe session is tough but reward to totally achievable FOR ALL ABILITIES!\nMeeting at Mile End Park, at the base of the Green Bridge at the southern end.\n",
+    "beta:formattedDescription": "Come along for a challenging but rewarding interval session with Tom!\r\n\r\nAfter a warm up and running drills we'll be getting stuck into sets or short, fast hills that help develop speed and power, mixing these with race effort running. Come along, get fitter, simple!\r\n\r\nThe session is tough but reward to totally achievable FOR ALL ABILITIES!\r\n\r\nMeeting at Mile End Park, at the base of the Green Bridge at the southern end.",
+    "disambiguatingDescription": "A short, but tough session for speed and power",
+    "activity": [{
+      "@type": "Concept",
+      "prefLabel": "Running"
+    }],
+    "programme": {
+      "@type": "Brand",
+      "name": "Training Session"
+    },
+    "startDate": "2014-09-23T18:45:00+01:00",
+    "endDate": "2014-09-23T20:40:00+01:00",
+    "duration": "PT115M",
+    "location": {
+      "type": "Place",
+      "address": {
+        "type": "PostalAddress",
+        "streetAddress": "Mile End Park ",
+        "addressLocality": "London",
+        "postalCode": "E3 4PL"
+      },
+      "geo": {
+        "type": "GeoCoordinates",
+        "latitude": 51.52462,
+        "longitude": -0.0354348
+      }
+    },
+    "remainingAttendeeCapacity": 22,
+    "maximumAttendeeCapacity": 25,
+    "beta:distance": {
+      "value": 6,
+      "unit": "KMT"
+    },
+    "beta:level": "intermediate",
+    "beta:hasCoaching": false,
+    "beta:registrationCount": 3,
+    "ageRange": "18",
+    "genderRestriction": "mixed",
+    "isAccessibleForFree": true,
+    "publicAccess": true,
+    "beta:orderPostUrl": "http://www.goodgym.org/api/external_registrations",
+    "offers": {
+      "type": "Offer",
+      "id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
+      "price": "0"
+    }
+  }
+}
