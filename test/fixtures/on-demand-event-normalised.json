@@ -8,7 +8,7 @@
       "https://openactive.io/",
       "https://openactive.io/ns-beta"
     ],
-    "type": "OnDemandEvent",
+    "@type": "OnDemandEvent",
     "provenanceInformation" : {
       "feedUrl" : ["https://playwaze.com/Book/"],
       "publisherName": "Playwaze",

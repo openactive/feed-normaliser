@@ -1,6 +1,6 @@
 {
     "@context": ["https://openactive.io/"],
-    "type": "Event",
+    "@type": "Event",
     "url": "https://www.britishtriathlon.org/events/hebridean-cycle-challenge_6302?utm_source=openactive&utm_medium=referral",
     "identifier": "race-26444",
     "name": "Hebridean Cycle Challenge",

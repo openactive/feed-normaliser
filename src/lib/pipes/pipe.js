@@ -50,17 +50,17 @@ class Pipe {
   }
 
   fixId(){
-    if(typeof this.rawData.id === 'undefined' && typeof this.rawData["@id"] !== 'undefined'){
-      this.rawData.id = this.rawData["@id"];
-      delete this.rawData["@id"];
+    if(typeof this.rawData.id !== 'undefined' && typeof this.rawData["@id"] === 'undefined'){
+      this.rawData["@id"] = this.rawData.id;
+      delete this.rawData.id;
     }
   }
 
   fixType(){
     // TODO what if type is an array
-    if(typeof this.rawData.type === 'undefined' && typeof this.rawData["@type"] !== 'undefined'){
-      this.rawData.type = this.rawData["@type"];
-      delete this.rawData["@type"];
+    if(typeof this.rawData.type !== 'undefined' && typeof this.rawData["@type"] === 'undefined'){
+      this.rawData["@type"] = this.rawData.type;
+      delete this.rawData.type;
     }
   }
 

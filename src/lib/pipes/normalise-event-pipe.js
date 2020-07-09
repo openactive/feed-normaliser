@@ -41,12 +41,13 @@ class NormaliseEventPipe extends Pipe {
             if (eventSubEvents){
                 this.doCleanup();
                 let {subEvent, ...parentEvent} = this.rawData;
-                parentEvent.type = "Event";
+                parentEvent["@type"] = "Event";
 
                 // Combine parent event data with each subEvent to make NormalisedEvents
                 // Any properties that are on both the subEvent and the parent will take the
                 // value from the subEvent
                 for (let sub of subEvent){
+                    delete sub.type;
                     let normalisedEventData = {
                         ...parentEvent,
                         ...sub
