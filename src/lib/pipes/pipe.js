@@ -71,38 +71,21 @@ class Pipe {
     // If the OA context is not first, moves it first.
     // If the OA context is missing, adds it.
     // If there is no @context at all, creates it.
+    // Always returns an array.
     // TODO: catch excessive wwws in context URL
 
     let contexts = [];
-    if(this.rawData["@context"] === 'undefined'){
-        this.rawData["@context"] = Settings.contextUrl;
-    }else
-    if(typeof this.rawData["@context"] === 'string'){
-      // there's only one context
-      if(this.rawData["@context"] !== Settings.contextUrl){
-        // but it's not the OA one
-        if(this.rawData["@context"] === Settings.contextJsonld){
-          // if it's the .jsonld version of the OA just replace it with the right URL
-          this.rawData["@context"] = Settings.contextUrl;
-        }else{
-          if(this.rawData["@context"] === Settings.betaContextJsonld){
-            // Fix it if it's the beta one
-            contexts.push(Settings.betaContextUrl);
-          }else{
-            // Then add to array with OA context
-            contexts.push(this.rawData["@context"]);
-          }
-          contexts.unshift(Settings.contextUrl);
-          this.rawData["@context"] = contexts;
-        }
-      }
-    }else{
-      // there are multiple contexts in an array
+    if(typeof this.rawData["@context"] !== 'undefined'){
+      // Make sure @context value is an array
+      this.rawData["@context"] = Utils.ensureArray(this.rawData["@context"]);
+
       this.rawData["@context"].forEach(function(context){
-        if(context === Settings.contextJsonld){
+        if(context == Settings.contextJsonld){
+          // Wrong URL for right context, correct it
           contexts.push(Settings.contextUrl);
         }else
-        if(context === Settings.betaContextJsonld){
+        if(context == Settings.betaContextJsonld){
+          // Wrong URL for beta context, correct it
           contexts.push(Settings.betaContextUrl);
         }else{
           // Keep any custom contexts as-is
@@ -111,14 +94,20 @@ class Pipe {
       });
       if(!contexts.includes(Settings.contextUrl)){
         // OA context is missing altogether
+        //   Stick it on the beginning
         contexts.unshift(Settings.contextUrl);
       }else if(contexts[0] !== Settings.contextUrl){
         // OA context is there but not the first element
+        //   Move it to start
         let i = contexts.indexOf(Settings.contextUrl);
         contexts.splice(i, 1);
         contexts.unshift(Settings.contextUrl);
       }
       this.rawData["@context"] = contexts;
+
+    }else{
+      // No context, set it
+      this.rawData["@context"] = [Settings.contextUrl];
     }
 
   }

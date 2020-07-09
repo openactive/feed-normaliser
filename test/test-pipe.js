@@ -25,7 +25,7 @@ describe('pipe-fix-contexts', function(){
             // No OA context and context isn't array
             const badContexts5 = "https://example.org/custom.jsonld";
 
-            const goodContexts1 = "https://openactive.io/";
+            const goodContexts1 = ["https://openactive.io/"];
             const goodContexts2 = [
                 "https://openactive.io/",
                 "https://openactive.io/ns-beta/"
@@ -43,7 +43,7 @@ describe('pipe-fix-contexts', function(){
 
             let pipe1 = new NormaliseEventPipe({id: 1, data: {"@context": badContexts1}}, []);
             pipe1.fixContext();
-            assert.equal(pipe1.rawData["@context"], goodContexts1);
+            assert.deepEqual(pipe1.rawData["@context"], goodContexts1);
 
             let pipe2 = new NormaliseEventPipe({id: 2, data: {"@context": badContexts2}}, []);
             pipe2.fixContext();
