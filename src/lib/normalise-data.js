@@ -115,8 +115,12 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
                 if (raw_data.data_deleted) {
                     await store_deleted_callback(raw_data.id);
                 } else {
-                    const pipeLine = new PipeLine(raw_data, pipes_to_call, store_normalised_callback);
-                    await pipeLine.run();
+                    if(raw_data.data === null){
+                        console.log("Skipping "+raw_data.id+" from feed "+publisher_feed.id+" because no data");
+                    }else{
+                        const pipeLine = new PipeLine(raw_data, pipes_to_call, store_normalised_callback);
+                        await pipeLine.run();
+                    }
                 }
             }
         }

@@ -69,3 +69,12 @@ describe('headline-event', function(){
         assert.deepEqual(results[0].data, output);
     });
 });
+
+describe('empty-event', function(){
+    it('should skip over an event with no data value without crashing', async function(){
+        const input = {id: 1234, data_deleted: true, data_kind: 'Event'};
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+        assert.equal(results.length, 0);
+    });
+});
