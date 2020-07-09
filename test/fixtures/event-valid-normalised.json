@@ -3,16 +3,16 @@
   "kind": "Event",
   "id": 616,
   "modified": "2014-09-15T09:12:51.706+01:00",
-  "provenanceInformation": {
-    "feedUrl": ["https://www.goodgym.org/api/happenings"],
-    "publisherName": "GoodGym"
-  },
   "data": {
     "@context": [
       "https://openactive.io/",
       "https://openactive.io/ns-beta/"
     ],
     "type": "Event",
+    "provenanceInformation": {
+      "feedUrl": ["https://www.goodgym.org/api/happenings"],
+      "publisherName": "GoodGym"
+    },
     "organizer": {
       "type": "Organization",
       "url": "http://www.goodgym.org/?utm_medium=openactive&utm_source=default",

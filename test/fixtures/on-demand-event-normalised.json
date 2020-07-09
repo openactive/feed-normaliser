@@ -3,17 +3,16 @@
   "kind": "Event",
   "id": "83969-A",
   "modified": 1586026287080,
-  "provenanceInformation" : {
-    "feedUrl" : ["https://playwaze.com/Book/"],
-    "publisherName": "Playwaze",
-    "parentId":["https://playwaze.com/Book/83969-A"]
-  },
   "data": {
     "@context": [
       "https://openactive.io/",
       "https://openactive.io/ns-beta"
     ],
     "type": "OnDemandEvent",
+    "provenanceInformation" : {
+      "feedUrl" : ["https://playwaze.com/Book/"],
+      "publisherName": "Playwaze",
+    },
     "identifier": "83969-A",
     "name": "Otsimo Special Education",
     "description": "Access gamified and personalised curriculum, just for your little hero.    Get into engaging speech therapy sessions, right at your fingertips.    Download for free",
