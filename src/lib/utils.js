@@ -39,6 +39,16 @@ class Utils {
     return await Utils.readJson(path.resolve(path.resolve(), './src/lib/oa.jsonld'));
   }
 
+  static ensureArray(input){
+    // if input is an array, returns it directly
+    // otherwise puts input into an array and returns that
+    if (!Array.isArray(input)){
+        return [input];
+    }else{
+        return input;
+    }
+  }
+
 }
 
 export {
