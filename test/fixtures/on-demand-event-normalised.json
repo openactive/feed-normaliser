@@ -11,7 +11,7 @@
     "@type": "OnDemandEvent",
     "provenanceInformation" : {
       "feedUrl" : ["https://playwaze.com/Book/"],
-      "publisherName": "Playwaze",
+      "publisherName": "Playwaze"
     },
     "identifier": "83969-A",
     "name": "Otsimo Special Education",
