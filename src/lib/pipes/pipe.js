@@ -23,6 +23,23 @@ class Pipe {
     });
   }
 
+  getType(event){
+    if (typeof event === 'undefined'){
+      event = this.rawData;
+    }
+    if(typeof event.type !== 'undefined'){
+      return event.type;
+    }else if( typeof event["@type"] !== 'undefined'){
+      return event["@type"];
+    }else{
+      return null;
+    }
+  }
+
+  getKind(){
+    return this.rawMeta.data_kind;
+  }
+
   doCleanup(){
     this.fixContext();
     this.fixId();
@@ -212,12 +229,14 @@ class Pipe {
     // "parentId": ["https://playwaze.com/SessionSeries/jifgh8dinma",
     //              "https://playwaze.com/SessionSeries/jifgh8dinma/ScheduledSession/bzncxfzk8oe"]
     // },
-    this.provenance = {
+
+    // TODO: get provenance information from database
+    this.rawData["provenanceInformation"] = {
       "feedUrl": [],
-      "publisherName": "",
-      "parentId": []
+      "publisherName": ""
     }
   }
+
 
 }
 
