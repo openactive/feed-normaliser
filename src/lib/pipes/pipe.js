@@ -8,7 +8,11 @@ class Pipe {
     // rawData is the contents of the data field
     const { data, ...meta } = rawData;
     this.rawMeta = meta;
-    this.rawData = data;
+    if(data == null){
+      this.rawData = {};
+    }else{
+      this.rawData = data;
+    }
     this.provenance = {};
     this.normalisedEvents = normalisedEvents;
     this.context = Utils.getContext();
@@ -31,6 +35,20 @@ class Pipe {
       return event.type;
     }else if( typeof event["@type"] !== 'undefined'){
       return event["@type"];
+    }else{
+      return null;
+    }
+  }
+
+  getId(event){
+    if (typeof event === 'undefined'){
+      event = this.rawData;
+    }
+
+    if(typeof event.id !== 'undefined'){
+      return event.id;
+    }else if( typeof event["@id"] !== 'undefined'){
+      return event["@id"];
     }else{
       return null;
     }

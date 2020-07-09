@@ -7,9 +7,10 @@ class NormaliseEventPipe extends Pipe {
   run(){
     return new Promise(async resolve => {
 
-        console.log(`Running ${this.rawData.id} (${this.rawData.type}) through ${this.constructor.name}`);
+        let id = this.getId();
         let type = this.getType();
         let kind = this.getKind();
+        console.log(`Running ${id} (${type}) through ${this.constructor.name}`);
 
         if (type == 'Event' || type == 'OnDemandEvent'){
             // The top level event is the Event
