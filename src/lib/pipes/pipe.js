@@ -4,9 +4,12 @@ import Settings from '../settings.js';
 
 class Pipe {
   constructor(rawData, normalisedEvents) {
-    this.rawData = rawData.data;
-    this.rawMeta = rawData;
-    delete this.rawMeta["data"]; // meta is everything except data
+    // rawMeta is an entire database row from the raw_data table, minus data field
+    // rawData is the contents of the data field
+    const { data, ...meta } = rawData;
+    this.rawMeta = meta;
+    this.rawData = data;
+    this.provenance = {};
     this.normalisedEvents = normalisedEvents;
     this.context = Utils.getContext();
   }
@@ -209,7 +212,7 @@ class Pipe {
     // "parentId": ["https://playwaze.com/SessionSeries/jifgh8dinma",
     //              "https://playwaze.com/SessionSeries/jifgh8dinma/ScheduledSession/bzncxfzk8oe"]
     // },
-    this.rawMeta["provenanceInformation"] = {
+    this.provenance = {
       "feedUrl": [],
       "publisherName": "",
       "parentId": []

@@ -14,11 +14,8 @@ class NormaliseEventPipe extends Pipe {
         if (type == 'Event' || type == 'OnDemandEvent'){
             // The top level event is the Event
 
-            let processedEvent = this.rawMeta;
-            let processedEventData = this.parseEvent(this.rawData);
-            processedEvent.kind = "Event";
-            processedEvent.data = processedEventData;
-            let normalisedEvent = new NormalisedEvent(processedEvent, processedEvent.kind);
+            let processedEvent = this.parseEvent(this.rawData);
+            let normalisedEvent = new NormalisedEvent(processedEvent, "Event");
 
             this.normalisedEvents.push(normalisedEvent);
 
