@@ -54,10 +54,10 @@ describe('normalise data', function() {
             // just in case the error handling itself throws an error.
             await client.release()
         }
-
         assert.equal(results.length,2);
-        assert.deepEqual(results[0].data,{ test: 1, data: { test: true } });
-        assert.deepEqual(results[1].data,{ test: 2, data: { test: true } });
+        assert.equal(results[0].data_kind, "TestKind");
+        assert.deepEqual(results[0].data,{ type: "TestEvent", extra: "a test", test: true } );
+        assert.deepEqual(results[1].data,{ type: "TestEvent", extra: "b test", test: true });
 
         // Raw data - is normalised flag set?
         client = await database_pool.connect();
