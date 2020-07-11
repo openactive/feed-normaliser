@@ -17,9 +17,8 @@ class PipeLine {
           console.log(`Error running data through pipe ${pipeSection.constructor.name} \n ${error}`);
         }
       }
-      if (normalisedEvents) {
-        await this.pipeOutputCb( this.rawData.id, normalisedEvents,);
-      }
+
+      await this.pipeOutputCb( this.rawData.id, normalisedEvents,);
 
       resolve("All pipes run");
     });
