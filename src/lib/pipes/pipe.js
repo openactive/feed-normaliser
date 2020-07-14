@@ -233,7 +233,7 @@ class Pipe {
     //     "https://playwaze.com/OpenData/SessionSeries"
     // ],
     // "publisherName": "Playwaze",
-    // "parentId": ["https://playwaze.com/SessionSeries/jifgh8dinma",
+    // "derivedFrom": ["https://playwaze.com/SessionSeries/jifgh8dinma",
     //              "https://playwaze.com/SessionSeries/jifgh8dinma/ScheduledSession/bzncxfzk8oe"]
     // },
 
