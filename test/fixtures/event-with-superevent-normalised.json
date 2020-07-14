@@ -1,0 +1,87 @@
+{
+  "state": "updated",
+  "kind": "Event",
+  "id": "00620dd0cea2a867dd4eadc8da9983f6dbe31c1e",
+  "modified": "2020-07-10T14:44:38.042Z",
+  "data": {
+    "@context": [
+      "https://openactive.io/",
+      "https://openactive.io/ns-beta"
+    ],
+    "@id": "https://goteamup.com/api/openactive/v1/id/event/25918324",
+    "url": "https://goteamup.com/p/280399-crossfit-fierce-spirit/e/25918324-wod-class/",
+    "@type": "Event",
+    "name": "WOD Class",
+    "level": [
+      "Beginner"
+    ],
+    "activity": [
+      {
+        "@id": "https://openactive.io/activity-list#853eab30-5812-44a8-8996-9e9e107bc4f9",
+        "@type": "Concept",
+        "inScheme": "https://openactive.io/activity-list",
+        "prefLabel": "Crossfit"
+      }
+    ],
+    "ageRange": {
+      "@type": "QuantitativeValue",
+      "minValue": 14
+    },
+    "organizer": {
+      "@id": "https://goteamup.com/api/openactive/v1/id/organizers/280399",
+      "url": "https://goteamup.com/p/280399-crossfit-fierce-spirit/",
+      "logo": {
+        "url": "https://teamupstatic.com/provider_logos/280399-2015_01_21_02_24_15.jpg",
+        "type": "ImageObject"
+      },
+      "name": "CrossFit Fierce Spirit",
+      "@type": "Organization",
+      "beta:formalCriteriaMet": [
+        "https://guides.imin.co/live-streaming-using-open-sessions/before-your-start-live-streaming/safety-safeguarding-and-insurance",
+        "https://guides.imin.co/live-streaming-using-open-sessions/before-your-start-live-streaming/music"
+      ]
+    },
+    "description": "CrossFit`s unique strength and conditioning training method, based around a mixture of Olympic weightlifting, CV and Gymnastics. Train for fun, to aid in a specialty or to compete in CrossFit everyone is welcome. Foundation course must be completed prior to taking part in these classes.   ",
+    "genderRestriction": [
+      "https://openactive.io/NoRestriction"
+    ],
+    "beta:formattedDescription": "CrossFit`s unique strength and conditioning training method, based around a mixture of Olympic weightlifting, CV and Gymnastics. Train for fun, to aid in a specialty or to compete in CrossFit everyone is welcome. Foundation course must be completed prior to taking part in these classes.   ",
+    "offers": [
+      {
+        "url": "https://goteamup.com/p/280399-crossfit-fierce-spirit/e/25918324-wod-class/",
+        "@type": "Offer",
+        "price": "5.00",
+        "priceCurrency": "GBP"
+      }
+    ],
+    "startDate": "2020-07-04T07:00:00+00:00",
+    "endDate": "2020-07-04T08:00:00+00:00",
+    "duration": "PT1H0M",
+    "location": {
+      "@id": "https://goteamup.com/api/openactive/v1/id/place/10739",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 53.1654998,
+        "longitude": -2.2045996
+      },
+      "name": "CrossFit Fierce Spirit",
+      "type": "Place",
+      "address": {
+        "type": "PostalAddress",
+        "postalCode": "CW12 1QU",
+        "addressRegion": "Cheshire",
+        "streetAddress": "Unit 5B Thomas Street",
+        "addressCountry": "GB",
+        "addressLocality": "Congleton"
+      }
+    },
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "provenanceInformation": {
+      "feedUrl": [],
+      "publisherName": "",
+      "derivedFrom": ["https://goteamup.com/api/openactive/v1/id/event-series/7837", "https://goteamup.com/api/openactive/v1/id/event/25918324"]
+    },
+    "maximumAttendeeCapacity": 8,
+    "remainingAttendeeCapacity": 0
+  }
+}

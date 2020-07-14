@@ -78,3 +78,15 @@ describe('empty-event', function(){
         assert.equal(results.length, 0);
     });
 });
+
+describe('event-with-super', function(){
+    it('should return a NormalisedEvent with data integrated from superEvent', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/event-with-superevent.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/event-with-superevent-normalised.json'));
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data, output.data);
+    });
+});

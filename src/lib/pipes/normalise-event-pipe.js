@@ -5,6 +5,7 @@ import NormalisedEvent from '../normalised-event.js';
 // Normalises an object with a type of Event
 class NormaliseEventPipe extends Pipe {
   run(){
+
     return new Promise(async resolve => {
 
         let id = this.getId();
@@ -16,8 +17,21 @@ class NormaliseEventPipe extends Pipe {
             // The top level event is the Event
 
             this.doCleanup();
-            let normalisedEvent = new NormalisedEvent(this.rawData, kind);
-            this.normalisedEvents.push(normalisedEvent);
+
+            if (typeof this.rawData.superEvent !== 'undefined'){
+                // It has a superEvent which we can get more data from.
+                let {superEvent, ...event} = this.rawData;
+                let normalisedEventData = {
+                    ...superEvent,
+                    ...event
+                }
+                let normalisedEvent = new NormalisedEvent(normalisedEventData, kind);
+                this.normalisedEvents.push(normalisedEvent);
+            }else{
+                // No superEvent, just use all data from the Event
+                let normalisedEvent = new NormalisedEvent(this.rawData, kind);
+                this.normalisedEvents.push(normalisedEvent);
+            }
 
         }
         else if (typeof this.rawData.subEvent !== 'undefined'){
