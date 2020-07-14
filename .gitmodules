@@ -1,0 +1,3 @@
+[submodule "conformance-profiles"]
+	path = conformance-profiles
+	url = https://github.com/openactive/conformance-profiles.git
