@@ -22,24 +22,39 @@ async function validate_raw_data_all() {
 
     await set_up_for_validation();
 
-    const client = await database_pool.connect();
-    try {
-        while(true) {
+    while(true) {
+
+        let rows = []
+
+        // Step 1 - load data to process
+        // we open and make sure we CLOSE the database connection after this, so the DB connection is not held open when processing in an unneeded manner
+        const client = await database_pool.connect();
+        try {
             const res_find_raw_data = await client.query('SELECT * FROM raw_data WHERE validation_done = \'f\' AND data_deleted=\'f\' ORDER BY updated_at ASC LIMIT 10');
             if (res_find_raw_data.rows.length == 0) {
                 break;
             }
+            // Make sure we just store raw data and no database cursors, etc
             for (var raw_data of res_find_raw_data.rows) {
-                await validate_raw_data(raw_data);
+                rows.push(raw_data)
             }
+        } catch(error) {
+            console.error("ERROR validate_raw_data_all");
+            console.error(error);
+        } finally {
+            // Make sure to release the client before any error handling,
+            // just in case the error handling itself throws an error.
+            client.release()
         }
-    } catch(error) {
-        console.error("ERROR validate_raw_data_all");
-        console.error(error);
-    } finally {
-        // Make sure to release the client before any error handling,
-        // just in case the error handling itself throws an error.
-        client.release()
+
+
+        // Step 2 - process each item of data we got
+        for (var raw_data of rows) {
+            await validate_raw_data(raw_data);
+        }
+
+
+
     }
 
 }
