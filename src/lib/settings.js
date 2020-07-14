@@ -20,6 +20,12 @@ const Settings = {
   // this is in cwd() and not /tmp so it works well on Heroku
   "dataModelValidatorRemoteJsonCachePath": path.join(process.cwd(), 'dataModelValidatorRemoteJsonCache'),
 
+  // context URLs
+  "contextUrl": "https://openactive.io/",
+  "betaContextUrl": "https://openactive.io/ns-beta/",
+  "contextJsonld": "https://www.openactive.io/ns/oa.jsonld",
+  "betaContextJsonld": "https://www.openactive.io/ns-beta/oa.jsonld"
+
 }
 
 export default Settings;

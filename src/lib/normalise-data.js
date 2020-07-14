@@ -56,6 +56,7 @@ async function store_deleted_callback(raw_data_id) {
 async function store_normalised_callback(raw_data_id, normalised_events) {
 
     const client = await database_pool.connect();
+
     try {
         await client.query('BEGIN');
 
@@ -70,7 +71,7 @@ async function store_normalised_callback(raw_data_id, normalised_events) {
 
             await client.query(
                 'INSERT INTO normalised_data (raw_data_id, data_id, data_deleted, data, data_kind) ' +
-                'VALUES ($1, $2, \'t\', $3, $4) ' +
+                'VALUES ($1, $2, \'f\', $3, $4) ' +
                 'ON CONFLICT (data_id) DO UPDATE SET ' +
                 'raw_data_id=$1, data_id=$2, data=$3, data_kind=$4, updated_at=(now() at time zone \'utc\'), data_deleted=\'f\''  ,
                 query_data
@@ -102,7 +103,7 @@ async function store_normalised_callback(raw_data_id, normalised_events) {
 
 async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
 
-    console.log("normalise_data_feed " + publisher_feed.id)
+    console.log("normalise_data_feed " + publisher_feed.id);
 
     const client = await database_pool.connect();
     try {
@@ -112,6 +113,8 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
                 break;
             }
             for (var raw_data of res_find_raw_data.rows) {
+                console.log("Running "+raw_data.id + " from " + publisher_feed.id);
+
                 if (raw_data.data_deleted) {
                     await store_deleted_callback(raw_data.id);
                 } else {

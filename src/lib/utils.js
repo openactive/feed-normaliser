@@ -1,3 +1,6 @@
+import { promises as fs } from 'fs';
+import path from 'path';
+
 
 class Utils {
 
@@ -22,8 +25,31 @@ class Utils {
 
   }
 
-}
+  static async readJson(path) {
+    try {
+      return JSON.parse(
+        await fs.readFile(path, {encoding: 'utf8'})
+      );
+    } catch (error){
+        console.error(error);
+    }
+  }
 
+  static async getContext(){
+    return await Utils.readJson(path.resolve(path.resolve(), './src/lib/oa.jsonld'));
+  }
+
+  static ensureArray(input){
+    // if input is an array, returns it directly
+    // otherwise puts input into an array and returns that
+    if (!Array.isArray(input)){
+        return [input];
+    }else{
+        return input;
+    }
+  }
+
+}
 
 export {
   Utils,

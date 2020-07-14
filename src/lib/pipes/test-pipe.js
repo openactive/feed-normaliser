@@ -8,18 +8,32 @@ class TestPipe extends Pipe {
   run(){
     return new Promise(async resolve => {
 
-      let normalisedEvent1 = new NormalisedEvent({
-        "test": 1,
-        "data": this.rawData.data
-        }, "TestKind");
+      console.log(`Running ${this.rawData.id} (${this.rawData.type}) through ${this.constructor.name}`);
 
+      // Check for a type and set if none
+      let type = "TestEvent";
+      if(typeof this.rawData["@type"] !== 'undefined'){
+        type = this.rawData["@type"];
+      }else if(typeof this.rawData.type !== 'undefined'){
+        type = this.rawData.type;
+      }
+
+      // Make it into two events
+      let event1 = {...this.rawData};
+      let event2 = {...this.rawData};
+      event1.type = type;
+      event2.type = type;
+
+      // Set something distinguishing
+      event1.extra = "a test";
+      event2.extra = "b test";
+
+      // Create NormalisedEvent objects
+      let normalisedEvent1 = new NormalisedEvent(event1, "TestKind");
       this.normalisedEvents.push(normalisedEvent1);
 
-      let normalisedEvent2 = new NormalisedEvent({
-        "test": 2,
-        "data": this.rawData.data
-        }, "TestKind");
-      this.normalisedEvents.push(normalisedEvent2 );
+      let normalisedEvent2 = new NormalisedEvent(event2, "TestKind");
+      this.normalisedEvents.push(normalisedEvent2);
 
       resolve(this.normalisedEvents);
     });
