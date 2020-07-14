@@ -238,10 +238,11 @@ class Pipe {
     // },
 
     // TODO: get provenance information from database
-    this.rawData["provenanceInformation"] = {
-      "feedUrl": [],
-      "publisherName": ""
-    }
+    // TODO: we might do this at the RDPE end instead
+    // this.rawData["provenanceInformation"] = {
+    //   "feedUrl": [],
+    //   "publisherName": ""
+    // }
   }
 
 
