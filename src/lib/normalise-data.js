@@ -6,7 +6,7 @@ import pipes from './pipes/index.js';
 async function normalise_data_all_publisher_feeds() {
   const client = await database_pool.connect();
     try {
-        const res_find_publisher_feeds = await client.query('SELECT * FROM publisher_feed WHERE');
+        const res_find_publisher_feeds = await client.query('SELECT * FROM publisher_feed');
         for (var idx in res_find_publisher_feeds.rows) {
             // Not await - we want the event loop of Node to run all feeds at once
             normalise_data_publisher_feed(res_find_publisher_feeds.rows[idx], pipes);

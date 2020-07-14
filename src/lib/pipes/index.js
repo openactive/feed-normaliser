@@ -1,4 +1,4 @@
-import TestPipe from './test-pipe.js';
+// import TestPipe from './test-pipe.js';
 import NormaliseEventPipe from './normalise-event-pipe.js';
 
 export default [

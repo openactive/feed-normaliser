@@ -13,7 +13,6 @@ class Pipe {
     }else{
       this.rawData = data;
     }
-    this.provenance = {};
     this.normalisedEvents = normalisedEvents;
     this.context = Utils.getContext();
   }
