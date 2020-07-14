@@ -9,10 +9,6 @@
       "https://openactive.io/ns-beta/"
     ],
     "@type": "Event",
-    "provenanceInformation": {
-      "feedUrl": ["https://www.goodgym.org/api/happenings"],
-      "publisherName": "GoodGym"
-    },
     "organizer": {
       "type": "Organization",
       "url": "http://www.goodgym.org/?utm_medium=openactive&utm_source=default",

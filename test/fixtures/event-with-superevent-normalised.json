@@ -76,11 +76,6 @@
       }
     },
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "provenanceInformation": {
-      "feedUrl": [],
-      "publisherName": "",
-      "derivedFrom": ["https://goteamup.com/api/openactive/v1/id/event-series/7837", "https://goteamup.com/api/openactive/v1/id/event/25918324"]
-    },
     "maximumAttendeeCapacity": 8,
     "remainingAttendeeCapacity": 0
   }
