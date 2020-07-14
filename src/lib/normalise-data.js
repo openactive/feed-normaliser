@@ -13,7 +13,6 @@ async function normalise_data_all_publisher_feeds() {
         }
     } catch(error) {
         console.error("ERROR normalise_data_all_publisher_feeds");
-        console.error(data);
         console.error(error);
 
     } finally {
@@ -105,16 +104,36 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
 
     console.log("normalise_data_feed " + publisher_feed.id);
 
-    const client = await database_pool.connect();
-    try {
-        while(true) {
+    while(true) {
+
+        let rows = []
+
+        // Step 1 - load data to process
+        // we open and make sure we CLOSE the database connection after this, so the DB connection is not held open when processing in an unneeded manner
+        const client = await database_pool.connect();
+        try {
             const res_find_raw_data = await client.query('SELECT * FROM raw_data WHERE publisher_feed_id=$1 AND normalised = \'f\' ORDER BY updated_at ASC LIMIT 10',[publisher_feed.id]);
             if (res_find_raw_data.rows.length == 0) {
                 break;
             }
+            // Make sure we just store raw data and no database cursors, etc
             for (var raw_data of res_find_raw_data.rows) {
-                console.log("Running "+raw_data.id + " from " + publisher_feed.id);
+                rows.push(raw_data)
+            }
+        } catch(error) {
+            console.error("ERROR normalise_data_publisher_feed");
+            console.error(publisher_feed);
+            console.error(error);
+        } finally {
+            // Make sure to release the client before any error handling,
+            // just in case the error handling itself throws an error.
+            client.release()
+        }
 
+        // Step 2 - process each item of data we got
+        try {
+            for (var raw_data of rows) {
+                console.log("Running "+raw_data.id + " from " + publisher_feed.id);
                 if (raw_data.data_deleted) {
                     await store_deleted_callback(raw_data.id);
                 } else {
@@ -122,17 +141,13 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
                     await pipeLine.run();
                 }
             }
+        } catch(error) {
+            console.error("ERROR normalise_data_publisher_feed");
+            console.error(publisher_feed);
+            console.error(error);
         }
-    } catch(error) {
-        console.error("ERROR normalise_data_publisher_feed");
-        console.error(publisher_feed);
-        console.error(error);
-    } finally {
-        // Make sure to release the client before any error handling,
-        // just in case the error handling itself throws an error.
-        client.release()
-    }
 
+    }
 
 }
 
