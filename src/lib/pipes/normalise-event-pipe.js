@@ -2,7 +2,11 @@ import Pipe from './pipe.js';
 import Utils from '../utils.js';
 import NormalisedEvent from '../normalised-event.js';
 
-// Normalises an object with a type of Event
+// Normalises an opportunity data object with the following types:
+//  * Event
+//  * OnDemandEvent
+//  * SessionSeries
+//  * ScheduledSession
 class NormaliseEventPipe extends Pipe {
   run(){
 
@@ -13,7 +17,9 @@ class NormaliseEventPipe extends Pipe {
         let kind = this.getKind();
         console.log(`Running ${id} (${type}) through ${this.constructor.name}`);
 
-        if (type == 'Event' || type == 'OnDemandEvent'){
+        if (type == "Event"
+         || type == "OnDemandEvent"
+         || type == "ScheduledSession"){
             // The top level event is the Event
 
             this.doCleanup();
@@ -21,6 +27,7 @@ class NormaliseEventPipe extends Pipe {
             if (typeof this.rawData.superEvent !== 'undefined'){
                 // It has a superEvent which we can get more data from.
                 let {superEvent, ...event} = this.rawData;
+                delete superEvent.type;
                 let normalisedEventData = {
                     ...superEvent,
                     ...event
@@ -45,7 +52,7 @@ class NormaliseEventPipe extends Pipe {
 
             for (let subEvent of subEvents){
                 let type = this.getType(subEvent);
-                if(type == "Event" || type == "OnDemandEvent"){
+                if(type == "Event" || type == "OnDemandEvent" || type == "ScheduledSession"){
                     // We only want to continue processing if any of the subEvents
                     // are the right type
                     eventSubEvents = true;
@@ -56,7 +63,13 @@ class NormaliseEventPipe extends Pipe {
             if (eventSubEvents){
                 this.doCleanup();
                 let {subEvent, ...parentEvent} = this.rawData;
-                parentEvent["@type"] = "Event";
+
+                if (type == "SessionSeries"){
+                    parentEvent["@type"] = "ScheduledSession";
+                }else{
+                    // Event or OnDemandEvent
+                    parentEvent["@type"] = type;
+                }
 
                 // Combine parent event data with each subEvent to make NormalisedEvents
                 // Any properties that are on both the subEvent and the parent will take the

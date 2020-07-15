@@ -8,7 +8,7 @@ class Pipe {
     // rawData is the contents of the data field
     const { data, ...meta } = rawData;
     this.rawMeta = meta;
-    if(data == null){
+    if(data == null || data == undefined){
       this.rawData = {};
     }else{
       this.rawData = data;
