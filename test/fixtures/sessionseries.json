@@ -1,0 +1,58 @@
+{
+  "state": "updated",
+  "kind": "SessionSeries",
+  "id": "jifgh8dinma",
+  "modified": 1574378246837,
+  "data": {
+    "@context": "https://openactive.io/",
+    "@type": "SessionSeries",
+    "@id": "https://playwaze.com/SessionSeries/jifgh8dinma",
+    "eventSchedule": [{
+      "@type": "Schedule",
+      "byDay": [
+        "https://schema.org/Thursday"
+      ],
+      "duration": "PT4H",
+      "endTime": "23:00",
+      "repeatFrequency": "P7D",
+      "scheduledEventType": "ScheduledSession",
+      "scheduleTimezone": "Europe/London",
+      "startDate": "2019-11-21",
+      "endDate": "2020-10-17",
+      "startTime": "19:00"
+    }],
+    "identifier": "jifgh8dinma",
+    "name": "No Strings Badminton and coaching Sessions - Thursday evenings 19:00 - 23:00",
+    "description": "Pay and play badminton sessions.  Coordinated by a  Badminton England accredited  Level 2 Coach.  Please pay at Reception and hand your receipt to the session organiser.   BE Members £6-00  Non- members £7-00  Minimum age 16yrs.  ",
+    "activity": [{
+      "@type": "Concept",
+      "prefLabel": "General"
+    }],
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "isAccessibleForFree": true,
+    "location": {
+      "@type": "Place",
+      "name": "52.0406224, -0.7594171",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 52.0406224,
+        "longitude": -0.7594171
+      }
+    },
+    "offers": [{
+      "@type": "Offer",
+      "@id": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/groupplaymanager-display/w1uebcxqyx2c4&free=true",
+      "name": "Free option available",
+      "price": 0,
+      "priceCurrency": "GBP",
+      "url": "https://badmintonengland.playwaze.com/Booking/FindBooking?seriesId=jifgh8dinma&Source=OA"
+    }],
+    "organizer": {
+      "@type": "Organization",
+      "@id": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzscommunity-details",
+      "name": "National Badminton Centre, Milton Keynes",
+      "url": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/community-about"
+    },
+    "url": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/groupplaymanager-display/w1uebcxqyx2c4"
+  }
+}
