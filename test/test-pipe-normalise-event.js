@@ -90,3 +90,42 @@ describe('empty-event', function(){
 //         assert.deepEqual(results[0].data, output.data);
 //     });
 // });
+
+describe('session-with-sub', function(){
+    it('should return a NormalisedEvent from data in SessionSeries and ScheduledSession', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries-with-subevent.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries-with-subevent-normalised.json'));
+
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data, output.data);
+    });
+});
+
+describe('session-with-super', function(){
+    it('should return a NormalisedEvent from data in ScheduledSession and SessionSeries', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-with-superevent.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries-with-subevent-normalised.json'));
+
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data, output.data);
+    });
+});
+
+describe('course-instance', function(){
+    it('should return a NormalisedEvent from a CourseInstance with a sub event', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/courseinstance.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/courseinstance-normalised.json'));
+
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data, output.data);
+    });
+});

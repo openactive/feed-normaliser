@@ -1,0 +1,24 @@
+{
+  "state": "updated",
+  "kind": "Session",
+  "id": 111,
+  "modified": "2014-09-15T09:12:51.706+01:00",
+  "data": {
+    "@context": "https://openactive.io/",
+    "type": "SessionSeries",
+    "url": "http://www.example.org/events/1",
+    "name": "Wednesday Yoga",
+    "description": "Yoga on a Wednesday",
+    "startDate": "2018-01-01",
+    "endDate": "2018-12-31",
+    "subEvent": [
+      {
+        "type": "ScheduledSession",
+        "url": "http://www.example.org/events/2",
+        "startDate": "2018-09-05T18:00:00-05:00",
+        "endDate": "2018-09-05T19:00:00-05:00",
+        "duration": "PT1H"
+      }
+    ]
+  }
+}
