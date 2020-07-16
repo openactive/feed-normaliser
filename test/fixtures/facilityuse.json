@@ -1,0 +1,127 @@
+{
+  "id": "https://opendata.fusion-lifestyle.com/OpenActiveTNG/api/facility-uses/ESGCRECHE352",
+  "name": "Creche 3-5yrs 2hrs",
+  "type": "FacilityUse",
+  "offers": [
+    {
+      "name": "Adult: Off Peak",
+      "type": "beta:IndicativeOffer",
+      "price": 5.75,
+      "identifier": "ADULT:OFFPEAK",
+      "priceCurrency": "GBP"
+    },
+    {
+      "name": "Adult: Peak",
+      "type": "beta:IndicativeOffer",
+      "price": 5.75,
+      "identifier": "ADULT:STAND",
+      "priceCurrency": "GBP"
+    },
+    {
+      "name": "Adult: 24 Hour",
+      "type": "beta:IndicativeOffer",
+      "price": 5.75,
+      "identifier": "ADULT:Z24HOUR",
+      "priceCurrency": "GBP"
+    },
+    {
+      "name": "Junior: Off Peak",
+      "type": "beta:IndicativeOffer",
+      "price": 3.15,
+      "ageRange": {
+        "type": "QuantitativeValue",
+        "maxValue": 15
+      },
+      "identifier": "JNR:OFFPEAK",
+      "priceCurrency": "GBP"
+    },
+    {
+      "name": "Junior: Peak",
+      "type": "beta:IndicativeOffer",
+      "price": 3.15,
+      "ageRange": {
+        "type": "QuantitativeValue",
+        "maxValue": 15
+      },
+      "identifier": "JNR:STAND",
+      "priceCurrency": "GBP"
+    },
+    {
+      "name": "Junior: 24 Hour",
+      "type": "beta:IndicativeOffer",
+      "price": 3.15,
+      "ageRange": {
+        "type": "QuantitativeValue",
+        "maxValue": 15
+      },
+      "identifier": "JNR:Z24HOUR",
+      "priceCurrency": "GBP"
+    }
+  ],
+  "@context": [
+    "https://openactive.io/",
+    "https://openactive.io/ns-beta"
+  ],
+  "category": [
+    "Creche"
+  ],
+  "location": {
+    "name": "Southgate Leisure Centre",
+    "type": "Place",
+    "address": {
+      "type": "PostalAddress"
+    },
+    "identifier": "ESG"
+  },
+  "provider": {
+    "name": "Fusion Lifestyle Training",
+    "type": "Organization",
+    "legalName": "Fusion Lifestyle Training"
+  },
+  "identifier": "ESGCRECHE352",
+  "hoursAvailable": [
+    {
+      "type": "OpeningHoursSpecification",
+      "opens": "00:00",
+      "closes": "23:59",
+      "dayOfWeek": "http://schema.org/Sunday"
+    },
+    {
+      "type": "OpeningHoursSpecification",
+      "opens": "09:00",
+      "closes": "12:59",
+      "dayOfWeek": "http://schema.org/Monday"
+    },
+    {
+      "type": "OpeningHoursSpecification",
+      "opens": "00:00",
+      "closes": "23:59",
+      "dayOfWeek": "http://schema.org/Tuesday"
+    },
+    {
+      "type": "OpeningHoursSpecification",
+      "opens": "09:00",
+      "closes": "12:59",
+      "dayOfWeek": "http://schema.org/Wednesday"
+    },
+    {
+      "type": "OpeningHoursSpecification",
+      "opens": "09:00",
+      "closes": "12:59",
+      "dayOfWeek": "http://schema.org/Thursday"
+    },
+    {
+      "type": "OpeningHoursSpecification",
+      "opens": "00:00",
+      "closes": "23:59",
+      "dayOfWeek": "http://schema.org/Friday"
+    },
+    {
+      "type": "OpeningHoursSpecification",
+      "opens": "00:00",
+      "closes": "23:59",
+      "dayOfWeek": "http://schema.org/Saturday"
+    }
+  ],
+  "beta:offerValidityPeriod": "P8D"
+}
