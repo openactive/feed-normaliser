@@ -114,6 +114,7 @@ async function download_raw_publisher_feed(publisher_feed, callback) {
 
         } catch (er) {
           console.log(`Issue with publisher feed ${publisher_feed.id} - ${er}`);
+          download_raw_error(nextURL, er, publisher_feed.id);
           break;
         }
 
@@ -121,6 +122,23 @@ async function download_raw_publisher_feed(publisher_feed, callback) {
 
 }
 
+
+async function download_raw_error(url, error, publisher_feed_id) {
+    const client = await database_pool.connect();
+    try {
+        await client.query(
+            'INSERT INTO  download_raw_errors (url, error, publisher_feed_id) VALUES ($1, $2, $3)',
+            [url, error, publisher_feed_id]
+        );
+    } catch(error) {
+        console.error("ERROR download_raw_error");
+        console.error(error);
+    } finally {
+        // Make sure to release the client before any error handling,
+        // just in case the error handling itself throws an error.
+        client.release()
+    }
+};
 
 
 export {
