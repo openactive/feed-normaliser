@@ -17,7 +17,6 @@ async function download_raw_all_publisher_feeds() {
         }
     } catch(error) {
         console.error("ERROR download_raw_all_publisher_feeds");
-        console.error(data);
         console.error(error);
 
     } finally {
@@ -37,7 +36,7 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
 
         for (const activityItem of data) {
 
-            const idFromData = Utils.getIdFromData(activityItem, publisher_feed.url);
+            const idFromData = Utils.getIdFromData(activityItem.data, publisher_feed.url);
 
             if (activityItem.state == 'updated' || activityItem.state == 'deleted'){
 
@@ -55,7 +54,7 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
                     'INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data, normalised) ' +
                     'VALUES ($1, $2, $3, $4, $5, $6, $7, \'f\') ' +
                     'ON CONFLICT (publisher_feed_id, rpde_id) DO UPDATE SET ' +
-                    'data_deleted=$3, data_modified=$5, data=$6, updated_at=(now() at time zone \'utc\'), normalised=\'f\', validation_done=\'f\', validation_passed=\'f\', validation_results=NULL'  ,
+                    'data_id=$3, data_deleted=$4, data_modified=$6, data=$7, updated_at=(now() at time zone \'utc\'), normalised=\'f\', validation_done=\'f\', validation_passed=\'f\', validation_results=NULL'  ,
                     query_data
                 );
 
