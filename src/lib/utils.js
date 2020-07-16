@@ -39,7 +39,7 @@ class Utils {
     return await Utils.readJson(path.resolve(path.resolve(), './src/lib/oa.jsonld'));
   }
 
-  static getIdFromData(data, feed_url){
+  static getIdFromData(data, feedUrl){
     // Gets or generates a unique id from data.
     // data is the contents of the `data` field on an object in an RPDE feed
     // Returns `@id` if present; if not returns `id`.
@@ -50,10 +50,10 @@ class Utils {
     }else if(typeof data.id !== 'undefined'){
       return data.id;
     }else if(typeof data.identifier !== 'undefined'){
-      if(feed_url.slice(-1) != "/"){
-        feed_url = feed_url + "/";
+      if(feedUrl.slice(-1) != "/"){
+        feedUrl = feedUrl + "/";
       }
-      return feed_url + data.identifier;
+      return feedUrl + data.identifier;
     }
   }
 
