@@ -9,3 +9,13 @@ Deletes are soft deletes, marked by the `data_deleted` column in the table.
 To run this:
 
 `$ node ./src/bin/download-raw.js`
+
+
+## Errors
+
+Any errors encountered during this stage will be stored in the `download_raw_errors` table.
+
+* `url` - Where the error occurred
+* `error` - What the error was
+* `publisher_feed_id` - The publisher feed we were fetching when we had an error
+* `error_at` - What date and time the error occurred
