@@ -37,11 +37,14 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
 
         for (const activityItem of data) {
 
+            const idFromData = Utils.getIdFromData(activityItem, publisher_feed.url);
+
             if (activityItem.state == 'updated' || activityItem.state == 'deleted'){
 
                 const query_data = [
                     publisher_feed.id,
                     activityItem.id,
+                    idFromData,
                     (activityItem.state == 'updated'?'f':'t'),
                     activityItem.kind,
                     activityItem.modified,
@@ -49,8 +52,8 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
                 ];
 
                 await client.query(
-                    'INSERT INTO raw_data (publisher_feed_id, rpde_id, data_deleted, data_kind, data_modified, data, normalised) ' +
-                    'VALUES ($1, $2, $3, $4, $5, $6, \'f\') ' +
+                    'INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data, normalised) ' +
+                    'VALUES ($1, $2, $3, $4, $5, $6, $7, \'f\') ' +
                     'ON CONFLICT (publisher_feed_id, rpde_id) DO UPDATE SET ' +
                     'data_deleted=$3, data_modified=$5, data=$6, updated_at=(now() at time zone \'utc\'), normalised=\'f\', validation_done=\'f\', validation_passed=\'f\', validation_results=NULL'  ,
                     query_data
