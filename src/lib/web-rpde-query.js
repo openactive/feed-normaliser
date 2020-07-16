@@ -28,11 +28,11 @@ class RPDEQuery {
     sql += " WHERE updated_at < ((now() at time zone 'utc') - interval '"+ this.dont_serve_data_until_seconds_old +" seconds') ";
     // Now if user has specified after, add those
     if (this.afterTimestamp && this.afterId) {
-       sql += " AND ( ( extract(epoch from updated_at)::int = $2 AND data_id > $3) OR (extract(epoch from updated_at)::int > $2)) ";
+       sql += " AND ( ( extract(epoch from updated_at)::int = $2 AND rpde_id > $3) OR (extract(epoch from updated_at)::int > $2)) ";
        params.push(this.afterTimestamp, this.afterId);
     }
     // Finally order and limit
-    sql += "ORDER BY extract(epoch from updated_at)::int ASC, data_id ASC LIMIT $1";
+    sql += "ORDER BY extract(epoch from updated_at)::int ASC, rpde_id ASC LIMIT $1";
     // ----- Run Query, store results
     const client = await database_pool.connect();
     try {
@@ -41,14 +41,14 @@ class RPDEQuery {
             const item = {
                 "state": (database_data.data_deleted ? "deleted" : "updated"),
                 "kind": database_data.data_kind,
-                "id": database_data.data_id,
+                "id": database_data.rpde_id,
                 "modified": database_data.updated_at,
             };
             if (!database_data.data_deleted) {
                 item.data = database_data.data;
             }
             this.rows.push(item);
-            this.next_afterId = database_data.data_id;
+            this.next_afterId = database_data.rpde_id;
             this.next_afterTimestamp = database_data.updated_at;
         }
     } catch(error) {
