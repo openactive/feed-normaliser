@@ -4,7 +4,7 @@ CREATE TABLE raw_data (
     id BIGSERIAL PRIMARY KEY,
     publisher_feed_id INTEGER NOT NULL,
     rpde_id TEXT NOT NULL,
-    data_id TEXT NOT NULL,
+    data_id TEXT NULL,
     data_deleted boolean NOT NULL,
     data_kind TEXT NOT NULL,
     data_modified TEXT NOT NULL,

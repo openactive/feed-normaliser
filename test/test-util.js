@@ -35,7 +35,7 @@ describe('getIdFromData', function(){
             "id": "https://example.org/events/2",
             "identifier": "event1"
         }
-        const id = Utils.getIdFromData(data, "https://example.org/events/");
+        const id = Utils.getIdFromData(data);
         assert.equal(id, "https://example.org/events/1");
     });
 
@@ -44,23 +44,25 @@ describe('getIdFromData', function(){
             "id": "https://example.org/events/2",
             "identifier": "event1"
         }
-        const id = Utils.getIdFromData(data, "https://example.org/events/");
+        const id = Utils.getIdFromData(data);
         assert.equal(id, "https://example.org/events/2");
     });
 
-    it('should return the identifier value', function(){
+    it('should return undefined if id is not a HTTP URI', function(){
         const data = {
-            "identifier": "event1"
+            "@id": "event1"
         }
-        const id = Utils.getIdFromData(data, "https://example.org/events/");
-        assert.equal(id, "https://example.org/events/event1");
+        const id = Utils.getIdFromData(data);
+        assert.deepEqual(id, undefined);
     });
 
-    it('should return the identifier value when feed has no /', function(){
-        const data = {
-            "identifier": "event1"
-        }
-        const id = Utils.getIdFromData(data, "https://example.org/events");
-        assert.equal(id, "https://example.org/events/event1");
+    it('should return undefined if @id/id is undefined', function(){
+        const id = Utils.getIdFromData({"blah": "nothing"});
+        assert.deepEqual(id, undefined);
+    });
+
+    it('should return undefined if data is undefined', function(){
+        const id = Utils.getIdFromData(undefined);
+        assert.deepEqual(id, undefined);
     });
 });
