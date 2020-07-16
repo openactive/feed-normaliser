@@ -116,3 +116,16 @@ describe('session-with-super', function(){
         assert.deepEqual(results[0].data, output.data);
     });
 });
+
+describe('course-instance', function(){
+    it('should return a NormalisedEvent from a CourseInstance with a sub event', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/courseinstance.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/courseinstance-normalised.json'));
+
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data, output.data);
+    });
+});

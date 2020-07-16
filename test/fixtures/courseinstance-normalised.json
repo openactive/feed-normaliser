@@ -1,0 +1,16 @@
+{
+  "state": "updated",
+  "kind": "Session",
+  "id": 111,
+  "modified": "2014-09-15T09:12:51.706+01:00",
+  "data": {
+    "@context": ["https://openactive.io/"],
+    "@type": "CourseInstanceSubEvent",
+    "name": "Sailing Course",
+    "description": "A ten week sailing course",
+    "url": "http://www.example.org/events/2",
+    "startDate": "2018-08-30T09:00:00-05:00",
+    "endDate": "2018-08-30T10:00:00-05:00",
+    "duration": "PT1H"
+  }
+}

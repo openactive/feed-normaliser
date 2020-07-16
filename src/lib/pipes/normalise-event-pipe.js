@@ -19,7 +19,8 @@ class NormaliseEventPipe extends Pipe {
 
         if (type == "Event"
          || type == "OnDemandEvent"
-         || type == "ScheduledSession"){
+         || type == "ScheduledSession"
+         || type == "CourseInstanceSubEvent"){
             // The top level event is the Event
 
             this.doCleanup();
@@ -27,11 +28,21 @@ class NormaliseEventPipe extends Pipe {
             if (typeof this.rawData.superEvent !== 'undefined'){
                 // It has a superEvent which we can get more data from.
                 let {superEvent, ...event} = this.rawData;
-                delete superEvent.type;
                 let normalisedEventData = {
                     ...superEvent,
                     ...event
                 }
+                // Get rid of stray 'type' property
+                delete normalisedEventData.type;
+
+                // If the parent is a CourseInstance, the child might have Event
+                // type but we actually want to force this to be a
+                // CourseInstanceSubEvent
+                let superType = this.getType(superEvent);
+                if(superType == "CourseInstance"){
+                    normalisedEventData["@type"] = "CourseInstanceSubEvent";
+                }
+
                 let normalisedEvent = new NormalisedEvent(normalisedEventData, kind);
                 this.normalisedEvents.push(normalisedEvent);
             }else{
@@ -52,7 +63,10 @@ class NormaliseEventPipe extends Pipe {
 
             for (let subEvent of subEvents){
                 let type = this.getType(subEvent);
-                if(type == "Event" || type == "OnDemandEvent" || type == "ScheduledSession"){
+                if(type == "Event"
+                || type == "OnDemandEvent"
+                || type == "ScheduledSession"
+                || type == "CourseInstanceSubEvent"){
                     // We only want to continue processing if any of the subEvents
                     // are the right type
                     eventSubEvents = true;
@@ -64,22 +78,26 @@ class NormaliseEventPipe extends Pipe {
                 this.doCleanup();
                 let {subEvent, ...parentEvent} = this.rawData;
 
-                if (type == "SessionSeries"){
-                    parentEvent["@type"] = "ScheduledSession";
-                }else{
-                    // Event or OnDemandEvent
-                    parentEvent["@type"] = type;
-                }
-
                 // Combine parent event data with each subEvent to make NormalisedEvents
                 // Any properties that are on both the subEvent and the parent will take the
                 // value from the subEvent
                 for (let sub of subEvent){
-                    delete sub.type;
                     let normalisedEventData = {
                         ...parentEvent,
                         ...sub
                     }
+
+                    // Make sure the type value is set correctly
+                    delete normalisedEventData.type;
+                    if (type == "SessionSeries"){
+                        normalisedEventData["@type"] = "ScheduledSession";
+                    }else if(type == "CourseInstance"){
+                        normalisedEventData["@type"] = "CourseInstanceSubEvent";
+                    }else{
+                        // Event or OnDemandEvent
+                        normalisedEventData["@type"] = type;
+                    }
+
                     let normalisedEvent = new NormalisedEvent(normalisedEventData, kind);
                     this.normalisedEvents.push(normalisedEvent);
                 }
