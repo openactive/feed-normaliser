@@ -27,3 +27,40 @@ describe('getContext', function() {
 
     });
 });
+
+describe('getIdFromData', function(){
+    it('should return the @id value', function(){
+        const data = {
+            "@id": "https://example.org/events/1",
+            "id": "https://example.org/events/2",
+            "identifier": "event1"
+        }
+        const id = Utils.getIdFromData(data, "https://example.org/events/");
+        assert.equal(id, "https://example.org/events/1");
+    });
+
+    it('should return the id value', function(){
+        const data = {
+            "id": "https://example.org/events/2",
+            "identifier": "event1"
+        }
+        const id = Utils.getIdFromData(data, "https://example.org/events/");
+        assert.equal(id, "https://example.org/events/2");
+    });
+
+    it('should return the identifier value', function(){
+        const data = {
+            "identifier": "event1"
+        }
+        const id = Utils.getIdFromData(data, "https://example.org/events/");
+        assert.equal(id, "https://example.org/events/event1");
+    });
+
+    it('should return the identifier value when feed has no /', function(){
+        const data = {
+            "identifier": "event1"
+        }
+        const id = Utils.getIdFromData(data, "https://example.org/events");
+        assert.equal(id, "https://example.org/events/event1");
+    });
+});
