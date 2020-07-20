@@ -5,6 +5,7 @@ class PublisherStatus {
     const client = await database_pool.connect();
     const publisherSqlQuery = `
      SELECT
+        publisher.id as "csPublisherId",
         publisher.name,
         publisher.url,
         publisher.data->'publisher'->'logo'->'url' as "logoUrl",

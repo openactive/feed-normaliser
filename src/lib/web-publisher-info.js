@@ -2,7 +2,9 @@ import { database_pool } from './database.js';
 
 class  PublisherInfo {
   static async getInfo(publisherId) {
+
     const client = await database_pool.connect();
+
     const publisherSqlQuery = `
      SELECT
         name,
@@ -10,9 +12,6 @@ class  PublisherInfo {
       FROM publisher
       WHERE id=$1 LIMIT 1
     `;
-
-    const resPublisher = await client.query(publisherSqlQuery, [publisherId]);
-
 
     const publisherFeedsSqlQuery = `
      SELECT
@@ -22,14 +21,23 @@ class  PublisherInfo {
       WHERE publisher_id=$1
     `;
 
-    const resFeeds = await client.query(publisherFeedsSqlQuery, [publisherId]);
-
-    client.release();
-
     let publisherInfo = {}
 
-    publisherInfo = resPublisher.rows[0];
-    publisherInfo.feeds = resFeeds.rows;
+    try {
+      const resPublisher = await client.query(publisherSqlQuery, [publisherId]);
+      const resFeeds = await client.query(publisherFeedsSqlQuery, [publisherId]);
+
+      publisherInfo = resPublisher.rows[0];
+
+      if (publisherInfo){
+        publisherInfo.feeds = resFeeds.rows;
+      }
+    } catch(err){
+      console.warn(err);
+      publisherInfo = false;
+    } finally {
+      client.release();
+    }
 
     return publisherInfo;
   }
