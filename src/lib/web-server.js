@@ -2,9 +2,13 @@ import express from 'express'
 import Settings from './settings.js';
 import RPDEQuery from './web-rpde-query.js';
 import PublisherStatus from './web-publisher-status.js';
+import PublisherInfo from './web-publisher-info.js';
 
 const web_server_app = express()
 
+function internalServerError(res){
+    return res.status(500).send({ message: "Internal Server Error"});
+}
 
 web_server_app.get('/', (req, res) => {
     res.json(
@@ -19,6 +23,14 @@ web_server_app.get('/publishers/status', async (req, res) => {
         "publishers": latestInfo,
       }
     );
+});
+
+web_server_app.get('/publisher/:publisherId', async (req, res) => {
+    const publisherInfo = await PublisherInfo.getInfo(req.params.publisherId);
+    if (!publisherInfo){
+        return res.status(404).send({ message: "Publisher Not Found"});
+    }
+    res.json(publisherInfo);
 });
 
 web_server_app.get('/normalised_data/all', async (req, res) => {
