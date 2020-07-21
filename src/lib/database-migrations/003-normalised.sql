@@ -2,7 +2,7 @@ ALTER TABLE raw_data ADD normalised BOOLEAN NOT NULL DEFAULT 'f';
 
 CREATE TABLE normalised_data (
     id BIGSERIAL PRIMARY KEY,
-    raw_data_id BIGSERIAL NOT NULL,
+    raw_data_id BIGINT NOT NULL,
     data_id TEXT NOT NULL,
     data_deleted boolean NOT NULL,
     data JSONB NULL,

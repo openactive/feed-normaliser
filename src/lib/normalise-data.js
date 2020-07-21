@@ -32,6 +32,7 @@ async function store_deleted_callback(raw_data_id) {
         // In this case, can we always assume we should mark as deleted all normalised_data that comes from this raw data object?
         // If so, this should be an easy SQL UPDATE to run.
         // UPDATE normalised_data SET data_deleted='t', data=NULL , updated=NOW WHERE raw_data_id=$1
+        // UPDATE normalised_data SET data_deleted='t', data=NULL , updated=NOW WHERE raw_data_parent_id=$1
 
         // But we do want to mark the fact that we have processed this raw_data item, so we don't want try to process it again
         await client.query(
@@ -65,14 +66,15 @@ async function store_normalised_callback(raw_data_id, normalised_events) {
                 raw_data_id,
                 normalised_event.id(),
                 normalised_event.data,
-                normalised_event.kind
+                normalised_event.kind,
+                normalised_event.parentId
             ];
 
             await client.query(
-                'INSERT INTO normalised_data (raw_data_id, data_id, data_deleted, data, data_kind) ' +
-                'VALUES ($1, $2, \'f\', $3, $4) ' +
+                'INSERT INTO normalised_data (raw_data_id, data_id, data_deleted, data, data_kind, raw_data_parent_id) ' +
+                'VALUES ($1, $2, \'f\', $3, $4, $5) ' +
                 'ON CONFLICT (data_id) DO UPDATE SET ' +
-                'raw_data_id=$1, data_id=$2, data=$3, data_kind=$4, updated_at=(now() at time zone \'utc\'), data_deleted=\'f\''  ,
+                'raw_data_id=$1, data_id=$2, data=$3, data_kind=$4, raw_data_parent_id=$5, updated_at=(now() at time zone \'utc\'), data_deleted=\'f\''  ,
                 query_data
             );
 
