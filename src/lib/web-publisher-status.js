@@ -16,10 +16,21 @@ class PublisherStatus {
       GROUP BY publisher.id
     `;
 
-    const res = await client.query(publisherSqlQuery);
+    let res;
 
-    client.release();
-    return res.rows;
+    try {
+      res = await client.query(publisherSqlQuery);
+    } catch (err) {
+      console.warn(err);
+    } finally {
+      client.release();
+    }
+
+    if (res){
+      return res.rows;
+    } else {
+      return false;
+    }
   }
 }
 
