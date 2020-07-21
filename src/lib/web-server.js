@@ -18,6 +18,11 @@ web_server_app.get('/', (req, res) => {
 
 web_server_app.get('/publishers/status', async (req, res) => {
     const latestInfo = await PublisherStatus.getLatestInfo();
+
+    if (latestInfo === false){
+        return internalServerError(res);
+    }
+
     res.json(
       {
         "publishers": latestInfo,
@@ -27,9 +32,14 @@ web_server_app.get('/publishers/status', async (req, res) => {
 
 web_server_app.get('/publisher/:publisherId', async (req, res) => {
     const publisherInfo = await PublisherInfo.getInfo(req.params.publisherId);
-    if (!publisherInfo){
+    if (publisherInfo === undefined){
         return res.status(404).send({ message: "Publisher Not Found"});
     }
+
+    if (publisherInfo === false){
+        return internalServerError(res);
+    }
+
     res.json(publisherInfo);
 });
 
