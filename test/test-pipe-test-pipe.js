@@ -11,7 +11,7 @@ import TestPipe from '../src/lib/pipes/test-pipe.js';
 describe('test-pipe', function() {
     it('basic test', function(done) {
 
-        let pipe = new TestPipe({id: 67, data_id: "ABC", data: {"test":true }}, []);
+        let pipe = new TestPipe({id: 67, rpde_id: "ABC", data: {"test":true }}, []);
         let results_promise = pipe.run();
         results_promise.then((results)=> {
 

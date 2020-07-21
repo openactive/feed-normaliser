@@ -27,3 +27,42 @@ describe('getContext', function() {
 
     });
 });
+
+describe('getIdFromData', function(){
+    it('should return the @id value', function(){
+        const data = {
+            "@id": "https://example.org/events/1",
+            "id": "https://example.org/events/2",
+            "identifier": "event1"
+        }
+        const id = Utils.getIdFromData(data);
+        assert.equal(id, "https://example.org/events/1");
+    });
+
+    it('should return the id value', function(){
+        const data = {
+            "id": "https://example.org/events/2",
+            "identifier": "event1"
+        }
+        const id = Utils.getIdFromData(data);
+        assert.equal(id, "https://example.org/events/2");
+    });
+
+    it('should return undefined if id is not a HTTP URI', function(){
+        const data = {
+            "@id": "event1"
+        }
+        const id = Utils.getIdFromData(data);
+        assert.deepEqual(id, undefined);
+    });
+
+    it('should return undefined if @id/id is undefined', function(){
+        const id = Utils.getIdFromData({"blah": "nothing"});
+        assert.deepEqual(id, undefined);
+    });
+
+    it('should return undefined if data is undefined', function(){
+        const id = Utils.getIdFromData(undefined);
+        assert.deepEqual(id, undefined);
+    });
+});

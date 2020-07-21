@@ -25,7 +25,7 @@ describe('normalise data', function() {
             const res_select_publisher_feed = await client.query('SELECT * FROM publisher_feed');
             publisher_feed = res_select_publisher_feed.rows[0];
             // Raw data
-            const res_add_raw = await client.query('INSERT INTO raw_data (publisher_feed_id, data_id, data_deleted, data_kind, data_modified, data) VALUES ($1, $2, $3, $4, $5, $6)', [publisher_feed_id, "D1",false, "CATS", "1", {test:true}]);
+            const res_add_raw = await client.query('INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data) VALUES ($1, $2, $3, $4, $5, $6, $7)', [publisher_feed_id, "D1","https://example.org/test/1",false, "CATS", "1", {test:true}]);
 
         } catch(error) {
             console.error("ERROR in test");
