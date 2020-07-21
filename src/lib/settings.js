@@ -24,7 +24,11 @@ const Settings = {
   "contextUrl": "https://openactive.io/",
   "betaContextUrl": "https://openactive.io/ns-beta/",
   "contextJsonld": "https://www.openactive.io/ns/oa.jsonld",
-  "betaContextJsonld": "https://www.openactive.io/ns-beta/oa.jsonld"
+  "betaContextJsonld": "https://www.openactive.io/ns-beta/oa.jsonld",
+
+  // TLS Setting
+  // Some publishers may only support older versions
+  "tlsDefaultMinimumVersion": "TLSv1"
 
 }
 
