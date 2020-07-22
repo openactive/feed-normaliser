@@ -1,0 +1,94 @@
+[
+  {
+    "state": "updated",
+    "kind": "CourseInstanceSubEvent",
+    "id": 3118701,
+    "modified": 1593083366,
+    "data": {
+      "@context": [
+        "https://openactive.io/"
+      ],
+      "@type": "Event",
+      "duration": "PT30M",
+      "endTime": "15:00",
+      "startTime": "14:30",
+      "startDate": "2020-05-01T14:30:00.000Z",
+      "endDate": "2020-05-01T15:00:00.000Z",
+      "identifier": 311870,
+      "name": "S4K TV - Dance",
+      "description": "We are delighted to welcome you and the family to the Sport4Kids Club! This is where the excitement really begins!We are live every Fridayfrom 13:30 -14:00. Watch our Facebook and Instagram pages for updates. You can access all of our classes on our S4KTV Youtube page: https://www.youtube.com/channel/UCaShqm-i1tIdz0-VphqRDFg",
+      "activity": [
+        {
+          "@type": "Concept",
+          "@id": "https://openactive.io/activity-list#6ca15167-51da-4d91-a1ae-8a45dc47b0ea",
+          "inScheme": "https://openactive.io/activity-list",
+          "prefLabel": "Dance"
+        }
+      ],
+      "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Sign Up",
+          "price": 0,
+          "priceCurrency": "GBP",
+          "url": "https://booking.sport4kids.biz/s4k_tv_-_dance01_01052020"
+        }
+      ],
+      "organizer": {
+        "@type": "Organization",
+        "@id": "http://api.cotech.no//organizers/12334",
+        "name": "Sport4Kids UK Ltd.",
+        "email": "enquiries@sport4kids.biz",
+        "telephone": "0300 303 3866"
+      },
+      "url": "https://booking.sport4kids.biz/s4k_tv_-_dance01_01052020"
+    }
+  },
+  {
+    "state": "updated",
+    "kind": "CourseInstanceSubEvent",
+    "id": 3118702,
+    "modified": 1593083366,
+    "data": {
+      "@context": [
+        "https://openactive.io/"
+      ],
+      "@type": "Event",
+      "duration": "PT30M",
+      "endTime": "15:00",
+      "startTime": "14:30",
+      "startDate": "2020-05-08T14:30:00.000Z",
+      "endDate": "2020-05-08T15:00:00.000Z",
+      "identifier": 311870,
+      "name": "S4K TV - Dance",
+      "description": "We are delighted to welcome you and the family to the Sport4Kids Club! This is where the excitement really begins!We are live every Fridayfrom 13:30 -14:00. Watch our Facebook and Instagram pages for updates. You can access all of our classes on our S4KTV Youtube page: https://www.youtube.com/channel/UCaShqm-i1tIdz0-VphqRDFg",
+      "activity": [
+        {
+          "@type": "Concept",
+          "@id": "https://openactive.io/activity-list#6ca15167-51da-4d91-a1ae-8a45dc47b0ea",
+          "inScheme": "https://openactive.io/activity-list",
+          "prefLabel": "Dance"
+        }
+      ],
+      "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Sign Up",
+          "price": 0,
+          "priceCurrency": "GBP",
+          "url": "https://booking.sport4kids.biz/s4k_tv_-_dance01_01052020"
+        }
+      ],
+      "organizer": {
+        "@type": "Organization",
+        "@id": "http://api.cotech.no//organizers/12334",
+        "name": "Sport4Kids UK Ltd.",
+        "email": "enquiries@sport4kids.biz",
+        "telephone": "0300 303 3866"
+      },
+      "url": "https://booking.sport4kids.biz/s4k_tv_-_dance01_01052020"
+    }
+  }
+]
