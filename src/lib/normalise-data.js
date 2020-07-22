@@ -70,13 +70,18 @@ async function store_normalised_callback(raw_data_id, normalised_events) {
                 normalised_event.parentId
             ];
 
-            await client.query(
+            const res = await client.query(
                 'INSERT INTO normalised_data (raw_data_id, data_id, data_deleted, data, data_kind, raw_data_parent_id) ' +
                 'VALUES ($1, $2, \'f\', $3, $4, $5) ' +
                 'ON CONFLICT (data_id) DO UPDATE SET ' +
-                'raw_data_id=$1, data_id=$2, data=$3, data_kind=$4, raw_data_parent_id=$5, updated_at=(now() at time zone \'utc\'), data_deleted=\'f\''  ,
+                'raw_data_id=$1, data_id=$2, data=$3, data_kind=$4, raw_data_parent_id=$5, updated_at=(now() at time zone \'utc\'), data_deleted=\'f\''  +
+                'RETURNING id',
                 query_data
             );
+
+            // Because we have updated the data, the results of the profile checks are now stale. Delete them so we recalculate.
+            // (We only need to do this on UPDATE not INSERT but we can't tell the difference).
+            await client.query('DELETE FROM normalised_data_profile_results WHERE normalised_data_id=$1', [res.rows[0].id])
 
         }
 

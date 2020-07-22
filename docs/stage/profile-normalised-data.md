@@ -1,3 +1,25 @@
 # Profile Normalised Data
 
-Not Written Yet
+This will profile all normalised data against the data profiles and store the results in the database.
+
+To run this:
+
+`$ node ./src/bin/profile-normalised-data.js`
+
+It can be stopped at any time and it will not leave the database in a bad state or lose to much work.
+
+When restarted it will pick up where it left off.
+
+## Database Storage & Errors
+
+It will store the results of this in the `normalised_data_profile_results` table.
+
+Rows are stored per item of normalised data and per profile, 
+so you should expect this table to have 3 times as many rows as `normalised_data` (if there are 3 profiles).
+
+For any data profile and normalised data item, there are 4 states:
+
+* no row - we haven't tried to run the check yet
+* a row with `checked=FALSE` - we tried to run the check but it went wrong. See `error_checking_message`.
+* a row with `checked=TRUE` and nothing in `results` - we checked it and the data passed the check!
+* a row with `checked=TRUE` and things in `results` - we checked it and the data failed the check. See `results`.
