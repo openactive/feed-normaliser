@@ -69,7 +69,7 @@ class NormaliseSchedulePipe extends Pipe {
                         rruleOptions.until = until;
                     }
                     if(typeof(count) !== 'undefined'){
-                        rruleOptions.byweekday = byDay;
+                        rruleOptions.count = count;
                     }
 
                     const rruleSet = new RRule.RRuleSet();
@@ -89,14 +89,15 @@ class NormaliseSchedulePipe extends Pipe {
 
                     // Only generate events two weeks from NOW (or until schedule ends, whichever is sooner)
                     // aka this does not generates events that would have start dates in the past.
-                    let occurences = rruleSet.between(this.eventsFrom(), this.eventsUntil(until));
-                    console.log(`Generating events ${rule.toText()} (${occurences.length} occurences between ${this.eventsFrom()} and  ${this.eventsUntil(until)})`);
+                    let occurrences = rruleSet.between(this.eventsFrom(), this.eventsUntil(until));
+                    console.log(`Generating events ${rule.toText()} (${occurrences.length} occurrences between ${this.eventsFrom()} and  ${this.eventsUntil(until)})`);
 
-                    if(occurences.length > 0){
-                        for(let occurenceDate of occurences){
+                    if(occurrences.length > 0){
+                        // Generate a NormalisedEvent for every occurrence date generated
+                        for(let occurrenceDate of occurrences){
                             let eventData = {...eventDataBase};
-                            eventData.startDate = occurenceDate.toISOString();
-                            eventData.endDate = this.calculateEndDate(occurenceDate, schedule.endTime, schedule.duration).toISOString();
+                            eventData.startDate = occurrenceDate.toISOString();
+                            eventData.endDate = this.calculateEndDate(occurrenceDate, schedule.endTime, schedule.duration).toISOString();
                             // TODO idTemplate and urlTemplate
                             let normalisedEvent = new NormalisedEvent(eventData, childKind);
                             this.normalisedEvents.push(normalisedEvent);
@@ -203,7 +204,6 @@ class NormaliseSchedulePipe extends Pipe {
             return {freq: RRule.RRule.YEARLY, interval: 1};
         }
     }catch(error){
-        // TODO: if repeatFrequency is not set, see if we can guess it from byDay/byMonth/byMonthDay
         console.log(`Could not parse duration [${schedule.repeatFrequency}]`);
         console.log(`Therefore guessing repeat frequency from byDay..`);
         // console.log(error);
@@ -241,16 +241,17 @@ class NormaliseSchedulePipe extends Pipe {
     return new Date(Date.now());
   }
 
-  calculateEndDate(occurenceDateStr, endTime, duration){
-    let occurenceDate = new Date(occurenceDateStr);
-    let endDate = occurenceDate;
+  calculateEndDate(occurrenceDateStr, endTime, duration){
+    let occurrenceDate = new Date(occurrenceDateStr);
+    let endDate = occurrenceDate;
     if(typeof duration !== 'undefined'){
         // use duration and start time to work out the end time.
-        // let startTime = occurenceDate.getHours() + ":" + occurenceDate.getMinutes();
-        endDate = end(parseDuration(duration), occurenceDate);
+        endDate = end(parseDuration(duration), occurrenceDate);
     }else
     if(typeof endTime !== 'undefined'){
         // assume it's on the same day because if there's no duration what else can we do
+        // DO NOT use endDate for this because it's supposed to be the end date of the
+        // schedule, not any specific event.
         let time = endTime.split(":");
         endDate.setHours(time[0]);
         endDate.setMinutes(time[1]);
