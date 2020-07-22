@@ -131,6 +131,7 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
             console.error("ERROR normalise_data_publisher_feed");
             console.error(publisher_feed);
             console.error(error);
+            break;
         } finally {
             // Make sure to release the client before any error handling,
             // just in case the error handling itself throws an error.
