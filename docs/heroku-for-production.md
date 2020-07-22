@@ -9,8 +9,8 @@ Add the "Heroku Postgres" addition. The free level only has 10,000 rows - we rec
 Make sure the database is set as "Attach as DATABASE". 
 If you go to "Settings" and "Reveal Config Vars" you should see details for it as "DATABASE_URL".
 
-Do a deploy. If you link your GitHub account you can press a button in the web interface to do this, or you set up the heroku CLI tool. 
-Either is fine.
+Do a deploy. You must do this by setting up the heroku CLI tool and a "git push" operation.
+(This is because we use submodules, and that only works with a push: https://devcenter.heroku.com/articles/git-submodules#git-submodules )
 
 Select More, Run Command and put in "node ./src/bin/migrate-database.js". Wait for this to finish.
 
@@ -24,10 +24,8 @@ That's it!
 
 Go to Resources - disable the "worker" Dyno.
 
-Deploy the latest code.
-
-If you link your GitHub account you can press a button in the web interface to do this, or you set up the heroku CLI tool. 
-Either is fine.
+Deploy the latest code. You must do this by setting up the heroku CLI tool and a "git push" operation.
+(This is because we use submodules, and that only works with a push: https://devcenter.heroku.com/articles/git-submodules#git-submodules )
 
 Select More, Run Command and put in "node ./src/bin/migrate-database.js". Wait for this to finish.
 
