@@ -14,7 +14,7 @@ const Settings = {
   "rpdeDontServeDataUntilSecondsOld": 5,
 
   // sleep is a crude solution to avoid rate limiting
-  "sleepWhileSpiderDataCatalogSeconds": 1,
+  "sleepWhileSpiderDataCatalogSeconds": 2,
   "sleepWhileDownloadRawSeconds": 1,
 
   // this is in cwd() and not /tmp so it works well on Heroku
@@ -28,7 +28,9 @@ const Settings = {
 
   // TLS Setting
   // Some publishers may only support older versions
-  "tlsDefaultMinimumVersion": "TLSv1"
+  "tlsDefaultMinimumVersion": "TLSv1",
+
+  "herokuWorkerMinimumCycleHours": 6
 
 }
 
