@@ -72,13 +72,25 @@ class NormaliseSchedulePipe extends Pipe {
                         rruleOptions.byweekday = byDay;
                     }
 
+                    const rruleSet = new RRule.RRuleSet();
                     const rule = new RRule.RRule(rruleOptions);
+                    rruleSet.rrule(rule);
+
+                    // Add dates to exclude if present
+                    // TODO: this only excludes exact matches, including time.
+                    //       It should also let input be yyyy-mm-dd and exclude any events that
+                    //       start in that 24 hour period.
+                    if(typeof schedule.exceptDate !== 'undefined'){
+                        const exceptDates = Utils.ensureArray(schedule.exceptDate);
+                        for(let exDate of exceptDates){
+                            rruleSet.exdate(new Date(exDate));
+                        }
+                    }
+
                     // Only generate events two weeks from NOW (or until schedule ends, whichever is sooner)
                     // aka this does not generates events that would have start dates in the past.
-                    let occurences = rule.between(this.eventsFrom(), this.eventsUntil(until));
+                    let occurences = rruleSet.between(this.eventsFrom(), this.eventsUntil(until));
                     console.log(`Generating events ${rule.toText()} (${occurences.length} occurences between ${this.eventsFrom()} and  ${this.eventsUntil(until)})`);
-
-                    // TODO: exceptDate
 
                     if(occurences.length > 0){
                         for(let occurenceDate of occurences){

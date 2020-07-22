@@ -1,0 +1,52 @@
+[{
+  "state": "updated",
+  "kind": "ScheduledSession",
+  "id": "tlqi1kkclv66",
+  "modified": 1580293007248,
+  "data": {
+    "@context": ["https://openactive.io/"],
+    "@type": "ScheduledSession",
+    "startDate": "2020-07-30T11:00:00.000Z",
+    "startTime": "11:00",
+    "endDate": "2020-07-30T14:00:00.000Z",
+    "endTime": "14:00",
+    "duration": "PT3H",
+    "identifier": "tlqi1kkclv66",
+    "name": "No Strings Badminton - Thursday daytime",
+    "description": "Thursday  11-2pm",
+    "activity": [
+      {
+        "@type": "Concept",
+        "prefLabel": "General"
+      }
+    ],
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "isAccessibleForFree": true,
+    "location": {
+      "@type": "Place",
+      "name": "52.0406224, -0.7594171",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 52.0406224,
+        "longitude": -0.7594171
+      }
+    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "@id": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/groupplaymanager-display/yodwmuk8ioo&free=true",
+        "name": "Free option available",
+        "price": 0,
+        "priceCurrency": "GBP",
+        "url": "https://badmintonengland.playwaze.com/Booking/FindBooking?seriesId=tlqi1kkclv66&Source=OA"
+      }
+    ],
+    "organizer": {
+      "@type": "Organization",
+      "@id": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzscommunity-details",
+      "name": "National Badminton Centre, Milton Keynes",
+      "url": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/community-about"
+    },
+    "url": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/groupplaymanager-display/yodwmuk8ioo"
+  }
+}]

@@ -62,4 +62,23 @@ describe('course-schedule', function() {
         assert.deepEqual(results[1].data, output[1].data);
     });
 
+    it('should generate one Normalised Event from a SessionSeries with eventSchedule with exceptDates', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries-with-schedule-exdates.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries-with-schedule-exdates-normalised.json'));
+        input.data_kind = input.kind;
+        let pipe = new NormaliseSchedulePipe(input, []);
+
+        // Mock eventsFrom and eventsUntil in pipe so it always returns a fixed date, since the dates are hardcoded in 'output' json
+        pipe.eventsFrom = function(){
+            return new Date("2020-07-22T00:00:00.000Z");
+        }
+        pipe.eventsUntil = function(){
+            return new Date("2020-08-05T00:00:00.000Z");
+        }
+
+        let results = await pipe.run();
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data, output[0].data);
+    });
+
 });
