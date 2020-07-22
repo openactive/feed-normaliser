@@ -2,7 +2,7 @@
 
 ## Initial Setup
 
-Create a new app.
+Create a new app in the "Europe" region.
 
 Add the "Heroku Postgres" addition. The free level only has 10,000 rows - we recommend you don't use that level.
 
