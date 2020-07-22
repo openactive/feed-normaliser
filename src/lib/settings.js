@@ -30,7 +30,9 @@ const Settings = {
   // Some publishers may only support older versions
   "tlsDefaultMinimumVersion": "TLSv1",
 
-  "herokuWorkerMinimumCycleHours": 6
+  "herokuWorkerMinimumCycleHours": 6,
+
+  "dataProfiles": ["core", "accessibility", "socialrx"]
 
 }
 
