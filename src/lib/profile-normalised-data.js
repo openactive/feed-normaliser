@@ -83,6 +83,7 @@ async function profile_normalised_data_for_item_for_profile(normalised_data, pro
 
 export {
   profile_normalised_data_all,
+  profile_normalised_data_all_for_profile
 };
 
 export default profile_normalised_data_all;
