@@ -30,6 +30,7 @@ $ npm run migrate
 * `$ node ./src/bin/download-raw.js` [Download raw data](/docs/stage/download-raw-data.md)
 * `$ node ./src/bin/validate-raw-data.js` [Validate Raw data](/docs/stage/validate-raw-data.md)
 * `$ node ./src/bin/normalise-data.js` [Create normalised version of raw data](/docs/stage/normalise-data.md)
+* `$ node ./src/bin/profile-normalised-data.js` [Profile normalised data](/docs/stage/profile-normalised-data.md)
 
 
 ### Webserver
