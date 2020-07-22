@@ -38,6 +38,7 @@ async function profile_normalised_data_all_for_profile(profile_name) {
         } catch(error) {
             console.error("ERROR validate_raw_data_all");
             console.error(error);
+            break;
         } finally {
             client.release()
         }
