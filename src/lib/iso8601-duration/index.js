@@ -1,5 +1,5 @@
 /**
- * Borrowed from https://github.com/tolu/ISO8601-duration/blob/master/src/index.js
+ * Copied from https://github.com/tolu/ISO8601-duration/blob/c39ca366611a4b8db61b6292c4955499b16a4d2b/src/index.js
  * until such a time as the import works properly
  *
  * @description A module for parsing ISO8601 durations
