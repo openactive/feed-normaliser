@@ -3,6 +3,7 @@ import { parse as parseDuration, end } from '../iso8601-duration/index.js';
 
 import Pipe from './pipe.js';
 import Utils from '../utils.js';
+import Settings from '../settings.js';
 import NormalisedEvent from '../normalised-event.js';
 
 // Normalises an opportunity data object of any type with the `eventSchedule` property
@@ -223,15 +224,15 @@ class NormaliseSchedulePipe extends Pipe {
   eventsUntil(until){
     // Generate events until two weeks from now, or until the end date,
     // whichever is sooner.
-    let twoWeeks = new Date(Date.now() + 12096e5);
+    let futureDate = new Date(Date.now() + Settings.scheduleEventsTimeSpan);
     if(typeof until !== 'undefined'){
-        if(twoWeeks <= until){
-            return twoWeeks;
+        if(futureDate <= until){
+            return futureDate;
         }else{
             return until;
         }
     }else{
-        return twoWeeks;
+        return futureDate;
     }
   }
 

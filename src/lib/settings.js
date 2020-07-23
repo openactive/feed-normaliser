@@ -10,6 +10,10 @@ const Settings = {
 
   "rpdeDefaultLimit": 500,
 
+  // How far into the future we should generate events from a schedule, in milliseconds
+  // 12096e5 is two weeks
+  "scheduleEventsTimeSpan": 12096e5,
+
   // This is to deal with the race condition described at https://developer.openactive.io/publishing-data/data-feeds/implementing-rpde-feeds#transactions-preventing-delayed-item-interleaving
   "rpdeDontServeDataUntilSecondsOld": 5,
 
