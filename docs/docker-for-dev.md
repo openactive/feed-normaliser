@@ -54,13 +54,13 @@ It will stay attached to the console and any output will be visible.
 
 Use CTRL+C to stop it.
 
-## Tests
+## Running tests
 
 To set up, open a database console and run:
 
 `app=# create database test;`
 
-Then run database tests at any time with:
+Then run tests at any time with:
 
 `$ docker-compose run  -l openactive-conformance-services-type=run -w /home/app -e DATABASE_URL="postgres://app:app@postgres:5432/test"   app npm run test `
 
