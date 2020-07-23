@@ -27,9 +27,9 @@ But you can clear it out without doing that if you need to.
 
 Before doing this, you will:
 
-* [need to clear out all Normalised Profile data](profile-normalised-data.md)
-* [need to Totally delete all normalised data from the database](normalise-data.md)
-* [need to clear out all raw data](download-raw-data.md)
+* need to [clear out all Normalised Profile data](profile-normalised-data.md)
+* need to [Totally delete all normalised data from the database](normalise-data.md)
+* need to [clear out all raw data](download-raw-data.md)
 
 Run the SQL:
 

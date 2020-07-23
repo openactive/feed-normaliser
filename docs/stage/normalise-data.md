@@ -31,7 +31,7 @@ Which option is best depends on your circumstances.
 
 ### Totally delete all normalised data from the database
 
-Before doing this, you will [need to clear out all Normalised Profile data](profile-normalised-data.md)
+Before doing this, you will need to [clear out all Normalised Profile data](profile-normalised-data.md)
 
 Run the SQL:
 
@@ -41,7 +41,7 @@ Run the SQL:
 
 ### Soft-delete all normalised data from the database but leave behind meta data
 
-Before doing this, you will [need to clear out all Normalised Profile data](profile-normalised-data.md)
+Before doing this, you will need to [clear out all Normalised Profile data](profile-normalised-data.md)
 
 Run the SQL:
 

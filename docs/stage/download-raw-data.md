@@ -24,8 +24,8 @@ Any errors encountered during this stage will be stored in the `download_raw_err
 
 Before doing this, you will:
 
-* [need to clear out all Normalised Profile data](profile-normalised-data.md)
-* [need to Totally delete all normalised data from the database](normalise-data.md)
+* need to [clear out all Normalised Profile data](profile-normalised-data.md)
+* need to [Totally delete all normalised data from the database](normalise-data.md)
 
 Run the SQL:
 
