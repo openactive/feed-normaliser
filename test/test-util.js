@@ -65,4 +65,9 @@ describe('getIdFromData', function(){
         const id = Utils.getIdFromData(undefined);
         assert.deepEqual(id, undefined);
     });
+
+    it('should return undefined if data is null', function(){
+        const id = Utils.getIdFromData(null);
+        assert.deepEqual(id, undefined);
+    });
 });

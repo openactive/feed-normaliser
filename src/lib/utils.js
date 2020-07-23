@@ -41,11 +41,11 @@ class Utils {
 
   static getIdFromData(data){
     // Gets the id from a data object, only if it's a valid URI
-    if(typeof data !== 'undefined'){
+    if(data != undefined){
       let id;
-      if(typeof data["@id"] !== 'undefined'){
+      if(data["@id"] != undefined){
         id = data["@id"];
-      }else if(typeof data.id !== 'undefined'){
+      }else if(data.id != undefined){
         id = data.id;
       }
       if(typeof id === 'string' && id.includes('http')){
