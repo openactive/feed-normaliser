@@ -48,7 +48,7 @@
       },
       {
         "type": "Slot",
-        "id": "http://www.example.org/facility-use/slots/1",
+        "id": "http://www.example.org/facility-use/slots/2",
         "facilityUse": "http://www.example.org/facility-use/1",
         "startDate": "2018-03-01T11:00:00Z",
         "duration": "PT30M",

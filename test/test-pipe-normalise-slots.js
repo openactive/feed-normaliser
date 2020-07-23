@@ -65,7 +65,7 @@ describe('facilityuse-embedded-slot', function() {
     });
 });
 
-describe('ifacilityuse-embedded-slot', function() {
+describe('facilityuse-embedded-slot', function() {
     it('should generate Slots with properties from parent FacilityUse', async function() {
         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/facilityuse-embedded-slot.json'));
         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/facilityuse-embedded-slot-normalised.json'));
