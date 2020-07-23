@@ -10,7 +10,7 @@ To run this:
 
 `$ node ./src/bin/download-raw.js`
 
-It can be stopped at any time and it will not leave the database in a bad state or lose to much work.
+It can be stopped at any time and it will not leave the database in a bad state or lose too much work.
 
 When restarted it will pick up where it left off.
 
@@ -37,11 +37,14 @@ Run the SQL:
     UPDATE publisher_feed SET raw_next_url=NULL;
     
 
-## To only download some raw data
+## To only download a limited set of raw data
+
+You may want to do this to avoid processing too much data. 
+Or to debug a problem that occurs with a specific publisher's data, you may want to get data for that publisher only.
 
 ### Stop the process early
 
-The process can be forcefully stopped at any point and the database will not be in a bad state. 
+The process can be forcibly stopped at any point and the database will not be in a bad state. 
 It will contain most work done up to the point you stop it. 
 
 ### Edit the SQL query that loads work to do
