@@ -1,6 +1,6 @@
 # Contributing
 
-Please note we have a [Code of Conduct](https://openactive.io/public-openactive-w3c/code-of-conduct/), please follow it in all your interactions with the project.
+We have a [Code of Conduct](https://openactive.io/public-openactive-w3c/code-of-conduct/); please follow it in all your interactions with the project.
 
 ## Reporting Issues & Requesting Features
 
@@ -8,7 +8,7 @@ If you notice something wrong with this code, or think there's something that it
 
 ## Code Quality
 
-Spontaneous bug fixes and incremental feature PRs are welcome! However, before making substantial changes to this repository, we encourage you to first discuss the change you wish to make via an issue, Slack, or any other method with the owners of this repository.
+Spontaneous bug fixes and incremental feature PRs are welcome! However, before making substantial changes to this repository, we encourage you to first discuss the change you wish to make via an [issue](https://github.com/openactive/conformance-services/issues), [Slack](https://slack.openactive.io/), or any other method with the [owners of this repository](https://www.openactive.io/about/).
 
 The general rule is: "Leave it at least as good as you found it. Preferably, a little better ☺️".
 
@@ -34,7 +34,7 @@ Changes should be made by starting a new branch (from `master`), writing the cha
 
 If you don't have write access to the repo:
 
-Changes should be made by forking this repo, then making changes on a branch in your fork. 
+Changes should be made by forking this repo, and making changes on a branch in your fork. When you're ready to submit your changes for review, open a Pull Request. 
 
 
 ### Branch naming
