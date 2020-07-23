@@ -23,36 +23,6 @@ async function normalise_data_all_publisher_feeds() {
 
 }
 
-async function store_deleted_callback(raw_data_id) {
-
-    const client = await database_pool.connect();
-    try {
-
-        // TODO
-        // In this case, can we always assume we should mark as deleted all normalised_data that comes from this raw data object?
-        // If so, this should be an easy SQL UPDATE to run.
-        // UPDATE normalised_data SET data_deleted='t', data=NULL , updated=NOW WHERE raw_data_id=$1
-        // UPDATE normalised_data SET data_deleted='t', data=NULL , updated=NOW WHERE raw_data_parent_id=$1
-
-        // But we do want to mark the fact that we have processed this raw_data item, so we don't want try to process it again
-        await client.query(
-            'UPDATE raw_data SET normalised=\'t\' WHERE id=$1'  ,
-            [raw_data_id]
-        );
-
-    } catch(error) {
-        console.error("ERROR download_raw_all_publisher_feeds");
-        console.error(raw_data_id);
-        console.error(normalised_events);
-        console.error(error);
-
-    } finally {
-        // Make sure to release the client before any error handling,
-        // just in case the error handling itself throws an error.
-        client.release()
-    }
-}
-
 async function store_normalised_callback(raw_data_id, normalised_events) {
 
     const client = await database_pool.connect();
@@ -81,6 +51,8 @@ async function store_normalised_callback(raw_data_id, normalised_events) {
 
             // Because we have updated the data, the results of the profile checks are now stale. Delete them so we recalculate.
             // (We only need to do this on UPDATE not INSERT but we can't tell the difference).
+            // ( In theory, we shouldn't need to do this at all - when a raw data item is updated, that will delete all the normalised_data_profile_results too.
+            //   But unless people start raising performance issues, lets be safe and just run a delete.)
             await client.query('DELETE FROM normalised_data_profile_results WHERE normalised_data_id=$1', [res.rows[0].id])
 
         }
@@ -119,7 +91,10 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
         // we open and make sure we CLOSE the database connection after this, so the DB connection is not held open when processing in an unneeded manner
         const client = await database_pool.connect();
         try {
-            const res_find_raw_data = await client.query('SELECT * FROM raw_data WHERE publisher_feed_id=$1 AND normalised = \'f\' ORDER BY updated_at ASC LIMIT 10',[publisher_feed.id]);
+            const res_find_raw_data = await client.query(
+                'SELECT * FROM raw_data WHERE publisher_feed_id=$1 AND data_deleted=FALSE AND normalised=FALSE ORDER BY updated_at ASC LIMIT 10',
+                [publisher_feed.id]
+            );
             if (res_find_raw_data.rows.length == 0) {
                 break;
             }
@@ -142,12 +117,8 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
         try {
             for (var raw_data of rows) {
                 console.log("Running "+raw_data.id + " from " + publisher_feed.id);
-                if (raw_data.data_deleted) {
-                    await store_deleted_callback(raw_data.id);
-                } else {
-                    const pipeLine = new PipeLine(raw_data, pipes_to_call, store_normalised_callback);
-                    await pipeLine.run();
-                }
+                const pipeLine = new PipeLine(raw_data, pipes_to_call, store_normalised_callback);
+                await pipeLine.run();
             }
         } catch(error) {
             console.error("ERROR normalise_data_publisher_feed");

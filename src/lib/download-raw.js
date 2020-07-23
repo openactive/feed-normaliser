@@ -50,12 +50,33 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
                     activityItem.data
                 ];
 
-                await client.query(
-                    'INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data, normalised) ' +
-                    'VALUES ($1, $2, $3, $4, $5, $6, $7, \'f\') ' +
-                    'ON CONFLICT (publisher_feed_id, rpde_id) DO UPDATE SET ' +
-                    'data_id=$3, data_deleted=$4, data_modified=$6, data=$7, updated_at=(now() at time zone \'utc\'), normalised=\'f\', validation_done=\'f\', validation_passed=\'f\', validation_results=NULL'  ,
+                const resRawDataRes = await client.query(
+                    `INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data, normalised)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, FALSE)
+                    ON CONFLICT (publisher_feed_id, rpde_id) DO UPDATE SET
+                    data_id=$3, data_deleted=$4, data_modified=$6, data=$7, updated_at=(now() at time zone 'utc'),
+                    normalised=FALSE, validation_done=FALSE, validation_passed=FALSE, validation_results=NULL
+                    RETURNING id`,
                     query_data
+                );
+
+                // (We only need to do the following queries on UPDATE not INSERT but we can't tell the difference)
+
+                // Because the raw data has changed, we need to remove all data that is build from that
+                // setting validation columns above clears the raw data validation.
+
+                const resRawDataId = resRawDataRes.rows[0].id;
+
+                // But we also need to flag normalised data as deleted
+                await client.query(
+                    "UPDATE normalised_data SET data_deleted=TRUE, data=NULL, updated_at=(NOW() AT TIME ZONE 'utc') WHERE raw_data_id=$1 OR raw_data_parent_id=$1",
+                    [resRawDataId]
+                );
+
+                // And remove any results from profiling that normalised data
+                await client.query(
+                    "DELETE FROM normalised_data_profile_results WHERE normalised_data_id IN (SELECT id FROM normalised_data WHERE raw_data_id=$1 OR raw_data_parent_id=$1)",
+                    [resRawDataId]
                 );
 
             } else {
@@ -144,6 +165,7 @@ async function download_raw_error(url, error, publisher_feed_id) {
 
 
 export {
+  store_raw_callback,
   download_raw_all_publisher_feeds,
 };
 
