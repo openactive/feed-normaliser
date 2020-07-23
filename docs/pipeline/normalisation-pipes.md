@@ -22,9 +22,18 @@ They all mainuplate the `rawData` object of the pipe that is running directly.
 
 ## Normalise Event pipe
 
-This pipe catches `Event`, `OnDemandEvent` and `ScheduledSession` type objects, as well as objects of any types with a `subEvent` property, processing only sub events with types `Event`, `OnDemandEvent` and `ScheduledSession`.
+This pipe will generate normalised events from raw data with the following types:
 
-1. If object has Event, OnDemandEvent, ScheduledSession type:
+* `Event` (or its `subEvents` if relevent)
+* `OnDemandEvent` (or its `subEvents` if relevent)
+* `ScheduledSession`
+* `CourseInstanceSubEvent`
+* `SessionSeries` so long as it has `subEvent` with one of the above types
+* `EventSeries` so long as it has `subEvent` with one of the above types
+* `CourseInstance` so long as it has `subEvent` with one of the above types
+* `HeadlineEvent` so long as it has `subEvent` with one of the above types
+
+1. If object has Event, OnDemandEvent, ScheduledSession, CourseInstanceSubEvent type:
   * Do data cleanup
   * Check for a `superEvent`
     * If so, merge data from `superEvent`
@@ -37,6 +46,12 @@ This pipe catches `Event`, `OnDemandEvent` and `ScheduledSession` type objects, 
     * Generate NormalisedEvent
 
 ## Normalise Slot pipe
+
+This pipe will generate normalised events from raw data objects with the following types:
+
+* `FacilityUse`
+* `IndividualFacilityUse`
+* `Slot` (todo)
 
 1. If object has Slot type:
   * Do data cleanup
@@ -53,26 +68,15 @@ This pipe catches `Event`, `OnDemandEvent` and `ScheduledSession` type objects, 
     * For each IndividualFacilityUse
       * Generate event with data from FU and IFU
       * Go to 4
-
 4. Get array of values from `event`
   * For each event:
     * (need cleanup)
     * Merge data from parent
     * Generate NormalisedEvent
 
-      1. FU --> [Slot]
-      2. FU --> [IFU] --> [Slot]
-      3. IFU --> FU
-             --> [Slot]
-      4. FU --> [Slot]
-            --> [IFU] --> [Slot]
-
-      1. Slot(s) with data from the parent FU
-      2. Slot(s) with data from the top parent FU and each respective parent IFU
-      3. Slot(s) with data from the parent IFU and its parent FU
-      4. Slot(s) with data from the FU and other Slot(s) with data from a parent IFU and the top level FU?
-
 ## Normalise Schedule pipe
+
+This pipe will generate normalised events from any raw data object with an `eventSchedule` property.
 
 1. If object has an `eventSchedule` property:
   * Do data cleanup
@@ -128,9 +132,11 @@ That is to say, if we start with:
 
 So we fetch `/subeventA`:
 
+```
 {
     "@id": "/subeventA",
     "superEvent": "/event1"
 }
+```
 
 Then we just drop the `superEvent` property entirely.
