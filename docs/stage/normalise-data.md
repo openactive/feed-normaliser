@@ -10,6 +10,9 @@ To run this:
 
 `$ node ./src/bin/normalise-data.js`
 
+It can be stopped at any time and it will not leave the database in a bad state or lose to much work.
+
+When restarted it will pick up where it left off.
 
 ## Clear out work already done (Database storage)
 
@@ -40,3 +43,16 @@ Run the SQL:
 
     UPDATE normalised_data SET data_deleted=TRUE, data=NULL;
     UPDATE raw_data SET normalised=FALSE;
+
+## To only normalise some data
+
+### Stop the process early
+
+The process can be forcefully stopped at any point and the database will not be in a bad state. 
+It will contain most work done up to the point you stop it. 
+
+### Edit the SQL query that loads work to do
+
+If you only want to get data for some or one publisher feed, you can edit the SQL statement in `src/lib/normalise-data.js`. 
+
+In the `normalise_data_all_publisher_feeds` function there is a `SELECT` statement - simply add a `WHERE` clause and an appropriate filter.

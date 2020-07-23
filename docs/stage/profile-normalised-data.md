@@ -29,3 +29,17 @@ For any data profile and normalised data item, there are 4 states:
 To clear out all work already done, you can run the SQL:
 
     DELETE FROM normalised_data_profile_results;
+
+## To only profile some data
+
+### Stop the process early
+
+The process can be forcefully stopped at any point and the database will not be in a bad state. 
+It will contain most work done up to the point you stop it. 
+
+### Only use some profiles
+
+In Settings, edit `dataProfiles` to remove some profiles and only leave the ones you want.
+(See `src/lib/settings.js`).
+
+Now run this stage as normal.

@@ -20,6 +20,10 @@ To run this:
 
 `$ node ./src/bin/validate-raw-data.js`
 
+It can be stopped at any time and it will not leave the database in a bad state or lose to much work.
+
+When restarted it will pick up where it left off.
+
 ## Clear out work already done (Database storage)
 
 To clear out all work already done, you can run the SQL:
@@ -27,4 +31,13 @@ To clear out all work already done, you can run the SQL:
     UPDATE raw_data SET validation_done=FALSE, validation_passed=FALSE, validation_results=NULL;
 
 This will leave all raw data still in the database, but will clear all data around validating that data.
+
+
+## To only validate some raw data
+
+### Stop the process early
+
+The process can be forcefully stopped at any point and the database will not be in a bad state. 
+It will contain most work done up to the point you stop it. 
+
 
