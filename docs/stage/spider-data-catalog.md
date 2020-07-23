@@ -20,10 +20,9 @@ Any errors encountered during this stage will be stored in the `spider_data_cata
 
 ## Clear out work already done (Database storage)
 
-In effect, this really counts as deleting the whole database, recreating and starting again. 
-You may find it faster to just do that.
-
-But you can clear it out without doing that if you need to.
+This removes all data relating to this application from the database. 
+If you've not got any other data in the database and you're comfortable removing and recreating the database, 
+then that's likely to be quicker. If not, however, then proceed.
 
 Before doing this, you will:
 
