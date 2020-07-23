@@ -23,3 +23,9 @@ For any data profile and normalised data item, there are 4 states:
 * a row with `checked=FALSE` - we tried to run the check but it went wrong. See `error_checking_message`.
 * a row with `checked=TRUE` and nothing in `results` - we checked it and the data passed the check!
 * a row with `checked=TRUE` and things in `results` - we checked it and the data failed the check. See `results`.
+
+## Clear out work already done (Database storage)
+
+To clear out all work already done, you can run the SQL:
+
+    DELETE FROM normalised_data_profile_results;

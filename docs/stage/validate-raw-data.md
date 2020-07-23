@@ -19,3 +19,12 @@ Every time a piece of raw data is updated or deleted by a publisher's RPDE feed,
 To run this:
 
 `$ node ./src/bin/validate-raw-data.js`
+
+## Clear out work already done (Database storage)
+
+To clear out all work already done, you can run the SQL:
+
+    UPDATE raw_data SET validation_done=FALSE, validation_passed=FALSE, validation_results=NULL;
+
+This will leave all raw data still in the database, but will clear all data around validating that data.
+

@@ -17,3 +17,33 @@ To run this:
 
 `$ node ./src/bin/normalise-data.js`
 
+
+## Clear out work already done (Database storage)
+
+There are 2 options here:
+
+* Totally delete all normalised data from the database
+* Soft-delete all normalised data from the database but leave behind meta data
+
+Crucially the first option will "break" the RPDE feeds, because we will not send delete flags for any update data we sent previously.
+The second option will not do this but will not reduce database rows in use and will mean the RPDE feed may send many delete flags.
+Which option is best depends on your circumstances.
+
+### Totally delete all normalised data from the database
+
+Before doing this, you will need to [clear out all Normalised Profile data](profile-normalised-data.md)
+
+Run the SQL:
+
+    DELETE FROM normalised_data;
+    UPDATE raw_data SET normalised=FALSE;
+    
+
+### Soft-delete all normalised data from the database but leave behind meta data
+
+Before doing this, you will need to [clear out all Normalised Profile data](profile-normalised-data.md)
+
+Run the SQL:
+
+    UPDATE normalised_data SET data_deleted=TRUE, data=NULL;
+    UPDATE raw_data SET normalised=FALSE;
