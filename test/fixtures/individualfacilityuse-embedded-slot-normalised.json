@@ -14,6 +14,7 @@
     "maximumUses": 1,
     "name": "Play Tenns on the Main Tennis Court",
     "description": "Tennis courts are available for 30 min sessions",
+    "facilityUse": "http://www.example.org/facility-use/1",
     "image": [
       {
         "type": "ImageObject",
@@ -57,6 +58,7 @@
   "maximumUses": 1,
   "name": "Play Tenns on the Main Tennis Court",
   "description": "Tennis courts are available for 30 min sessions",
+  "facilityUse": "http://www.example.org/facility-use/1",
   "image": [
     {
       "type": "ImageObject",

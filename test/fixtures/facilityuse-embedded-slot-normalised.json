@@ -8,6 +8,7 @@
     "url": "http://www.example.org/facility-use/1",
     "name": "Example Leisure Centre Table Tennis",
     "description": "Table tennis tables are available to hire for thirty minute slots",
+    "facilityUse": "http://www.example.org/facility-use/1",
     "activity": [{"@type": "Concept", "prefLabel": "Table Tennis"}],
     "provider": {
       "type": "Organization",
@@ -51,6 +52,7 @@
     "url": "http://www.example.org/facility-use/1",
     "name": "Example Leisure Centre Table Tennis",
     "description": "Table tennis tables are available to hire for thirty minute slots",
+    "facilityUse": "http://www.example.org/facility-use/1",
     "activity": [{"@type": "Concept", "prefLabel": "Table Tennis"}],
     "provider": {
       "type": "Organization",

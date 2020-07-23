@@ -85,9 +85,8 @@ describe('facilityuse-ifu-slot', function(){
         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/facilityuse-ifu-slots-normalised.json'));
         let pipe = new NormaliseSlotPipe(input, []);
         let results = await pipe.run();
-
-        assert.equal(results[0].data,output[0].data);
-        assert.equal(results[1].data,output[1].data);
-        assert.equal(results[2].data,output[2].data);
+        assert.deepEqual(results[0].data,output[0].data);
+        assert.deepEqual(results[1].data,output[1].data);
+        assert.deepEqual(results[2].data,output[2].data);
     });
 });

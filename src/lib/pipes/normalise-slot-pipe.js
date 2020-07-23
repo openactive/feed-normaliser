@@ -64,7 +64,6 @@ class NormaliseSlotPipe extends Pipe {
         normalisedEventData["@type"] = "Slot";
 
         // Delete circular references to parents from Slots
-        delete normalisedEventData.facilityUse;
         delete normalisedEventData.aggregateFacilityUse;
         delete normalisedEventData.individualFacilityUse;
 
