@@ -65,15 +65,12 @@ This pipe catches `Event`, `OnDemandEvent` and `ScheduledSession` type objects, 
       3. IFU --> FU
              --> [Slot]
       4. FU --> [Slot]
-            --> [IFU]
-      5. FU --> [Slot]
             --> [IFU] --> [Slot]
 
       1. Slot(s) with data from the parent FU
       2. Slot(s) with data from the top parent FU and each respective parent IFU
       3. Slot(s) with data from the parent IFU and its parent FU
-      4. ?? Slot(s) with data only from the FU?
-      5. ?? Slot(s) with data from the FU and other Slot(s) with data from a parent IFU and the top level FU?
+      4. Slot(s) with data from the FU and other Slot(s) with data from a parent IFU and the top level FU?
 
 ## Normalise Schedule pipe
 

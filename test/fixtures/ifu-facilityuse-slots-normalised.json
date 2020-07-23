@@ -1,0 +1,30 @@
+[
+    {
+      "kind": "Slot",
+      "data": {
+        "@context": ["https://openactive.io/"],
+        "name": "Area51",
+        "description": "Cloaking technology lab",
+        "@id": "https://example.org/slot/x",
+        "@type": "Slot",
+        "facilityUse": "https:example.org/facilityuse/1",
+        "startDate": "2018-03-01T11:00:00Z",
+        "duration": "PT30M",
+        "remainingUses": 3
+      }
+    },
+    {
+      "kind": "Slot",
+      "data": {
+        "@context": ["https://openactive.io/"],
+        "name": "Area51",
+        "description": "Cloaking technology lab",
+        "@id": "https://example.org/slot/y",
+        "@type": "Slot",
+        "facilityUse": "https:example.org/facilityuse/1",
+        "startDate": "2018-03-02T11:00:00Z",
+        "duration": "PT30M",
+        "remainingUses": 3
+      }
+    }
+]

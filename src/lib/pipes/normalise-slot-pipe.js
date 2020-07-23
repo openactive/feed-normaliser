@@ -23,16 +23,20 @@ class NormaliseSlotPipe extends Pipe {
 
             this.doCleanup();
 
+            if (typeof this.rawData.aggregateFacilityUse !== 'undefined'){
+                // It has a parent FacilityUse which we can get more data from
+                let updatedParent = this.combineIfuWithParent(this.rawData);
+                this.combineSlotAndParent(updatedParent);
+
+            }else
             if (typeof this.rawData.event !== 'undefined'){
                 // It has event property, which is where Slots live
                 this.combineSlotAndParent(this.rawData);
             }
-            if (typeof this.rawData.aggregateFacilityUse !== 'undefined'){
 
-            }
             if (typeof this.rawData.individualFacilityUse !== 'undefined'){
                 // It has individualFacilityUse (Slots can live on these)
-                this.combineIFUAndParent(this.rawData);
+                this.extractIndividualFacilityUse(this.rawData);
             }
         }
 
@@ -72,8 +76,22 @@ class NormaliseSlotPipe extends Pipe {
     }
   }
 
-  combineIFUAndParent(IFUAndParent){
-    let {individualFacilityUse, ...parentEvent} = IFUAndParent;
+  combineIfuWithParent(individualFacilityUse){
+    let {aggregateFacilityUse, ...ifu} = individualFacilityUse;
+    // Take all properties from the FacilityUse and apply them to the IFU
+    // then override any duplicates with those from the IFU.
+    // Any slots under 'event' property will be retained from either,
+    // but if they're on both, only the IFU ones will be retained
+    let updatedParent = {
+        ...aggregateFacilityUse,
+        ...ifu
+    }
+    delete updatedParent.aggregateFacilityUse;
+    return updatedParent;
+  }
+
+  extractIndividualFacilityUse(facilityUse){
+    let {individualFacilityUse, ...parentEvent} = facilityUse;
     individualFacilityUse = Utils.ensureArray(individualFacilityUse);
     // one FacilityUse can have many individualFacilityUse
     for (let ifu of individualFacilityUse){

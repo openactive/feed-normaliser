@@ -90,3 +90,23 @@ describe('facilityuse-ifu-slot', function(){
         assert.deepEqual(results[2].data,output[2].data);
     });
 });
+
+describe('ifu-facilityuse-slot', function(){
+    it('should generate two Slots from an IFU', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/ifu-facilityuse-slots.json'));
+
+        let pipe = new NormaliseSlotPipe(input, []);
+        let results = await pipe.run();
+        assert.equal(results.length,2);
+    });
+
+    it('should generate two Slots with data from parent IFU and nested FU', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/ifu-facilityuse-slots.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/ifu-facilityuse-slots-normalised.json'));
+
+        let pipe = new NormaliseSlotPipe(input, []);
+        let results = await pipe.run();
+        assert.deepEqual(results[0].data,output[0].data);
+        assert.deepEqual(results[1].data,output[1].data);
+    });
+});
