@@ -1,0 +1,27 @@
+{
+  "kind": "ScheduledSession",
+  "data": {
+    "id": "https://ncc.leisurecloud.net/OpenActive/api/scheduled-sessions/80322360",
+    "type": "ScheduledSession",
+    "endDate": "2020-07-23T14:00:00Z",
+    "@context": [
+      "https://openactive.io/",
+      "https://openactive.io/ns-beta"
+    ],
+    "duration": "PT1H30M",
+    "startDate": "2020-07-23T12:30:00Z",
+    "identifier": 80322360,
+    "superEvent": "https://ncc.leisurecloud.net/OpenActive/api/session-series/VRES0000235",
+    "maximumAttendeeCapacity": 30,
+    "remainingAttendeeCapacity": 30,
+    "beta:sportsActivityLocation": [
+      {
+        "name": [
+          "V.L.C Health Suite",
+          "V.L.C Health Suite Res"
+        ],
+        "type": "SportsActivityLocation"
+      }
+    ]
+  }
+}

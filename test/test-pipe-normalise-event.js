@@ -115,6 +115,14 @@ describe('session-with-super', function(){
         assert.equal(results.length,1);
         assert.deepEqual(results[0].data, output.data);
     });
+
+    it('should only merge the superEvent when it is an embedded object', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-referenced-superevent.json'));
+
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+        assert.equal(typeof results[0].data.superEvent,'string');
+    });
 });
 
 describe('course-instance', function(){

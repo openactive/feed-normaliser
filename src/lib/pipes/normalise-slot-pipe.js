@@ -23,18 +23,18 @@ class NormaliseSlotPipe extends Pipe {
 
             this.doCleanup();
 
-            if (typeof this.rawData.aggregateFacilityUse !== 'undefined'){
+            if (typeof this.rawData.aggregateFacilityUse == 'object'){
                 // It has a parent FacilityUse which we can get more data from
                 let updatedParent = this.combineIfuWithParent(this.rawData);
                 this.combineSlotAndParent(updatedParent);
 
             }else
-            if (typeof this.rawData.event !== 'undefined'){
+            if (typeof this.rawData.event == 'object'){
                 // It has event property, which is where Slots live
                 this.combineSlotAndParent(this.rawData);
             }
 
-            if (typeof this.rawData.individualFacilityUse !== 'undefined'){
+            if (typeof this.rawData.individualFacilityUse == 'object'){
                 // It has individualFacilityUse (Slots can live on these)
                 this.extractIndividualFacilityUse(this.rawData);
             }
@@ -100,7 +100,7 @@ class NormaliseSlotPipe extends Pipe {
             ...ifu
         }
         // one IndividualFacilityUse can have many Slots
-        if(typeof ifu.event !== 'undefined'){
+        if(typeof ifu.event == 'object'){
             this.combineSlotAndParent(baseEventData);
         }
     }

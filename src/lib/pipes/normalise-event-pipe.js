@@ -25,7 +25,7 @@ class NormaliseEventPipe extends Pipe {
 
             this.doCleanup();
 
-            if (typeof this.rawData.superEvent !== 'undefined'){
+            if (typeof this.rawData.superEvent == 'object'){
                 // It has a superEvent which we can get more data from.
                 let {superEvent, ...event} = this.rawData;
                 let normalisedEventData = {
@@ -52,7 +52,7 @@ class NormaliseEventPipe extends Pipe {
             }
 
         }
-        else if (typeof this.rawData.subEvent !== 'undefined'){
+        else if (typeof this.rawData.subEvent == 'object'){
             // There are subEvents. If any are Event type, we normalise them.
             // This is expected to catch EventSeries and HeadlineEvent
             // TODO: if an Event has subEvents do we throw away the parent?
