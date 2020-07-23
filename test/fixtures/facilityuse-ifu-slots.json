@@ -1,0 +1,51 @@
+{
+  "kind": "FacilityUse",
+  "data_kind": "FacilityUse",
+  "data": {
+    "@context": "https://openactive.io/",
+    "id": "https://example.org/facilityuse/1",
+    "type": "FacilityUse",
+    "name": "Area51",
+    "description": "Secret extraterrestrial facility",
+    "individualFacilityUse": [
+      {
+        "id": "https://example.org/individual/a",
+        "type": "IndividualFacilityUse",
+        "description": "Cloaking technology lab",
+        "event": [
+          {
+            "id": "https://example.org/slot/x",
+            "type": "Slot",
+            "facilityUse": "https:example.org/facilityuse/1",
+            "startDate": "2018-03-01T11:00:00Z",
+            "duration": "PT30M",
+            "remainingUses": 3
+          },
+          {
+            "id": "https://example.org/slot/y",
+            "type": "Slot",
+            "facilityUse": "https:example.org/facilityuse/1",
+            "startDate": "2018-03-02T11:00:00Z",
+            "duration": "PT30M",
+            "remainingUses": 3
+          }
+        ]
+      },
+      {
+        "id": "https://example.org/individual/b",
+        "type": "IndividualFacilityUse",
+        "description": "Hyperdrive testing bay",
+        "event": [
+          {
+            "id": "https://example.org/slot/z",
+            "type": "Slot",
+            "facilityUse": "https:example.org/facilityuse/1",
+            "startDate": "2018-03-03T11:00:00Z",
+            "duration": "PT3H",
+            "remainingUses": 1
+          }
+        ]
+      }
+    ]
+  }
+}
