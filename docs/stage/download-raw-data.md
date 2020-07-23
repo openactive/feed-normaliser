@@ -19,3 +19,17 @@ Any errors encountered during this stage will be stored in the `download_raw_err
 * `error` - What the error was
 * `publisher_feed_id` - The publisher feed we were fetching when we had an error
 * `error_at` - What date and time the error occurred
+
+## Clear out work already done (Database storage)
+
+Before doing this, you will:
+
+* [need to clear out all Normalised Profile data](profile-normalised-data.md)
+* [need to Totally delete all normalised data from the database](normalise-data.md)
+
+Run the SQL:
+
+    DELETE FROM raw_data;
+    DELETE FROM download_raw_errors;
+    UPDATE publisher_feed SET raw_next_url=NULL;
+    
