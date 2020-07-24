@@ -8,6 +8,9 @@ To run this:
 
 `$ node ./src/bin/spider-data-catalog.js`
 
+It can be stopped at any time and it will not leave the database in a bad state or lose too much work.
+
+When restarted, it will always start at the beginning again.
 
 ## Errors
 
@@ -35,3 +38,29 @@ Run the SQL:
     DELETE FROM publisher_feed;
     DELETE FROM publisher;
     DELETE FROM spider_data_catalog_error;
+
+## To run the system with only some publishers / feeds
+
+To debug a problem that occurs with a specific publisher's data, you may want to get data for that publisher only.
+
+### Delete entries 
+
+First, run this stage as normal. 
+
+Then from the `publisher` and `publisher_feed` database tables, delete the entries you don't want.
+
+Now run all other stages as normal.
+
+Note that if you are running on Heroku, the worker will try to download the catalog again and put back the entries you just deleted.
+You will need to edit the `src/bin/heroku.js` file and take out the call to the `spider()` function.
+
+### Provide your own Data Catalog file
+
+This process starts with a data catalog file, and finds all publishers from there.
+
+If you want to only process some publishers, you can provide your own data catalog file.
+
+You will need to put it online somewhere and then change the `spiderDataCatalogStartURL` setting to your new URL. 
+(See `src/lib/settings.js` - you can also set an environmental variable).
+
+Now run all other stages as normal.

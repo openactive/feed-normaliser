@@ -6,7 +6,7 @@ To run this:
 
 `$ node ./src/bin/profile-normalised-data.js`
 
-It can be stopped at any time and it will not leave the database in a bad state or lose to much work.
+It can be stopped at any time and it will not leave the database in a bad state or lose too much work.
 
 When restarted it will pick up where it left off.
 
@@ -29,3 +29,19 @@ For any data profile and normalised data item, there are 4 states:
 To clear out all work already done, you can run the SQL:
 
     DELETE FROM normalised_data_profile_results;
+
+## To only profile a limited set of data
+
+You may want to do this to avoid processing too much data. 
+
+### Stop the process early
+
+The process can be forcibly stopped at any point and the database will not be in a bad state. 
+It will contain most work done up to the point you stop it. 
+
+### Only use some profiles
+
+In Settings, edit `dataProfiles` to remove some profiles and only leave the ones you want.
+(See `src/lib/settings.js`).
+
+Now run this stage as normal.
