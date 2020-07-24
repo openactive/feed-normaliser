@@ -1,6 +1,7 @@
 import { database_pool } from './database.js';
 import PipeLine from './pipeline.js';
 import pipes from './pipes/index.js';
+import Settings from './settings.js';
 
 
 async function normalise_data_all_publisher_feeds() {
@@ -92,7 +93,7 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
         const client = await database_pool.connect();
         try {
             const res_find_raw_data = await client.query(
-                'SELECT * FROM raw_data WHERE publisher_feed_id=$1 AND data_deleted=FALSE AND normalised=FALSE ORDER BY updated_at ASC LIMIT 10',
+                'SELECT * FROM raw_data WHERE publisher_feed_id=$1 AND data_deleted=FALSE AND normalised=FALSE ORDER BY updated_at ASC LIMIT '+ Settings.normaliseDataLoadWorkLimit,
                 [publisher_feed.id]
             );
             if (res_find_raw_data.rows.length == 0) {

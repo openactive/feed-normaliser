@@ -36,7 +36,11 @@ const Settings = {
 
   "herokuWorkerMinimumCycleHours": 6,
 
-  "dataProfiles": ["core", "accessibility", "socialrx"]
+  "dataProfiles": ["core", "accessibility", "socialrx"],
+
+  "normaliseDataLoadWorkLimit": 1000,
+  "profileNormalisedDataLoadWorkLimit": 1000,
+  "validateRawDataLoadWorkLimit": 1000
 
 }
 

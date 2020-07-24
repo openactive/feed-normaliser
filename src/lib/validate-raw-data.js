@@ -30,7 +30,9 @@ async function validate_raw_data_all() {
         // we open and make sure we CLOSE the database connection after this, so the DB connection is not held open when processing in an unneeded manner
         const client = await database_pool.connect();
         try {
-            const res_find_raw_data = await client.query('SELECT * FROM raw_data WHERE validation_done = \'f\' AND data_deleted=\'f\' ORDER BY updated_at ASC LIMIT 10');
+            const res_find_raw_data = await client.query(
+                'SELECT * FROM raw_data WHERE validation_done = \'f\' AND data_deleted=\'f\' ORDER BY updated_at ASC LIMIT '+Settings.validateRawDataLoadWorkLimit
+            );
             if (res_find_raw_data.rows.length == 0) {
                 break;
             }
