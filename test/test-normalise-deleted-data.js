@@ -24,8 +24,7 @@ describe('normalise deleted raw data', function() {
             const res_add_publisher = await client.query('INSERT INTO publisher (name, url) VALUES ($1, $2) RETURNING id', ["Test", "http://test.com"]);
             const publisher_id = res_add_publisher.rows[0].id;
             // Publisher Feed
-            const res_add_feed = await client.query('INSERT INTO publisher_feed (publisher_id, name, url) VALUES ($1, $2, $3) RETURNING id', [publisher_id, "Things","http://test.com/things"]);
-            const publisher_feed_id = res_add_publisher.rows[0].id;
+            await client.query('INSERT INTO publisher_feed (publisher_id, name, url) VALUES ($1, $2, $3) RETURNING id', [publisher_id, "Things","http://test.com/things"]);
             const res_select_publisher_feed = await client.query('SELECT * FROM publisher_feed');
             publisher_feed = res_select_publisher_feed.rows[0];
 
