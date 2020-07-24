@@ -8,7 +8,8 @@ To run this:
 
 `$ node ./src/bin/spider-data-catalog.js`
 
-It can be stopped at any time and it will not leave the database in a bad state or lose too much work.
+It can be stopped at any time and it will not leave the database in a bad state. 
+Only records being processed at that particular moment in time would be lost.
 
 When restarted, it will always start at the beginning again.
 
@@ -42,6 +43,8 @@ Run the SQL:
 ## To run the system with only some publishers / feeds
 
 To debug a problem that occurs with a specific publisher's data, you may want to get data for that publisher only.
+
+You can do this in 2 ways:
 
 ### Delete entries 
 
