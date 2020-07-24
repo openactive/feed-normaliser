@@ -2,11 +2,11 @@ import assert from 'assert';
 import { migrate_database, delete_database  }  from '../src/lib/database.js';
 import { database_pool } from '../src/lib/database.js';
 import { normalise_data_publisher_feed } from '../src/lib/normalise-data.js';
-import TestPipe from '../src/lib/pipes/test-pipe.js';
+import TestPipeCrash from '../src/lib/pipes/test-pipe-crash.js';
 
 
 describe('normalise data', function() {
-    it('basic test', async function() {
+    it('test when a pipe crashes', async function() {
 
         let client;
         await delete_database();
@@ -38,7 +38,7 @@ describe('normalise data', function() {
         }
 
         //--------------------------------------------------- Process!
-        await normalise_data_publisher_feed(publisher_feed, [TestPipe]);
+        await normalise_data_publisher_feed(publisher_feed, [TestPipeCrash]);
 
         //--------------------------------------------------- Check Results
         client = await database_pool.connect();
@@ -54,13 +54,9 @@ describe('normalise data', function() {
             // just in case the error handling itself throws an error.
             await client.release()
         }
-        assert.equal(results.length,2);
-        assert.equal(results[0].data_kind, "TestKind");
-        assert.deepEqual(results[0].data,{ type: "TestEvent", extra: "a test", test: true } );
-        assert.deepEqual(results[1].data,{ type: "TestEvent", extra: "b test", test: true });
-        assert.deepEqual(results[0].normalisation_errors,undefined);
-        assert.deepEqual(results[1].normalisation_errors,{'errors':[{'error':'BOO!'}]});
+        assert.equal(results.length,0);
 
+        
         // Raw data - is normalised flag set?
         client = await database_pool.connect();
         let results_raw_data;
@@ -78,7 +74,7 @@ describe('normalise data', function() {
 
         assert.equal(results_raw_data.length,1);
         assert.deepEqual(results_raw_data[0].normalised,true);
-        assert.deepEqual(results_raw_data[0].normalisation_errors,undefined);
+        assert.deepEqual(results_raw_data[0].normalisation_errors,{errors: [{error: 'AGGGH',pipe: 'TestPipeCrash'}]});
 
     });
 });

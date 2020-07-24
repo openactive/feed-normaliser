@@ -55,7 +55,7 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
                     VALUES ($1, $2, $3, $4, $5, $6, $7, FALSE)
                     ON CONFLICT (publisher_feed_id, rpde_id) DO UPDATE SET
                     data_id=$3, data_deleted=$4, data_modified=$6, data=$7, updated_at=(now() at time zone 'utc'),
-                    normalised=FALSE, validation_done=FALSE, validation_passed=FALSE, validation_results=NULL
+                    normalised=FALSE, normalisation_errors=NULL, validation_done=FALSE, validation_passed=FALSE, validation_results=NULL
                     RETURNING id`,
                     query_data
                 );

@@ -20,6 +20,9 @@ When restarted it will pick up where it left off.
 If an error occurs for a specific piece of normalised data, 
 it can be found in the `normalisation_errors` column of the `normalised_data` table.
 
+If an crash occurs in a pipe, 
+it can be found in the `normalisation_errors` column of the `raw_data` table.
+
 
 ## Clear out work already done (Database storage)
 
@@ -39,7 +42,7 @@ Before doing this, you will need to [clear out all Normalised Profile data](prof
 Run the SQL:
 
     DELETE FROM normalised_data;
-    UPDATE raw_data SET normalised=FALSE;
+    UPDATE raw_data SET normalised=FALSE, normalisation_errors=NULL;
     
 
 ### Soft-delete all normalised data from the database but leave behind meta data
