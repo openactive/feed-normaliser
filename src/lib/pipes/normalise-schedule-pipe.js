@@ -81,7 +81,7 @@ class NormaliseSchedulePipe extends Pipe {
                     // TODO: this only excludes exact matches, including time.
                     //       It should also let input be yyyy-mm-dd and exclude any events that
                     //       start in that 24 hour period.
-                    if(typeof schedule.exceptDate !== 'undefined'){
+                    if(schedule.exceptDate != undefined){
                         const exceptDates = Utils.ensureArray(schedule.exceptDate);
                         for(let exDate of exceptDates){
                             rruleSet.exdate(new Date(exDate));
@@ -119,25 +119,26 @@ class NormaliseSchedulePipe extends Pipe {
 
   schemaDaytoRRuleDay(schemaDay){
     // Could be a schema.org day or an iCal string day
-    if(schemaDay == "https://schema.org/Monday" || schemaDay == "MO"){
+    // Some publishers use http and some use https for schema org so not doing exact matches
+    if(schemaDay.includes("schema.org/Monday") || schemaDay == "MO"){
         return RRule.RRule.MO;
     }
-    if(schemaDay == "https://schema.org/Tuesday" || schemaDay == "TU"){
+    if(schemaDay.includes("schema.org/Tuesday") || schemaDay == "TU"){
         return RRule.RRule.TU;
     }
-    if(schemaDay == "https://schema.org/Wednesday" || schemaDay == "WE"){
+    if(schemaDay.includes("schema.org/Wednesday") || schemaDay == "WE"){
         return RRule.RRule.WE;
     }
-    if(schemaDay == "https://schema.org/Thursday" || schemaDay == "TH"){
+    if(schemaDay.includes("schema.org/Thursday") || schemaDay == "TH"){
         return RRule.RRule.TH;
     }
-    if(schemaDay == "https://schema.org/Friday" || schemaDay == "FR"){
+    if(schemaDay.includes("schema.org/Friday") || schemaDay == "FR"){
         return RRule.RRule.FR;
     }
-    if(schemaDay == "https://schema.org/Saturday" || schemaDay == "SA"){
+    if(schemaDay.includes("schema.org/Saturday") || schemaDay == "SA"){
         return RRule.RRule.SA;
     }
-    if(schemaDay == "https://schema.org/Sunday" || schemaDay == "SU"){
+    if(schemaDay.includes("schema.org/Sunday") || schemaDay == "SU"){
         return RRule.RRule.SU;
     }
   }
@@ -205,11 +206,11 @@ class NormaliseSchedulePipe extends Pipe {
             return {freq: RRule.RRule.YEARLY, interval: 1};
         }
     }catch(error){
-        console.log(`Could not parse duration [${schedule.repeatFrequency}]`);
+        console.log(`Warning: could not parse repeatFrequency [${schedule.repeatFrequency}]`);
         console.log(`Therefore guessing repeat frequency from byDay..`);
         // console.log(error);
 
-        if(typeof schedule.byDay !== 'undefined' && schedule.byDay.length > 0){
+        if(schedule.byDay != undefined && schedule.byDay.length > 0){
             // This is a hack to accommodate a common non-conformant practice of using byDay
             // to indicate weekly repetition.
             return {freq: RRule.RRule.WEEKLY, interval: 1};
