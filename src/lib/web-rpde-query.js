@@ -22,7 +22,7 @@ class RPDEQuery {
   async run() {
     // ----- Build SQL
     // Postgres will compare by microseconds if we let it. To make sure paging work correctly, we must compare by seconds only. Hence "extract(epoch" stuff.
-    let sql = "SELECT * FROM normalised_data ";
+    let sql = "SELECT *, extract(epoch from updated_at)::int AS updated_at_seconds FROM normalised_data ";
     let params = [this.limit];
     // This is to deal with the race condition described at https://developer.openactive.io/publishing-data/data-feeds/implementing-rpde-feeds#transactions-preventing-delayed-item-interleaving
     sql += " WHERE updated_at < ((now() at time zone 'utc') - interval '"+ this.dont_serve_data_until_seconds_old +" seconds') ";
@@ -42,7 +42,7 @@ class RPDEQuery {
                 "state": (database_data.data_deleted ? "deleted" : "updated"),
                 "kind": database_data.data_kind,
                 "id": database_data.data_id,
-                "modified": database_data.updated_at,
+                "modified": database_data.updated_at_seconds,
             };
             if (!database_data.data_deleted) {
                 item.data = database_data.data;
