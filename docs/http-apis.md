@@ -17,3 +17,7 @@ RPDE APIs are meant to be called directly by users. They are:
 Publisher status information:
 
 * `/publishers/status`
+
+Normalised data - if you have a piece of normalised data and you want to see the raw data that generated it, you can call:
+
+* `/normalised_data/item_by_id/<ID>`

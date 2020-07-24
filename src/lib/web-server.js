@@ -3,6 +3,7 @@ import Settings from './settings.js';
 import RPDEQuery from './web-rpde-query.js';
 import PublisherStatus from './web-publisher-status.js';
 import PublisherInfo from './web-publisher-info.js';
+import NormalisedDataInfo from './web-normalised-data-info.js';
 
 const web_server_app = express()
 
@@ -48,6 +49,19 @@ web_server_app.get('/normalised_data/all', async (req, res) => {
     const out = await query.run_and_get_api_response("/normalised_data/all");
     res.json(out);
 });
+
+
+web_server_app.get('/normalised_data/item_by_id/:data_id', async (req, res) => {
+    const dataInfo = await NormalisedDataInfo.getInfo(req.params.data_id);
+    if (dataInfo === undefined){
+        return res.status(404).send({ message: "Data Not Found"});
+    }
+    if (dataInfo === false){
+        return internalServerError(res);
+    }
+    res.json(dataInfo);
+});
+
 
 async function start_web_server() {
     web_server_app.listen(Settings.webServerPort, () => { console.log("started http://localhost:" + Settings.webServerPort); } );
