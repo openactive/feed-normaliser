@@ -1,0 +1,27 @@
+{
+  "state": "updated",
+  "kind": "Course",
+  "id": 311870,
+  "modified": 1593083366,
+  "data": {
+    "@context": "https://openactive.io/",
+    "@type": "CourseInstance",
+    "@id": "http://api.cotech.no/api/v1/oa/1325/courses/311870",
+    "name": "S4K TV - Dance",
+    "eventSchedule": [
+      {
+        "@type": "Schedule",
+        "byDay": [ "http://schema.org/Friday" ],
+        "endTime": "10:00",
+        "duration": "PT1H",
+        "scheduledEventType": "CourseInstanceSubEvent",
+        "startDate": "2020-07-31",
+        "startTime": "09:00",
+        "beta:timeZone": "Europe/London"
+      }
+    ],
+    "startDate": "2020-05-01",
+    "endDate": "2020-09-04",
+    "url": "https://booking.sport4kids.biz/s4k_tv_-_dance01_01052020"
+  }
+}

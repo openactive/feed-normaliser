@@ -81,4 +81,14 @@ describe('course-schedule', function() {
         assert.deepEqual(results[0].data, output[0].data);
     });
 
+    it('should generate events when byDay value uses http', async function() {
+
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/course-schedule-httpday.json'));
+        let pipe = new NormaliseSchedulePipe(input, []);
+        let results = await pipe.run();
+
+        assert.equal(results.length,2);
+
+    });
+
 });
