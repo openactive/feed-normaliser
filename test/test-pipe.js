@@ -1,4 +1,6 @@
 import assert from 'assert';
+import { migrate_database, delete_database, database_pool  }  from '../src/lib/database.js';
+import Settings from '../src/lib/settings.js';
 import NormaliseEventPipe from '../src/lib/pipes/normalise-event-pipe.js';
 
 
@@ -354,4 +356,52 @@ describe('pipe-fix-types', function(){
     //         done(error);
     //     }
     // });
+});
+
+describe('pipe-rawdata-lookup', function(){
+    it('should get one row from the raw_data table', async function(){
+        const event = {
+            "@context": ["https://openactive.io/"],
+            "@id": "https://opportunity.example/event/1",
+            "@type": "Event",
+            "superEvent": "https://opportunity.example/headline"
+        }
+        const superEvent = {
+            "@context": ["https://openactive.io/"],
+            "@id": "https://opportunity.example/headline",
+            "@type": "HeadlineEvent",
+        }
+
+        // Init database
+        await delete_database();
+        await migrate_database();
+        let client = await database_pool.connect();
+        let rawId;
+        try {
+            // Insert test data
+            // Publisher
+            const insertPublisher = await client.query('INSERT INTO publisher (name, url) VALUES ($1, $2) RETURNING id', ["Test", "http://test.com"]);
+            const publisherId = insertPublisher.rows[0].id;
+            // Publisher Feed
+            const insertFeed = await client.query('INSERT INTO publisher_feed (publisher_id, name, url) VALUES ($1, $2, $3) RETURNING id', [publisherId, "Things","http://test.com/things"]);
+            const publisherFeedId = insertFeed.rows[0].id;
+            // Raw data
+            const superEventQueryData = [
+                publisherFeedId, 555, "https://opportunity.example/headline", "f", "HeadlineEvent", 1574378246837, superEvent
+            ];
+            const insertRaw = await client.query('INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data, normalised) VALUES ($1, $2, $3, $4, $5, $6, $7, FALSE) RETURNING id', superEventQueryData);
+            rawId = insertRaw.rows[0].id;
+        }catch(error){
+            console.log('Error inserting test data');
+            console.log(error);
+        }finally{
+            await client.release();
+        }
+
+        let pipe = new NormaliseEventPipe({id: 1, data: event}, []);
+        let result = await pipe.selectRawByDataId(event.superEvent);
+        assert.equal(result.id, rawId);
+        assert.equal(typeof result.data, "object");
+    });
+
 });

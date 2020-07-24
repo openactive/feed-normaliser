@@ -1,6 +1,7 @@
 import path from 'path';
 import Utils from "../utils.js";
 import Settings from '../settings.js';
+import { database_pool } from '../database.js';
 
 class Pipe {
   constructor(rawData, normalisedEvents) {
@@ -242,6 +243,24 @@ class Pipe {
     //   "feedUrl": [],
     //   "publisherName": ""
     // }
+  }
+
+  async selectRawByDataId(dataId){
+    // data_id is a URI from the data object
+    // eg. the value of id or @id if present and valid
+    const client = await database_pool.connect();
+    let result;
+    try{
+      const rawDataResult = await client.query('SELECT id, data FROM raw_data WHERE data_id=$1 LIMIT 1', [dataId]);
+      result = rawDataResult["rows"][0];
+    }catch(error){
+      console.log(`Error querying for ${dataId}`);
+      console.log(error);
+    }finally{
+      await client.release();
+    }
+
+    return result; // undefined if no results
   }
 
 
