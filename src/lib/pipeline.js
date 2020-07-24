@@ -9,16 +9,20 @@ class PipeLine {
   run() {
     return new Promise(async resolve => {
       let normalisedEvents = [];
+      let errors = [];
       for (const Pipe of this.pipes) {
+        let pipeSection;
         try {
-          const pipeSection = new Pipe(this.rawData, normalisedEvents);
+          pipeSection = new Pipe(this.rawData, normalisedEvents);
           normalisedEvents = await pipeSection.run();
+          // TODO let the pipeline pass errors back, add them to errors
         } catch (error) {
           console.log(`Error running data through pipe ${pipeSection.constructor.name} \n ${error}`);
+          errors.push({ 'error':error, 'pipe':pipeSection.constructor.name});
         }
       }
 
-      await this.pipeOutputCb( this.rawData.id, normalisedEvents,);
+      await this.pipeOutputCb( this.rawData.id, normalisedEvents, errors);
 
       resolve("All pipes run");
     });

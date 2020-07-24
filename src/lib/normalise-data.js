@@ -24,7 +24,7 @@ async function normalise_data_all_publisher_feeds() {
 
 }
 
-async function store_normalised_callback(raw_data_id, normalised_events) {
+async function store_normalised_callback(raw_data_id, normalised_events, errors) {
 
     const client = await database_pool.connect();
 
@@ -60,8 +60,8 @@ async function store_normalised_callback(raw_data_id, normalised_events) {
         }
 
         await client.query(
-            'UPDATE raw_data SET normalised=\'t\' WHERE id=$1'  ,
-            [raw_data_id]
+            'UPDATE raw_data SET normalised=TRUE, normalisation_errors=$2 WHERE id=$1'  ,
+            [raw_data_id, (errors && errors.length > 0  ? {'errors':errors} : undefined)]
         );
 
         await client.query('COMMIT');
