@@ -10,7 +10,8 @@ To run this:
 
 `$ node ./src/bin/normalise-data.js`
 
-It can be stopped at any time and it will not leave the database in a bad state or lose too much work.
+It can be stopped at any time and it will not leave the database in a bad state. 
+Only records being processed at that particular moment in time would be lost.
 
 When restarted it will pick up where it left off.
 
@@ -54,7 +55,7 @@ Or to debug a problem that occurs with a specific publisher's data, you may want
 The process can be forcibly stopped at any point and the database will not be in a bad state. 
 It will contain most work done up to the point you stop it. 
 
-### Edit the SQL query that loads work to do
+### Edit the SQL query that determines data to normalise
 
 If you only want to get data for some or one publisher feed, you can edit the SQL statement in `src/lib/normalise-data.js`. 
 

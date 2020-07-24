@@ -20,7 +20,8 @@ To run this:
 
 `$ node ./src/bin/validate-raw-data.js`
 
-It can be stopped at any time and it will not leave the database in a bad state or lose too much work.
+It can be stopped at any time and it will not leave the database in a bad state. 
+Only records being processed at that particular moment in time would be lost.
 
 When restarted it will pick up where it left off.
 
