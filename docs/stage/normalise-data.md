@@ -15,6 +15,12 @@ Only records being processed at that particular moment in time would be lost.
 
 When restarted it will pick up where it left off.
 
+## Errors
+
+If an error occurs for a specific piece of normalised data, 
+it can be found in the `normalisation_errors` column of the `normalised_data` table.
+
+
 ## Clear out work already done (Database storage)
 
 There are 2 options here:

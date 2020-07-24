@@ -6,5 +6,8 @@ See documentation [for the "Spider Data Catalog" stage](stage/spider-data-catalo
 In the "Download Raw Data" stage, any errors are written to a database table. 
 See documentation [for the "Download Raw Data" stage](stage/download-raw-data.md).
 
+In the "Normalise Data" stage, any errors are written to a database table. 
+See documentation [for the "Normalise Data" stage](stage/normalise-data.md).
+
 In the "Profile Normalised Data" stage, any errors running the check are written to a database table. 
 See documentation [for the "Profile Normalised Data" stage](stage/profile-normalised-data.md).

@@ -32,7 +32,7 @@ class TestPipe extends Pipe {
       let normalisedEvent1 = new NormalisedEvent(event1, "TestKind");
       this.normalisedEvents.push(normalisedEvent1);
 
-      let normalisedEvent2 = new NormalisedEvent(event2, "TestKind");
+      let normalisedEvent2 = new NormalisedEvent(event2, "TestKind", undefined, [{'error':'BOO!'}]);
       this.normalisedEvents.push(normalisedEvent2);
 
       resolve(this.normalisedEvents);

@@ -38,14 +38,15 @@ async function store_normalised_callback(raw_data_id, normalised_events) {
                 normalised_event.id(),
                 normalised_event.data,
                 normalised_event.kind,
-                normalised_event.parentId
+                normalised_event.parentId,
+                ( normalised_event.errors ? {'errors':normalised_event.errors} : undefined)
             ];
 
             const res = await client.query(
-                'INSERT INTO normalised_data (raw_data_id, data_id, data_deleted, data, data_kind, raw_data_parent_id) ' +
-                'VALUES ($1, $2, \'f\', $3, $4, $5) ' +
+                'INSERT INTO normalised_data (raw_data_id, data_id, data_deleted, data, data_kind, raw_data_parent_id, normalisation_errors) ' +
+                'VALUES ($1, $2, \'f\', $3, $4, $5, $6) ' +
                 'ON CONFLICT (data_id) DO UPDATE SET ' +
-                'raw_data_id=$1, data_id=$2, data=$3, data_kind=$4, raw_data_parent_id=$5, updated_at=(now() at time zone \'utc\'), data_deleted=\'f\''  +
+                'raw_data_id=$1, data_id=$2, data=$3, data_kind=$4, raw_data_parent_id=$5, normalisation_errors=$6, updated_at=(now() at time zone \'utc\'), data_deleted=\'f\''  +
                 'RETURNING id',
                 query_data
             );
