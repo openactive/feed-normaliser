@@ -63,6 +63,7 @@ class  PublisherInfo {
 
     return publisherInfo;
   }
+
 }
 
 export default PublisherInfo;
