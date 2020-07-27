@@ -3,7 +3,8 @@ import Settings from './settings.js';
 import RPDEQuery from './web-rpde-query.js';
 import PublisherStatus from './web-publisher-status.js';
 import PublisherInfo from './web-publisher-info.js';
-import NormalisedDataInfo from './web-normalised-data-info.js';
+import FeedInfo from './web-feed-info.js';
+import NormalisedDataInfo from './web-normalised-data-info.js'
 
 const web_server_app = express()
 
@@ -42,6 +43,19 @@ web_server_app.get('/publisher/:publisherId', async (req, res) => {
     }
 
     res.json(publisherInfo);
+});
+
+web_server_app.get('/publisher/:publisherId/feed/:feedId/errors', async (req, res) => {
+    const feedErrors = await FeedInfo.getErrors(req.params.publisherId, req.params.feedId);
+
+    if (feedErrors === false){
+        return internalServerError(res);
+    }
+
+    res.json({
+        total: feedErrors.length,
+        errors: feedErrors
+    });
 });
 
 web_server_app.get('/normalised_data/all', async (req, res) => {
