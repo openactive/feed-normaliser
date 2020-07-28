@@ -10,7 +10,7 @@ These tools are developed and tested using `node` version `13.9`
 
 ## Database connection
 
-The supported database server is Postgresql.
+The supported database server is Postgres.
 
 The database connection can be specified using the environment variable `DATABASE_URL`
 
@@ -23,3 +23,4 @@ The default value is `postgres://app:app@localhost:5432/app`. See src/lib/settin
 The tool will automatically set up the Postgres database structure.
 
 `$ node ./src/bin/migrate-database.js`
+

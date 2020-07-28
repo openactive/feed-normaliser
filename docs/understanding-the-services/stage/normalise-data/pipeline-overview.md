@@ -1,9 +1,6 @@
-# Pipeline overview
+# Normalisation Overview
 
-The 'pipeline' consists of several 'pipes' which are run in turn.
-The pipeline is initialised with an empty array called `normalisedData`.
-Each object from the `raw_data` table is passed into each pipe.
-Each pipe also has access to the `normalisedData` array, and if the pipe is able to generate a normalised event from the input data, the normalised event is added to this array. Pipes may also edit or remove data from this array.
+The 'pipeline' consists of several 'pipes' which are run in turn. The pipeline is initialised with an empty array called `normalisedData`. Each object from the `raw_data` table is passed into each pipe. Each pipe also has access to the `normalisedData` array, and if the pipe is able to generate a normalised event from the input data, the normalised event is added to this array. Pipes may also edit or remove data from this array.
 
 ## Configuring the pipeline
 
@@ -20,3 +17,4 @@ There are three kinds of pipes:
 * [Normalisation pipes](normalisation-pipes.md)
 * Cleanup pipes
 * Enhancement pipes
+

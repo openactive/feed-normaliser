@@ -1,4 +1,4 @@
-# HTTP APIs
+# Republication
 
 There is a webserver that provides data as API's.
 
@@ -6,7 +6,7 @@ To run this:
 
 `$ npm run start-webserver`
 
-or start in developer mode (auto reloads on changes)
+or start in developer mode \(auto reloads on changes\)
 
 `$ npm run start-webserver-dev`
 
@@ -17,3 +17,4 @@ RPDE APIs are meant to be called directly by users. They are:
 Publisher status information:
 
 * `/publishers/status`
+
