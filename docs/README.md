@@ -1,38 +1,41 @@
 # Open Active Conformance Services
 
-Various tools for harvesting and normalising OpenActive Opportunity feeds to a common representation
+A suite of tools to discover, download, normalise, enhance and republish data that uses the OpenActive specification. 
 
-See the [docs](/docs/) folder for more information.
+See the [docs](./) folder for more information.
 
 ## Quick Start
 
+### Prepare
+
+Set up a Postgres database and user. Record the details. 
+
+These instructions assume Linux. 
+
 ### Configuration
 
-Environment variable
+Set environment variable:
 
 `DATABASE_URL=postgres://user:pass@host:port/database`
 
-
-
 ### Install
 
-```
+```text
 $ npm install
 $ npm run migrate
 ```
 
-[Installation docs](/docs/requirements-and-install.md)
-
-
 ### Data tools
 
-* `$ node ./src/bin/spider-data-catalog.js` [Fetch feeds](/docs/stage/spider-data-catalog.md)
-* `$ node ./src/bin/download-raw.js` [Download raw data](/docs/stage/download-raw-data.md)
-* `$ node ./src/bin/validate-raw-data.js` [Validate Raw data](/docs/stage/validate-raw-data.md)
-* `$ node ./src/bin/normalise-data.js` [Create normalised version of raw data](/docs/stage/normalise-data.md)
-* `$ node ./src/bin/profile-normalised-data.js` [Profile normalised data](/docs/stage/profile-normalised-data.md)
+Run each of these in turn to run the full pipeline. See 
 
+* `$ node ./src/bin/spider-data-catalog.js` [Fetch feeds](understanding-the-services/stage/spider-data-catalog.md)
+* `$ node ./src/bin/download-raw.js` [Download raw data](understanding-the-services/stage/download-raw-data.md)
+* `$ node ./src/bin/validate-raw-data.js` [Validate Raw data](understanding-the-services/stage/validate-raw-data.md)
+* `$ node ./src/bin/normalise-data.js` [Create normalised version of raw data](understanding-the-services/stage/normalise-data/)
+* `$ node ./src/bin/profile-normalised-data.js` [Profile normalised data](understanding-the-services/stage/profile-normalised-data.md)
 
 ### Webserver
 
 * `$ npm run start-webserver` Runs webserver providing JSON output of certain data for use by [status](https://github.com/openactive/conformance-status-page)
+
