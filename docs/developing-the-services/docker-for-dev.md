@@ -1,4 +1,4 @@
-# Docker for development
+# Dev hosting with Docker
 
 The Dockerfile and docker-compose are configured for development purposes only, not intended for use in production.
 
@@ -16,7 +16,7 @@ Then to migrate databases:
 
 To run any of the other app commands:
 
-```
+```text
 $ docker-compose run -l openactive-conformance-services-type=run -w /home/app app node ./src/bin/spider-data-catalog.js
 $ docker-compose run -l openactive-conformance-services-type=run -w /home/app app node ./src/bin/download-raw.js
 // etc.
@@ -24,7 +24,7 @@ $ docker-compose run -l openactive-conformance-services-type=run -w /home/app ap
 
 For NPM:
 
-```
+```text
 $ docker-compose run -l openactive-conformance-services-type=run -w /home/app app npm install
 // etc.
 ```
@@ -33,7 +33,7 @@ $ docker-compose run -l openactive-conformance-services-type=run -w /home/app ap
 
 To access the database with psql:
 
-```
+```text
 $ docker-compose exec postgres psql -U app -h postgres
 $ // (password is 'app')
 ```
@@ -44,11 +44,11 @@ Database will persist between container restarts/rebuilds.
 
 Run
 
-`$ docker-compose run  -l openactive-conformance-services-type=run -w /home/app -p 3000:3000 app npm run start-webserver-dev`
+`$ docker-compose run -l openactive-conformance-services-type=run -w /home/app -p 3000:3000 app npm run start-webserver-dev`
 
 The API should be available at "localhost:3000".
 
-It will reload automatically when you make changes. 
+It will reload automatically when you make changes.
 
 It will stay attached to the console and any output will be visible.
 
@@ -62,10 +62,11 @@ To set up, open a database console and run:
 
 Then run tests at any time with:
 
-`$ docker-compose run  -l openactive-conformance-services-type=run -w /home/app -e DATABASE_URL="postgres://app:app@postgres:5432/test"   app npm run test `
+`$ docker-compose run -l openactive-conformance-services-type=run -w /home/app -e DATABASE_URL="postgres://app:app@postgres:5432/test" app npm run test`
 
 ## Cleaning up Docker
 
 Because we label containers when we run things, we can clean up old containers with:
 
 `$ docker container prune --filter label=openactive-conformance-services-type=run`
+
