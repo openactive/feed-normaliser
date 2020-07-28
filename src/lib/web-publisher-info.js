@@ -20,6 +20,7 @@ class  PublisherInfo {
         url
       FROM publisher_feed
       WHERE publisher_id=$1
+      ORDER BY name
     `;
 
     const feedValidationPasses = `

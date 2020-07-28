@@ -14,6 +14,7 @@ class PublisherStatus {
       FROM publisher
       LEFT JOIN publisher_feed on publisher.id=publisher_feed.publisher_id
       GROUP BY publisher.id
+      ORDER BY publisher.name
     `;
 
     let res;
