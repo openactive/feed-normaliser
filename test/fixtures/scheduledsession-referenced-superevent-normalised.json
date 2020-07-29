@@ -11,10 +11,14 @@
     "@type": "ScheduledSession",
     "@id": "https://playwaze.com/SessionSeries/jifgh8dinma/ScheduledSession/bzncxfzk8oe",
     "identifier": "bzncxfzk8oe",
-    "superEvent": "https://playwaze.com/SessionSeries/jifgh8dinma",
     "name": "No Strings Badminton and coaching Sessions - Thursday evenings 19:00 - 23:00",
     "description": "Sessions include a coaching session on basic skills for beginners and intermediate players.    Please pay at reception and hand in your reciept to the session organiser.",
-    "activity": [{
+    "activity": [
+      {
+      "@type": "Concept",
+      "prefLabel": "General"
+      },
+      {
       "@type": "Concept",
       "@id": "https://openactive.io/activity-list#c0360db0-a817-4bae-9167-40f89b49fc9e",
       "inScheme": "https://openactive.io/activity-list",
@@ -43,9 +47,18 @@
       "name": "National Badminton Centre, Milton Keynes",
       "url": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/community-about"
     },
+    "offers": [{
+      "@type": "Offer",
+      "@id": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/groupplaymanager-display/w1uebcxqyx2c4&free=true",
+      "name": "Free option available",
+      "price": 0,
+      "priceCurrency": "GBP",
+      "url": "https://badmintonengland.playwaze.com/Booking/FindBooking?seriesId=jifgh8dinma&Source=OA"
+    }],
     "startDate": "2019-11-28T19:00:00+00:00",
     "endDate": "2019-11-28T23:00:00+00:00",
     "url": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/groupplaymanager-display/w1uebcxqyx2c4/20191128",
-    "beta:attendeeCount": 1
+    "beta:attendeeCount": 1,
+    "isAccessibleForFree": true
   }
 }

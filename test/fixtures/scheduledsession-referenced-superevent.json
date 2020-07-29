@@ -1,27 +1,55 @@
 {
+  "state": "updated",
   "kind": "ScheduledSession",
+  "id": "bzncxfzk8oe",
+  "modified": 1574378246837,
   "data": {
-    "id": "https://ncc.leisurecloud.net/OpenActive/api/scheduled-sessions/80322360",
-    "type": "ScheduledSession",
-    "endDate": "2020-07-23T14:00:00Z",
     "@context": [
       "https://openactive.io/",
       "https://openactive.io/ns-beta"
     ],
-    "duration": "PT1H30M",
-    "startDate": "2020-07-23T12:30:00Z",
-    "identifier": 80322360,
-    "superEvent": "https://ncc.leisurecloud.net/OpenActive/api/session-series/VRES0000235",
-    "maximumAttendeeCapacity": 30,
-    "remainingAttendeeCapacity": 30,
-    "beta:sportsActivityLocation": [
+    "@type": "ScheduledSession",
+    "@id": "https://playwaze.com/SessionSeries/jifgh8dinma/ScheduledSession/bzncxfzk8oe",
+    "identifier": "bzncxfzk8oe",
+    "superEvent": "https://playwaze.com/SessionSeries/jifgh8dinma",
+    "name": "No Strings Badminton and coaching Sessions - Thursday evenings 19:00 - 23:00",
+    "description": "Sessions include a coaching session on basic skills for beginners and intermediate players.    Please pay at reception and hand in your reciept to the session organiser.",
+    "activity": [
       {
-        "name": [
-          "V.L.C Health Suite",
-          "V.L.C Health Suite Res"
-        ],
-        "type": "SportsActivityLocation"
+        "@type": "Concept",
+        "@id": "https://openactive.io/activity-list#c0360db0-a817-4bae-9167-40f89b49fc9e",
+        "inScheme": "https://openactive.io/activity-list",
+        "prefLabel": "Badminton"
       }
-    ]
+    ],
+    "duration": "PT4H",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "genderRestriction": "https://openactive.io/NoRestriction",
+    "image": [
+      {
+        "@type": "ImageObject",
+        "url": "https://Playwaze.com/Images/SportsAvatars/badminton.png"
+      }
+    ],
+    "location": {
+      "@type": "Place",
+      "name": "52.0383757, -0.7858541",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 52.0383757,
+        "longitude": -0.7858541
+      }
+    },
+    "organizer": {
+      "@type": "Organization ",
+      "@id": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzscommunity-details",
+      "name": "National Badminton Centre, Milton Keynes",
+      "url": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/community-about"
+    },
+    "startDate": "2019-11-28T19:00:00+00:00",
+    "endDate": "2019-11-28T23:00:00+00:00",
+    "url": "https://badmintonengland.playwaze.com/national-badminton-centre-milton-keynes/xdpcp4jkpqzs/groupplaymanager-display/w1uebcxqyx2c4/20191128",
+    "beta:attendeeCount": 1
   }
 }
