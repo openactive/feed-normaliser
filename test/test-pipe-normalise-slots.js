@@ -110,3 +110,45 @@ describe('ifu-facilityuse-slot', function(){
         assert.deepEqual(results[1].data,output[1].data);
     });
 });
+
+describe('slot-referenced-facilityuse', function(){
+    it('should merge data into Slot from referenced FacilityUse', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse-normalised.json'));
+
+        // Mock superEvent retrieval from db
+        const facilityuseData = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/facilityuse.json'));
+        let pipe = new NormaliseSlotPipe(input, []);
+        pipe.selectRawByDataId = function(dataId){
+            return {
+                "id": "abc",
+                "data": facilityuseData.data
+            };
+        }
+
+        let results = await pipe.run();
+        assert.equal(results[0].parentId, "abc");
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data,output.data);
+    });
+
+    it('should merge data into Slot from referenced FacilityUse (2)', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse-2.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse-normalised-2.json'));
+
+        // Mock superEvent retrieval from db
+        const facilityuseData = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/facilityuse-2.json'));
+        let pipe = new NormaliseSlotPipe(input, []);
+        pipe.selectRawByDataId = function(dataId){
+            return {
+                "id": "def",
+                "data": facilityuseData.data
+            };
+        }
+
+        let results = await pipe.run();
+        assert.equal(results[0].parentId, "def");
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data,output.data);
+    });
+});

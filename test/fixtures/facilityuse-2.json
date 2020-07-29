@@ -1,0 +1,43 @@
+{
+  "kind": "FacilityUse",
+  "state": "updated",
+  "id": "2",
+  "modified": 247302,
+  "data": {
+    "@context": "https://openactive.io/",
+    "id": "https://lincsinspire-openactive.legendonlineservices.co.uk/api/facility-uses/10-3",
+    "identifier": "10-3",
+    "name": "Squash Activities ST",
+    "activity": [
+      {
+        "prefLabel": "Squash Activities ST",
+        "type": "Concept"
+      }
+    ],
+    "provider": {
+      "name": "Lincs Inspire LTD",
+      "email": "Enquiries@lincsinspire.com",
+      "type": "Organization"
+    },
+    "location": {
+      "identifier": "bf57b7d4-d98f-4282-864d-a09f764b4383",
+      "name": "Grimsby L C",
+      "address": {
+        "streetAddress": "Cromwell Road",
+        "addressLocality": "North East Lincolnshire",
+        "addressRegion": "North East Lincolnshire",
+        "postalCode": "DN31 2BH",
+        "addressCountry": "GB",
+        "type": "PostalAddress"
+      },
+      "telephone": "01472323100",
+      "geo": {
+        "latitude": 53.569465,
+        "longitude": -0.113715,
+        "type": "GeoCoordinates"
+      },
+      "type": "Place"
+    },
+    "type": "FacilityUse"
+  }
+}

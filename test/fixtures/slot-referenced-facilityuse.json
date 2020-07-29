@@ -1,21 +1,23 @@
 {
-  "id": "https://jubileehall-openactive.legendonlineservices.co.uk/api/facility-uses/106-4/events/33e68d92-4e8c-42d2-b11e-0df71c9de8b7",
-  "type": "Slot",
-  "offers": [
-    {
-      "name": "Non-member",
-      "type": "Offer",
-      "price": 37.5,
-      "identifier": "HeadlinePrice",
-      "priceCurrency": "GBP"
-    }
-  ],
-  "endDate": "2020-07-09T19:30:00+01:00",
-  "@context": "https://openactive.io/",
-  "duration": "PT1H",
-  "startDate": "2020-07-09T18:30:00+01:00",
-  "identifier": "33e68d92-4e8c-42d2-b11e-0df71c9de8b7",
-  "facilityUse": "https://jubileehall-openactive.legendonlineservices.co.uk/api/facility-uses/106-4",
-  "maximumUses": 2,
-  "remainingUses": 0
+  "data": {
+    "id": "https://jubileehall-openactive.legendonlineservices.co.uk/api/facility-uses/106-4/events/33e68d92-4e8c-42d2-b11e-0df71c9de8b7",
+    "type": "Slot",
+    "offers": [
+      {
+        "name": "Non-member",
+        "type": "Offer",
+        "price": 37.5,
+        "identifier": "HeadlinePrice",
+        "priceCurrency": "GBP"
+      }
+    ],
+    "endDate": "2020-07-09T19:30:00+01:00",
+    "@context": "https://openactive.io/",
+    "duration": "PT1H",
+    "startDate": "2020-07-09T18:30:00+01:00",
+    "identifier": "33e68d92-4e8c-42d2-b11e-0df71c9de8b7",
+    "facilityUse": "https://jubileehall-openactive.legendonlineservices.co.uk/api/facility-uses/106-4",
+    "maximumUses": 2,
+    "remainingUses": 0
+  }
 }
