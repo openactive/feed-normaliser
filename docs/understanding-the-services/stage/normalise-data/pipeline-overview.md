@@ -1,4 +1,4 @@
-# Pipeline overview
+# Normalisation Overview
 
 The 'pipeline' consists of several 'pipes' which are run in turn.
 
