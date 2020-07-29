@@ -25,13 +25,59 @@ class NormaliseEventPipe extends Pipe {
 
             this.doCleanup();
 
-            if (typeof this.rawData.superEvent == 'object'){
+            if(this.rawData.superEvent != undefined){
                 // It has a superEvent which we can get more data from.
                 let {superEvent, ...event} = this.rawData;
-                let normalisedEventData = {
-                    ...superEvent,
-                    ...event
+                let superEventId;
+                let normalisedEventData;
+
+                if (typeof superEvent == 'object'){
+                    // superEvent is embedded
+                    normalisedEventData = {
+                        ...superEvent,
+                        ...event
+                    }
+                }else if(typeof superEvent == 'string' && superEvent.includes('http')){
+                    // superEvent is referenced by a HTTP URI
+                    // There's no point in even trying to look it up if it's not because
+                    // we only store ones that are
+                    let superEventResult = this.selectRawByDataId(superEvent);
+                    let superEventData = superEventResult.data;
+                    superEventId = superEventResult.id;
+                    if (superEventData != undefined){
+
+                        // unset superEvent ids in case they are not overriden by event
+                        delete superEventData.id;
+                        delete superEventData.identifier;
+                        delete superEventData["@id"];
+                        // also drop any circular subEvent, assuming it's a dup of event
+                        delete superEventData.subEvent;
+                        // some superEvents *also* have an eventSchedule, which we can also drop
+                        delete superEventData.eventSchedule;
+
+                        // merge arrays that we want to keep both from, rather than override
+                        if(superEventData.activity != undefined && event.activity != undefined){
+                            event.activity = [...superEventData.activity, ...event.activity];
+                        }
+                        if(superEventData.category != undefined && event.category != undefined){
+                            event.category = [...superEventData.category, ...event.category];
+                        }
+
+                        normalisedEventData = {
+                            ...superEventData,
+                            ...event
+                        }
+                    }else{
+                        console.log(`No raw_data with data_id [${superEvent}]`);
+                        normalisedEventData = event;
+                    }
+                }else{
+                    // superEvent is something else that we can't process..
+                    // probably a bug
+                    console.log(`Can't process superEvent value [${superEvent}]`);
+                    normalisedEventData = event;
                 }
+
                 // Get rid of stray 'type' property
                 delete normalisedEventData.type;
 
@@ -43,8 +89,9 @@ class NormaliseEventPipe extends Pipe {
                     normalisedEventData["@type"] = "CourseInstanceSubEvent";
                 }
 
-                let normalisedEvent = new NormalisedEvent(normalisedEventData, kind);
+                let normalisedEvent = new NormalisedEvent(normalisedEventData, kind, superEventId);
                 this.normalisedEvents.push(normalisedEvent);
+
             }else{
                 // No superEvent, just use all data from the Event
                 let normalisedEvent = new NormalisedEvent(this.rawData, kind);

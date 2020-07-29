@@ -1,0 +1,63 @@
+{
+  "state": "updated",
+  "data": {
+    "@id": "https://ncc.leisurecloud.net/OpenActive/api/scheduled-sessions/11575967",
+    "@type": "ScheduledSession",
+    "name": "Shadow Box Fit",
+    "endDate": "2020-07-27T09:00:00Z",
+    "@context": [
+      "https://openactive.io/",
+      "https://openactive.io/ns-beta"
+    ],
+    "duration": "PT45M",
+    "startDate": "2020-07-27T08:15:00Z",
+    "identifier": 11575967,
+    "maximumAttendeeCapacity": 35,
+    "remainingAttendeeCapacity": 21,
+    "beta:sportsActivityLocation": [
+      {
+        "name": [
+          "H.H.S.V. Court 1",
+          "H.H.S.V. Court 2",
+          "H.H.S.V. Court 3",
+          "H.H.S.V. Court 4"
+        ],
+        "type": "SportsActivityLocation"
+      }
+    ],
+    "offers": [
+      {
+        "name": "Non-Member",
+        "type": "Offer",
+        "price": 6.9,
+        "identifier": "STAND",
+        "description": "Fitness Class",
+        "priceCurrency": "GBP"
+      }
+    ],
+    "category": [
+      "Fitness Class"
+    ],
+    "location": {
+      "name": "Harvey Hadden Sports Vill",
+      "type": "Place",
+      "address": {
+        "type": "PostalAddress"
+      },
+      "identifier": "HHSV"
+    },
+    "organizer": {
+      "url": "https://www.activenottingham.com",
+      "logo": {
+        "url": "https://res.cloudinary.com/gladstone/image/upload/NottinghamCC-live/kj4no6aibkgpsylyv0sz",
+        "type": "ImageObject"
+      },
+      "name": "Nottingham City Council Sport and Leisure",
+      "type": "Organization",
+      "email": "SportandLeisure@nottinghamcity.gov.uk",
+      "legalName": "Nottingham City Council",
+      "telephone": "0115876100",
+      "beta:formattedDescription": "<p><br></p>"
+    }
+  }
+}

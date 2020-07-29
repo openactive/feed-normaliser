@@ -1,0 +1,60 @@
+{
+  "data": {
+    "id": "https://ncc.leisurecloud.net/OpenActive/api/session-series/HRES0001802",
+    "name": "Shadow Box Fit",
+    "type": "SessionSeries",
+    "offers": [
+      {
+        "name": "Non-Member",
+        "type": "Offer",
+        "price": 6.9,
+        "identifier": "STAND",
+        "description": "Fitness Class",
+        "priceCurrency": "GBP"
+      }
+    ],
+    "@context": [
+      "https://openactive.io/",
+      "https://openactive.io/ns-beta"
+    ],
+    "category": [
+      "Fitness Class"
+    ],
+    "duration": "PT45M",
+    "location": {
+      "name": "Harvey Hadden Sports Vill",
+      "type": "Place",
+      "address": {
+        "type": "PostalAddress"
+      },
+      "identifier": "HHSV"
+    },
+    "organizer": {
+      "url": "https://www.activenottingham.com",
+      "logo": {
+        "url": "https://res.cloudinary.com/gladstone/image/upload/NottinghamCC-live/kj4no6aibkgpsylyv0sz",
+        "type": "ImageObject"
+      },
+      "name": "Nottingham City Council Sport and Leisure",
+      "type": "Organization",
+      "email": "SportandLeisure@nottinghamcity.gov.uk",
+      "legalName": "Nottingham City Council",
+      "telephone": "0115876100",
+      "beta:formattedDescription": "<p><br></p>"
+    },
+    "identifier": "HRES0001802",
+    "eventSchedule": [
+      {
+        "type": "PartialSchedule",
+        "byDay": [
+          "http://schema.org/Monday"
+        ],
+        "endDate": "2021-01-18",
+        "endTime": "10:00",
+        "duration": "PT45M",
+        "startDate": "2020-07-20",
+        "startTime": "09:15"
+      }
+    ]
+  }
+}

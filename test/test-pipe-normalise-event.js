@@ -105,7 +105,7 @@ describe('session-with-sub', function(){
 });
 
 describe('session-with-super', function(){
-    it('should return a NormalisedEvent from data in ScheduledSession and SessionSeries', async function(){
+    it('should merge data from embedded super SessionSeries with ScheduledSession', async function(){
         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-with-superevent.json'));
         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries-with-subevent-normalised.json'));
 
@@ -116,12 +116,45 @@ describe('session-with-super', function(){
         assert.deepEqual(results[0].data, output.data);
     });
 
-    it('should only merge the superEvent when it is an embedded object', async function(){
+    it('should merge data from referenced super SessionSeries with ScheduledSession', async function(){
         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-referenced-superevent.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-referenced-superevent-normalised.json'));
 
+        // Mock superEvent retrieval from db
+        const superEventData = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries.json'));
         let pipe = new NormaliseEventPipe(input, []);
+        pipe.selectRawByDataId = function(dataId){
+            return {
+                "id": "123",
+                "data": superEventData.data
+            };
+        }
         let results = await pipe.run();
-        assert.equal(typeof results[0].data.superEvent,'string');
+
+        assert.equal(results.length,1);
+        assert.equal(results[0].parentId, '123');
+        assert.deepEqual(results[0].data, output.data);
+    });
+
+    it('should merge data from referenced super SessionSeries with ScheduledSession (2)', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-referenced-superevent-2.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-referenced-superevent-normalised-2.json'));
+
+        // Mock superEvent retrieval from db
+        const superEventData = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries-2.json'));
+        let pipe = new NormaliseEventPipe(input, []);
+        pipe.selectRawByDataId = function(dataId){
+            return {
+                "id": "456",
+                "data": superEventData.data
+            };
+        }
+
+        let results = await pipe.run();
+
+        assert.equal(results.length,1);
+        assert.equal(results[0].parentId, '456');
+        assert.deepEqual(results[0].data, output.data);
     });
 });
 

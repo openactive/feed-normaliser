@@ -1,0 +1,29 @@
+{
+  "state": "updated",
+  "data": {
+    "id": "https://ncc.leisurecloud.net/OpenActive/api/scheduled-sessions/11575967",
+    "type": "ScheduledSession",
+    "endDate": "2020-07-27T09:00:00Z",
+    "@context": [
+      "https://openactive.io/",
+      "https://openactive.io/ns-beta"
+    ],
+    "duration": "PT45M",
+    "startDate": "2020-07-27T08:15:00Z",
+    "identifier": 11575967,
+    "superEvent": "https://ncc.leisurecloud.net/OpenActive/api/session-series/HRES0001802",
+    "maximumAttendeeCapacity": 35,
+    "remainingAttendeeCapacity": 21,
+    "beta:sportsActivityLocation": [
+      {
+        "name": [
+          "H.H.S.V. Court 1",
+          "H.H.S.V. Court 2",
+          "H.H.S.V. Court 3",
+          "H.H.S.V. Court 4"
+        ],
+        "type": "SportsActivityLocation"
+      }
+    ]
+  }
+}
