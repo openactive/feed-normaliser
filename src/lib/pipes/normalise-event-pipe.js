@@ -15,6 +15,7 @@ class NormaliseEventPipe extends Pipe {
         let id = this.getId();
         let type = this.getType();
         let kind = this.getKind();
+        let errors = [];
         console.log(`Running ${id} (${type}) through ${this.constructor.name}`);
 
         if (type == "Event"
@@ -31,7 +32,7 @@ class NormaliseEventPipe extends Pipe {
                 let superEventId;
                 let normalisedEventData;
 
-                if (typeof superEvent == 'object'){
+                if (typeof superEvent == 'object' && !Array.isArray(superEvent)){
                     // superEvent is embedded
                     normalisedEventData = {
                         ...superEvent,
@@ -68,13 +69,13 @@ class NormaliseEventPipe extends Pipe {
                             ...event
                         }
                     }else{
-                        console.log(`No raw_data with data_id [${superEvent}]`);
+                        errors.push({missingSuperEvent: `No raw_data with data_id [${superEvent}]`});
                         normalisedEventData = event;
                     }
                 }else{
                     // superEvent is something else that we can't process..
                     // probably a bug
-                    console.log(`Can't process superEvent value [${superEvent}]`);
+                    errors.push({invalidSuperEvent: `Can't process superEvent value [${superEvent}]`});
                     normalisedEventData = event;
                 }
 
@@ -89,12 +90,12 @@ class NormaliseEventPipe extends Pipe {
                     normalisedEventData["@type"] = "CourseInstanceSubEvent";
                 }
 
-                let normalisedEvent = new NormalisedEvent(normalisedEventData, kind, superEventId);
+                let normalisedEvent = new NormalisedEvent(normalisedEventData, kind, superEventId, errors);
                 this.normalisedEvents.push(normalisedEvent);
 
             }else{
                 // No superEvent, just use all data from the Event
-                let normalisedEvent = new NormalisedEvent(this.rawData, kind);
+                let normalisedEvent = new NormalisedEvent(this.rawData, kind, undefined, errors);
                 this.normalisedEvents.push(normalisedEvent);
             }
 
@@ -145,7 +146,7 @@ class NormaliseEventPipe extends Pipe {
                         normalisedEventData["@type"] = type;
                     }
 
-                    let normalisedEvent = new NormalisedEvent(normalisedEventData, kind);
+                    let normalisedEvent = new NormalisedEvent(normalisedEventData, kind, undefined, errors);
                     this.normalisedEvents.push(normalisedEvent);
                 }
             }

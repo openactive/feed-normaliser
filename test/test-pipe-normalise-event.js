@@ -170,3 +170,37 @@ describe('course-instance', function(){
         assert.deepEqual(results[0].data, output.data);
     });
 });
+
+describe('test-errors', function(){
+    it('should set an error for a missing superEvent', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-referenced-superevent-2.json'));
+        const error = {"missingSuperEvent": `No raw_data with data_id [https://ncc.leisurecloud.net/OpenActive/api/session-series/HRES0001802]`}
+
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+        assert.equal(results[0].errors.length, 1);
+        assert.deepEqual(results[0].errors[0], error);
+    });
+
+    it('should set an error for an invalid superEvent value', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-referenced-superevent-2.json'));
+        input.data.superEvent = "notavaliduri";
+        const error = {"invalidSuperEvent": `Can't process superEvent value [notavaliduri]`}
+
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+        assert.equal(results[0].errors.length, 1);
+        assert.deepEqual(results[0].errors[0], error);
+    });
+
+    it('should set an error for an invalid superEvent type', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/scheduledsession-referenced-superevent-2.json'));
+        input.data.superEvent = ["https://example.org/superevent"];
+        const error = {"invalidSuperEvent": `Can't process superEvent value [https://example.org/superevent]`}
+
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
+        assert.equal(results[0].errors.length, 1);
+        assert.deepEqual(results[0].errors[0], error);
+    });
+})

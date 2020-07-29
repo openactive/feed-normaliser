@@ -43,6 +43,10 @@ describe('course-schedule', function() {
         assert.deepEqual(results[1].data, output[1].data);
     });
 
+});
+
+describe('session-schedule', function() {
+
     it('should generate two correct Normalised Events from a SessionSeries with eventSchedule', async function(){
         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries-with-schedule.json'));
         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/sessionseries-with-schedule-normalised.json'));
@@ -80,6 +84,10 @@ describe('course-schedule', function() {
         assert.equal(results.length,1);
         assert.deepEqual(results[0].data, output[0].data);
     });
+
+});
+
+describe('error-handling', function() {
 
     it('should generate events when byDay value uses http', async function() {
 
