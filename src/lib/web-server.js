@@ -51,7 +51,7 @@ web_server_app.get('/normalised_data/all', async (req, res) => {
 });
 
 
-web_server_app.get('/normalised_data/item_by_id/:data_id', async (req, res) => {
+web_server_app.get('/normalised_data/item/:data_id', async (req, res) => {
     const dataInfo = await NormalisedDataInfo.getInfo(req.params.data_id);
     if (dataInfo === undefined){
         return res.status(404).send({ message: "Data Not Found"});

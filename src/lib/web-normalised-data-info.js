@@ -22,16 +22,16 @@ class  NormalisedDataInfo {
             'id': normalised_data.data_id,
             'deleted': normalised_data.data_deleted,
             'data': normalised_data.data,
-            'updated_at': normalised_data.updated_at,
+            'updatedAt': normalised_data.updated_at,
             'kind': normalised_data.data_kind
         };
 
-        out['raw_data'] = await this.get_raw_data_info(normalised_data.raw_data_id, client);
+        out['rawData'] = await this.get_raw_data_info(normalised_data.raw_data_id, client);
 
         if (normalised_data.raw_data_parent_id) {
-            out['parent_raw_data'] = await this.get_raw_data_info(normalised_data.raw_data_parent_id, client);
+            out['parentRawData'] = await this.get_raw_data_info(normalised_data.raw_data_parent_id, client);
         } else {
-            out['parent_raw_data'] = null;
+            out['parentRawData'] = null;
         }
 
       } else {
@@ -76,8 +76,8 @@ class  NormalisedDataInfo {
     const raw_data = res_raw_data.rows[0];
 
     let out = {
-        'rpde_id': raw_data.rpde_id,
-        'data_id': raw_data.data_id,
+        'rpdeId': raw_data.rpde_id,
+        'dataId': raw_data.data_id,
         'kind': raw_data.data_kind,
         'data': raw_data.data,
         'validation': {
