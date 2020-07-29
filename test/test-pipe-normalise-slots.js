@@ -116,7 +116,7 @@ describe('slot-referenced-facilityuse', function(){
         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse.json'));
         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse-normalised.json'));
 
-        // Mock superEvent retrieval from db
+        // Mock facilityUse retrieval from db
         const facilityuseData = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/facilityuse.json'));
         let pipe = new NormaliseSlotPipe(input, []);
         pipe.selectRawByDataId = function(dataId){
@@ -136,7 +136,7 @@ describe('slot-referenced-facilityuse', function(){
         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse-2.json'));
         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse-normalised-2.json'));
 
-        // Mock superEvent retrieval from db
+        // Mock facilityUse retrieval from db
         const facilityuseData = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/facilityuse-2.json'));
         let pipe = new NormaliseSlotPipe(input, []);
         pipe.selectRawByDataId = function(dataId){
@@ -150,5 +150,39 @@ describe('slot-referenced-facilityuse', function(){
         assert.equal(results[0].parentId, "def");
         assert.equal(results.length,1);
         assert.deepEqual(results[0].data,output.data);
+    });
+});
+
+describe('test-errors', function(){
+    it('should set an error for a missing facilityUse', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse-2.json'));
+        const error = {"missingFacilityUse": `No raw_data with data_id [https://lincsinspire-openactive.legendonlineservices.co.uk/api/facility-uses/10-3]`}
+
+        let pipe = new NormaliseSlotPipe(input, []);
+        let results = await pipe.run();
+        assert.equal(results[0].errors.length, 1);
+        assert.deepEqual(results[0].errors[0], error);
+    });
+
+    it('should set an error for an invalid facilityUse value', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse-2.json'));
+        input.data.facilityUse = "notavaliduri";
+        const error = {"invalidFacilityUse": `Can't process facilityUse value [notavaliduri]`}
+
+        let pipe = new NormaliseSlotPipe(input, []);
+        let results = await pipe.run();
+        assert.equal(results[0].errors.length, 1);
+        assert.deepEqual(results[0].errors[0], error);
+    });
+
+    it('should set an error for an invalid facilityUse type', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/slot-referenced-facilityuse-2.json'));
+        input.data.facilityUse = ["https://example.org/fu"];
+        const error = {"invalidFacilityUse": `Can't process facilityUse value [https://example.org/fu]`}
+
+        let pipe = new NormaliseSlotPipe(input, []);
+        let results = await pipe.run();
+        assert.equal(results[0].errors.length, 1);
+        assert.deepEqual(results[0].errors[0], error);
     });
 });

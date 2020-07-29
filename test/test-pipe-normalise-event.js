@@ -203,4 +203,4 @@ describe('test-errors', function(){
         assert.equal(results[0].errors.length, 1);
         assert.deepEqual(results[0].errors[0], error);
     });
-})
+});
