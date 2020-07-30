@@ -1,5 +1,7 @@
 import { promises as fs } from 'fs';
+import fetch from 'node-fetch';
 import path from 'path';
+import Settings from './settings.js';
 
 
 class Utils {
@@ -64,9 +66,23 @@ class Utils {
     }
   }
 
+  static async loadActivitiesJSONIntoCache() {
+
+    const res = await fetch(Settings.activityListJSONLD);
+    // TODO handle errors / non 200 responses
+    const activitiesData =  await res.json();
+
+    cache.activities = {};
+
+    for(let idx in activitiesData.concept) {
+      cache.activities[activitiesData.concept[idx].id] = activitiesData.concept[idx];
+    }
+
+  }
+
 }
 
-var cache = { postcodes: {} };
+var cache = { postcodes: {}, activities: {} };
 
 export {
   cache,

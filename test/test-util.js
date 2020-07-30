@@ -1,5 +1,5 @@
 import assert from 'assert';
-import Utils from '../src/lib/utils.js';
+import {cache, Utils} from '../src/lib/utils.js';
 
 
 describe('makeNextURL', function() {
@@ -69,5 +69,17 @@ describe('getIdFromData', function(){
     it('should return undefined if data is null', function(){
         const id = Utils.getIdFromData(null);
         assert.deepEqual(id, undefined);
+    });
+});
+
+describe('activities-cache', function(){
+    it('should load the remote Activity List into the cache', async function(){
+        assert.equal(Object.keys(cache.activities).length, 0);
+        try{
+            await Utils.loadActivitiesJSONIntoCache();
+        }catch(e){
+            console.log(e);
+        }
+        assert.equal(Object.keys(cache.activities).length>0,true);
     });
 });
