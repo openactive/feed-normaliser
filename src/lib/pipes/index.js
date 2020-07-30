@@ -2,11 +2,15 @@
 import NormaliseEventPipe from './normalise-event-pipe.js';
 import NormaliseSlotPipe from './normalise-slot-pipe.js';
 import NormaliseSchedulePipe from './normalise-schedule-pipe.js';
+import GeoPipe from './geo-pipe.js';
 
 export default [
-  // Comment this out to see some test normalised events in the system
-  //TestPipe
+  // Test pipe - uncomment for test events
+  //TestPipe,
+  // Normalisation pipes - don't turn these off except for testing
   NormaliseEventPipe,
   NormaliseSlotPipe,
-  NormaliseSchedulePipe
+  NormaliseSchedulePipe,
+  // Data enhancement pipes - turn these on and off as needed
+  GeoPipe
 ];
