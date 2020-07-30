@@ -66,7 +66,10 @@ class Utils {
 
 }
 
+var cache = { postcodes: {} };
+
 export {
+  cache,
   Utils,
 };
 
