@@ -1,0 +1,57 @@
+{
+  "kind": "FacilityUse.Slot",
+  "state": "updated",
+  "id": "155569",
+  "modified": 307799,
+  "data": {
+    "@context": ["https://openactive.io/"],
+    "@id": "https://lincsinspire-openactive.legendonlineservices.co.uk/api/facility-uses/10-3/events/d05b2453-0828-4d5e-a9c1-d1edd5080f43",
+    "identifier": "d05b2453-0828-4d5e-a9c1-d1edd5080f43",
+    "startDate": "2020-06-25T10:20:00+01:00",
+    "endDate": "2020-06-25T11:00:00+01:00",
+    "duration": "PT40M",
+    "remainingUses": 2,
+    "maximumUses": 2,
+    "offers": [
+      {
+        "identifier": "HeadlinePrice",
+        "name": "Non-member",
+        "price": 6.1,
+        "priceCurrency": "GBP",
+        "type": "Offer"
+      }
+    ],
+    "name": "Squash Activities ST",
+    "activity": [
+      {
+        "prefLabel": "Squash Activities ST",
+        "type": "Concept"
+      }
+    ],
+    "provider": {
+      "name": "Lincs Inspire LTD",
+      "email": "Enquiries@lincsinspire.com",
+      "type": "Organization"
+    },
+    "location": {
+      "identifier": "bf57b7d4-d98f-4282-864d-a09f764b4383",
+      "name": "Grimsby L C",
+      "address": {
+        "streetAddress": "Cromwell Road",
+        "addressLocality": "North East Lincolnshire",
+        "addressRegion": "North East Lincolnshire",
+        "postalCode": "DN31 2BH",
+        "addressCountry": "GB",
+        "type": "PostalAddress"
+      },
+      "telephone": "01472323100",
+      "geo": {
+        "latitude": 53.569465,
+        "longitude": -0.113715,
+        "type": "GeoCoordinates"
+      },
+      "type": "Place"
+    },
+    "@type": "Slot"
+  }
+}

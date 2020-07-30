@@ -91,37 +91,19 @@ This pipe will generate normalised events from any raw data object with an `even
 
 Events are often related to each other using `subEvent`, `superEvent`, `facilityUse` or `event` relationships. Sometimes the whole related object is embedded in the parent; in this case we can just process the data that's there.
 
-Sometimes the related object exists in another feed, and the value of the `subEvent` \(etc\) property is a URL. This could look like one of:
+In the cases of `superEvent` and `facilityUse`, the related object may exist in another feed, and the value of the property is a URL. Eg:
 
-```text
-"subEvent": "https://opportunities.example/event/1"
+```json
+"superEvent": "https://opportunities.example/event/1"
 ```
 
-```text
-"subEvent": {
-    "@id": "https://opportunities.example/event/1"
-}
-```
-
-```text
-"subEvent": ["https://opportunities.example/event/1"]
-```
-
-```text
-"subEvent": [{
-    "@id": "https://opportunities.example/event/1"
-}]
-```
-
-\(where `@id` could instead be `id`\).
-
-In theory all feeds that use this form of referencing events should only ever be referring to fully fledged URIs, and not identifier strings. Once we've pulled the URI\(s\) for the children out of the relevent property value, we can look it up in the database. The URIs should appear in the `data_id` field of the `raw_data` table. Then we continue to process it as if it was nested.
+In theory all feeds that use this form of referencing events should only ever be referring to fully fledged URIs, and not identifier strings. Once we've pulled the URI for the children out of the relevent property value, we can look it up in the database. The URI should appear in the `data_id` field of the `raw_data` table. Then we continue to process it as if it was nested.
 
 The properties that relate events to one another each have inverse versions. Eg. `subEvent` is the inverse of `superEvent`. In the case where we have fetched an event by reference and the referenced event contains the inverse property to the one we followed to fetch it, we assume there is nothing extra to be gained by following or processing this - and to avoid getting stuck in an infinite loop - we just remove it from the final Normalised Event.
 
 That is to say, if we start with:
 
-```text
+```json
 {
     "@id": "/event1",
     "subEvent": [
@@ -132,7 +114,7 @@ That is to say, if we start with:
 
 So we fetch `/subeventA`:
 
-```
+```json
 {
     "@id": "/subeventA",
     "superEvent": "/event1"

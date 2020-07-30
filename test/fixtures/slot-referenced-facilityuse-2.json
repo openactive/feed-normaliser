@@ -1,0 +1,27 @@
+{
+  "kind": "FacilityUse.Slot",
+  "state": "updated",
+  "id": "155569",
+  "modified": 307799,
+  "data": {
+    "@context": "https://openactive.io/",
+    "id": "https://lincsinspire-openactive.legendonlineservices.co.uk/api/facility-uses/10-3/events/d05b2453-0828-4d5e-a9c1-d1edd5080f43",
+    "identifier": "d05b2453-0828-4d5e-a9c1-d1edd5080f43",
+    "facilityUse": "https://lincsinspire-openactive.legendonlineservices.co.uk/api/facility-uses/10-3",
+    "startDate": "2020-06-25T10:20:00+01:00",
+    "endDate": "2020-06-25T11:00:00+01:00",
+    "duration": "PT40M",
+    "remainingUses": 2,
+    "maximumUses": 2,
+    "offers": [
+      {
+        "identifier": "HeadlinePrice",
+        "name": "Non-member",
+        "price": 6.1,
+        "priceCurrency": "GBP",
+        "type": "Offer"
+      }
+    ],
+    "type": "Slot"
+  }
+}
