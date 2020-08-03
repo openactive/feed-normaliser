@@ -5,6 +5,7 @@ import Settings from './settings.js';
 
 const database_pool = new pg.Pool({
       connectionString: Settings.postgresURL,
+      ssl: Settings.postgresSSL,
 });
 
 async function migrate_database() {
