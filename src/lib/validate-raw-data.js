@@ -66,8 +66,22 @@ async function validate_raw_data(raw_data) {
 
 
     const client = await database_pool.connect();
+    let result;
+
     try {
-        const result = await validator.validate(raw_data.data, validate_options);
+        result = await validator.validate(raw_data.data, validate_options);
+    } catch (error) {
+        console.error("ERROR validator.validate");
+        console.error(error);
+
+        await client.query(
+            'UPDATE raw_data SET validation_done=TRUE, validation_results=$1, validation_passed=FALSE WHERE id=$2',
+            [JSON.stringify({validator_exception: error}), raw_data.id]
+        );
+        return;
+    }
+
+    try {
         const result_filtered = result.filter(r => r.severity === "failure");
 
         await client.query(
