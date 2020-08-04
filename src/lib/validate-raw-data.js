@@ -64,11 +64,12 @@ async function validate_raw_data_all() {
 
 async function validate_raw_data(raw_data) {
 
-    const result = await validator.validate(raw_data.data, validate_options);
-    const result_filtered = result.filter(r => r.severity === "failure");
 
     const client = await database_pool.connect();
     try {
+        const result = await validator.validate(raw_data.data, validate_options);
+        const result_filtered = result.filter(r => r.severity === "failure");
+
         await client.query(
             'UPDATE raw_data SET validation_done= \'t\', validation_results=$1, validation_passed=$2 WHERE id=$3',
             [JSON.stringify(result_filtered), (result_filtered.length == 0),  raw_data.id]
