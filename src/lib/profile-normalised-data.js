@@ -36,7 +36,7 @@ async function profile_normalised_data_all_for_profile(profile_name) {
                 rows.push(raw_data)
             }
         } catch(error) {
-            console.error("ERROR validate_raw_data_all");
+            console.error("ERROR profile_normalised_data_all_for_profile");
             console.error(error);
             break;
         } finally {
