@@ -46,9 +46,9 @@ class NormaliseEventPipe extends Pipe {
                     let superEventData = superEventResult.data;
                     superEventId = superEventResult.id;
                     if (superEventData != undefined){
+                        superEventData = this.fixIdInData(this.fixTypeInData(superEventData));
 
                         // unset superEvent ids in case they are not overriden by event
-                        delete superEventData.id;
                         delete superEventData.identifier;
                         delete superEventData["@id"];
                         // also drop any circular subEvent, assuming it's a dup of event
@@ -78,9 +78,6 @@ class NormaliseEventPipe extends Pipe {
                     errors.push({invalidSuperEvent: `Can't process superEvent value [${superEvent}]`});
                     normalisedEventData = event;
                 }
-
-                // Get rid of stray 'type' property
-                delete normalisedEventData.type;
 
                 // If the parent is a CourseInstance, the child might have Event
                 // type but we actually want to force this to be a
@@ -136,7 +133,6 @@ class NormaliseEventPipe extends Pipe {
                     }
 
                     // Make sure the type value is set correctly
-                    delete normalisedEventData.type;
                     if (type == "SessionSeries"){
                         normalisedEventData["@type"] = "ScheduledSession";
                     }else if(type == "CourseInstance"){
