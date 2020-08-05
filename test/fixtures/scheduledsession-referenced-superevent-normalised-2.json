@@ -22,13 +22,13 @@
           "H.H.S.V. Court 3",
           "H.H.S.V. Court 4"
         ],
-        "type": "SportsActivityLocation"
+        "@type": "SportsActivityLocation"
       }
     ],
     "offers": [
       {
         "name": "Non-Member",
-        "type": "Offer",
+        "@type": "Offer",
         "price": 6.9,
         "identifier": "STAND",
         "description": "Fitness Class",
@@ -40,9 +40,9 @@
     ],
     "location": {
       "name": "Harvey Hadden Sports Vill",
-      "type": "Place",
+      "@type": "Place",
       "address": {
-        "type": "PostalAddress"
+        "@type": "PostalAddress"
       },
       "identifier": "HHSV"
     },
@@ -50,10 +50,10 @@
       "url": "https://www.activenottingham.com",
       "logo": {
         "url": "https://res.cloudinary.com/gladstone/image/upload/NottinghamCC-live/kj4no6aibkgpsylyv0sz",
-        "type": "ImageObject"
+        "@type": "ImageObject"
       },
       "name": "Nottingham City Council Sport and Leisure",
-      "type": "Organization",
+      "@type": "Organization",
       "email": "SportandLeisure@nottinghamcity.gov.uk",
       "legalName": "Nottingham City Council",
       "telephone": "0115876100",

@@ -15,7 +15,6 @@ class Pipe {
       this.rawData = data;
     }
     this.normalisedEvents = normalisedEvents;
-    this.context = Utils.getContext();
   }
 
   /* Override this function */
@@ -62,24 +61,27 @@ class Pipe {
     this.fixContext();
     this.fixId();
     this.fixType();
-    this.fixInvalidData();
     this.expandObjects();
-    this.addProvenanceInformation();
   }
 
   fixId(){
-    if(typeof this.rawData.id !== 'undefined' && typeof this.rawData["@id"] === 'undefined'){
-      this.rawData["@id"] = this.rawData.id;
-      delete this.rawData.id;
-    }
+    this.rawData = this.fixIdInData(this.rawData);
+  }
+
+  fixIdInData(data){
+    let dataJson = JSON.stringify(data);
+    dataJson = dataJson.replace(/\"id\":/gm, '"@id":');
+    return JSON.parse(dataJson);
   }
 
   fixType(){
-    // TODO what if type is an array
-    if(typeof this.rawData.type !== 'undefined' && typeof this.rawData["@type"] === 'undefined'){
-      this.rawData["@type"] = this.rawData.type;
-      delete this.rawData.type;
-    }
+    this.rawData = this.fixTypeInData(this.rawData);
+  }
+
+  fixTypeInData(data){
+    let dataJson = JSON.stringify(data);
+    dataJson = dataJson.replace(/\"type\":/gm, '"@type":');
+    return JSON.parse(dataJson);
   }
 
   fixContext(){
@@ -128,14 +130,6 @@ class Pipe {
       this.rawData["@context"] = [Settings.contextUrl];
     }
 
-  }
-
-  fixInvalidData(){
-    let event = this.rawData;
-    let invalidProperties = this.findInvalidProperties();
-    let emptyValues = this.findEmptyValues();
-    // TODO: fix them
-    this.rawData = event;
   }
 
   expandObjects(){
@@ -195,54 +189,6 @@ class Pipe {
       }
     }
     return activity;
-  }
-
-  findInvalidProperties(){
-    // Properties that are not defined in the specification, and do not have the
-    // data: prefix, should be wrapped in an 'invalidAttribute` object.
-    //
-    // but beta is okay
-    // what about if there are additional contexts?
-    //
-    // Get validation results from db or execute validation if not present
-    //
-    // import validator from '@openactive/data-model-validator';
-    // import Settings from '../src/lib/settings.js';
-    //
-    // const validate_options = {
-    //     loadRemoteJson: true,
-    //     remoteJsonCachePath: Settings.dataModelValidatorRemoteJsonCachePath,
-    // };
-
-    // const result = await validator.validate(input.data, validate_options);
-    // console.log(result.filter(r => r.type === "field_not_in_spec"));
-  }
-
-  findEmptyValues(){
-    // Properties that have values such as empty strings, null, or empty arrays,
-    // should be stripped from the normalised object, in accordance with the
-    // Opportunity specification.
-    //
-    // console.log(result.filter(r => r.type === "field_is_empty"));
-  }
-
-  addProvenanceInformation(){
-    // "provenanceInformation": {
-    //   "feedUrl" : [
-    //     "https://playwaze.com/OpenData/ScheduledSessions",
-    //     "https://playwaze.com/OpenData/SessionSeries"
-    // ],
-    // "publisherName": "Playwaze",
-    // "derivedFrom": ["https://playwaze.com/SessionSeries/jifgh8dinma",
-    //              "https://playwaze.com/SessionSeries/jifgh8dinma/ScheduledSession/bzncxfzk8oe"]
-    // },
-
-    // TODO: get provenance information from database
-    // TODO: we might do this at the RDPE end instead
-    // this.rawData["provenanceInformation"] = {
-    //   "feedUrl": [],
-    //   "publisherName": ""
-    // }
   }
 
   async selectRawByDataId(dataId){

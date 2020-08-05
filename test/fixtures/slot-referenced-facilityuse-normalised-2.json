@@ -18,20 +18,20 @@
         "name": "Non-member",
         "price": 6.1,
         "priceCurrency": "GBP",
-        "type": "Offer"
+        "@type": "Offer"
       }
     ],
     "name": "Squash Activities ST",
     "activity": [
       {
         "prefLabel": "Squash Activities ST",
-        "type": "Concept"
+        "@type": "Concept"
       }
     ],
     "provider": {
       "name": "Lincs Inspire LTD",
       "email": "Enquiries@lincsinspire.com",
-      "type": "Organization"
+      "@type": "Organization"
     },
     "location": {
       "identifier": "bf57b7d4-d98f-4282-864d-a09f764b4383",
@@ -42,15 +42,15 @@
         "addressRegion": "North East Lincolnshire",
         "postalCode": "DN31 2BH",
         "addressCountry": "GB",
-        "type": "PostalAddress"
+        "@type": "PostalAddress"
       },
       "telephone": "01472323100",
       "geo": {
         "latitude": 53.569465,
         "longitude": -0.113715,
-        "type": "GeoCoordinates"
+        "@type": "GeoCoordinates"
       },
-      "type": "Place"
+      "@type": "Place"
     },
     "@type": "Slot"
   }

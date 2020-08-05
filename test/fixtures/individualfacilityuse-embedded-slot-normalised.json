@@ -17,23 +17,23 @@
     "facilityUse": "http://www.example.org/facility-use/1",
     "image": [
       {
-        "type": "ImageObject",
+        "@type": "ImageObject",
         "url": "http://example.org/images/1.jpg"
       }
     ],
     "activity": [{"@type": "Concept", "prefLabel": "Tennis"}],
     "provider": {
-      "type": "Organization",
+      "@type": "Organization",
       "name": "Leisure Centre Ltd"
     },
     "location": {
-      "type": "SportsActivityLocation",
+      "@type": "SportsActivityLocation",
       "name": "Main Tennis Court",
       "containedInPlace": {
-        "type": "Place",
+        "@type": "Place",
         "name": "Example Leisure Centre",
         "address": {
-          "type": "PostalAddress",
+          "@type": "PostalAddress",
           "streetAddress": "1 High Street",
           "addressLocality": "Bristol",
           "addressRegion": "Somerset",
@@ -61,23 +61,23 @@
   "facilityUse": "http://www.example.org/facility-use/1",
   "image": [
     {
-      "type": "ImageObject",
+      "@type": "ImageObject",
       "url": "http://example.org/images/1.jpg"
     }
   ],
   "activity": [{"@type": "Concept", "prefLabel": "Tennis"}],
   "provider": {
-    "type": "Organization",
+    "@type": "Organization",
     "name": "Leisure Centre Ltd"
   },
   "location": {
-    "type": "SportsActivityLocation",
+    "@type": "SportsActivityLocation",
     "name": "Main Tennis Court",
     "containedInPlace": {
-      "type": "Place",
+      "@type": "Place",
       "name": "Example Leisure Centre",
       "address": {
-        "type": "PostalAddress",
+        "@type": "PostalAddress",
         "streetAddress": "1 High Street",
         "addressLocality": "Bristol",
         "addressRegion": "Somerset",

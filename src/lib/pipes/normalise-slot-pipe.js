@@ -54,8 +54,9 @@ class NormaliseSlotPipe extends Pipe {
                 parentId = facilityUseResult.id;
                 if (facilityUseData != undefined){
 
+                    facilityUseData = this.fixIdInData(this.fixTypeInData(facilityUseData));
+
                     // unset facilityUse ids in case they are not overriden by event
-                    delete facilityUseData.id;
                     delete facilityUseData.identifier;
                     delete facilityUseData["@id"];
                     // drop hoursAvailable because it doesn't make sense on Slot
@@ -97,9 +98,6 @@ class NormaliseSlotPipe extends Pipe {
                 errors.push({ invalidFacilityUse: `Can't process facilityUse value [${facilityUse}]` });
             }
 
-            // Get rid of stray 'type' property
-            delete normalisedEventData.type;
-
             let normalisedEvent = new NormalisedEvent(normalisedEventData, kind, parentId, errors);
             this.normalisedEvents.push(normalisedEvent);
         }
@@ -125,10 +123,8 @@ class NormaliseSlotPipe extends Pipe {
         // Make sure @id value is set correctly
         let slotId = this.getId(normalisedEventData);
         normalisedEventData["@id"] = slotId;
-        delete normalisedEventData.id;
 
         // Make sure the @type value is set correctly
-        delete normalisedEventData.type;
         normalisedEventData["@type"] = "Slot";
 
         // Delete circular references to parents from Slots

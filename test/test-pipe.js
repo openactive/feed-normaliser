@@ -118,112 +118,112 @@ describe('pipe-fix-ids', function(){
         }
     });
 
-    // it('should replace id in nested object with @id', function(done){
-    //     try{
-    //         const input = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "offers": {
-    //                "@type": "Offer",
-    //                "id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
-    //                "price": "0"
-    //              }
-    //         }
-    //         const output = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "offers": {
-    //                "@type": "Offer",
-    //                "@id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
-    //                "price": "0"
-    //              }
-    //         }
-    //         let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
-    //         pipe.fixId();
-    //         assert.deepEqual(pipe.rawData, output);
-    //         done();
-    //     }catch(error){
-    //         done(error);
-    //     }
-    // });
+    it('should replace id in nested object with @id', function(done){
+        try{
+            const input = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "offers": {
+                   "@type": "Offer",
+                   "id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
+                   "price": "0"
+                 }
+            }
+            const output = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "offers": {
+                   "@type": "Offer",
+                   "@id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
+                   "price": "0"
+                 }
+            }
+            let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
+            pipe.fixId();
+            assert.deepEqual(pipe.rawData, output);
+            done();
+        }catch(error){
+            done(error);
+        }
+    });
 
-    // it('should replace id in nested array object with @id', function(done){
-    //     try{
-    //         const input = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "subEvent": [
-    //                 {
-    //                     "id": "https://opportunity.example/event/2",
-    //                     "@type": "Event",
-    //                     "name": "A sub event"
-    //                 }
-    //             ]
-    //         }
-    //         const output = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "subEvent": [
-    //                 {
-    //                     "@id": "https://opportunity.example/event/2",
-    //                     "@type": "Event",
-    //                     "name": "A sub event"
-    //                 }
-    //             ]
-    //         }
-    //         let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
-    //         pipe.fixId();
-    //         assert.deepEqual(pipe.rawData, output);
-    //         done();
-    //     }catch(error){
-    //         done(error);
-    //     }
-    // });
+    it('should replace id in nested array object with @id', function(done){
+        try{
+            const input = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "subEvent": [
+                    {
+                        "id": "https://opportunity.example/event/2",
+                        "@type": "Event",
+                        "name": "A sub event"
+                    }
+                ]
+            }
+            const output = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "subEvent": [
+                    {
+                        "@id": "https://opportunity.example/event/2",
+                        "@type": "Event",
+                        "name": "A sub event"
+                    }
+                ]
+            }
+            let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
+            pipe.fixId();
+            assert.deepEqual(pipe.rawData, output);
+            done();
+        }catch(error){
+            done(error);
+        }
+    });
 
-    // it('should replace both top level id and id in nested array object with @id', function(done){
-    //     try{
-    //         const input = {
-    //             "@context": ["https://openactive.io/"],
-    //             "id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "subEvent": [
-    //                 {
-    //                     "id": "https://opportunity.example/event/2",
-    //                     "@type": "Event",
-    //                     "name": "A sub event"
-    //                 }
-    //             ]
-    //         }
-    //         const output = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "subEvent": [
-    //                 {
-    //                     "@id": "https://opportunity.example/event/2",
-    //                     "@type": "Event",
-    //                     "name": "A sub event"
-    //                 }
-    //             ]
-    //         }
-    //         let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
-    //         pipe.fixId();
-    //         assert.deepEqual(pipe.rawData, output);
-    //         done();
-    //     }catch(error){
-    //         done(error);
-    //     }
-    // });
+    it('should replace both top level id and id in nested array object with @id', function(done){
+        try{
+            const input = {
+                "@context": ["https://openactive.io/"],
+                "id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "subEvent": [
+                    {
+                        "id": "https://opportunity.example/event/2",
+                        "@type": "Event",
+                        "name": "A sub event"
+                    }
+                ]
+            }
+            const output = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "subEvent": [
+                    {
+                        "@id": "https://opportunity.example/event/2",
+                        "@type": "Event",
+                        "name": "A sub event"
+                    }
+                ]
+            }
+            let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
+            pipe.fixId();
+            assert.deepEqual(pipe.rawData, output);
+            done();
+        }catch(error){
+            done(error);
+        }
+    });
 });
 
 describe('pipe-fix-types', function(){
@@ -250,112 +250,112 @@ describe('pipe-fix-types', function(){
         }
     });
 
-    // it('should replace type in nested object with @type', function(done){
-    //     try{
-    //         const input = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "offers": {
-    //                "type": "Offer",
-    //                "@id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
-    //                "price": "0"
-    //              }
-    //         }
-    //         const output = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "offers": {
-    //                "@type": "Offer",
-    //                "@id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
-    //                "price": "0"
-    //              }
-    //         }
-    //         let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
-    //         pipe.fixId();
-    //         assert.deepEqual(pipe.rawData, output);
-    //         done();
-    //     }catch(error){
-    //         done(error);
-    //     }
-    // });
+    it('should replace type in nested object with @type', function(done){
+        try{
+            const input = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "offers": {
+                   "type": "Offer",
+                   "@id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
+                   "price": "0"
+                 }
+            }
+            const output = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "offers": {
+                   "@type": "Offer",
+                   "@id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
+                   "price": "0"
+                 }
+            }
+            let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
+            pipe.fixType();
+            assert.deepEqual(pipe.rawData, output);
+            done();
+        }catch(error){
+            done(error);
+        }
+    });
 
-    // it('should replace type in nested array object with @type', function(done){
-    //     try{
-    //         const input = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "subEvent": [
-    //                 {
-    //                     "@id": "https://opportunity.example/event/2",
-    //                     "type": "Event",
-    //                     "name": "A sub event"
-    //                 }
-    //             ]
-    //         }
-    //         const output = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "subEvent": [
-    //                 {
-    //                     "@id": "https://opportunity.example/event/2",
-    //                     "@type": "Event",
-    //                     "name": "A sub event"
-    //                 }
-    //             ]
-    //         }
-    //         let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
-    //         pipe.fixId();
-    //         assert.deepEqual(pipe.rawData, output);
-    //         done();
-    //     }catch(error){
-    //         done(error);
-    //     }
-    // });
+    it('should replace type in nested array object with @type', function(done){
+        try{
+            const input = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "subEvent": [
+                    {
+                        "@id": "https://opportunity.example/event/2",
+                        "type": "Event",
+                        "name": "A sub event"
+                    }
+                ]
+            }
+            const output = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "subEvent": [
+                    {
+                        "@id": "https://opportunity.example/event/2",
+                        "@type": "Event",
+                        "name": "A sub event"
+                    }
+                ]
+            }
+            let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
+            pipe.fixType();
+            assert.deepEqual(pipe.rawData, output);
+            done();
+        }catch(error){
+            done(error);
+        }
+    });
 
-    // it('should replace both top level type and type in nested array object with @type', function(done){
-    //     try{
-    //         const input = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "type": "Event",
-    //             "name": "An event",
-    //             "subEvent": [
-    //                 {
-    //                     "@id": "https://opportunity.example/event/2",
-    //                     "type": "Event",
-    //                     "name": "A sub event"
-    //                 }
-    //             ]
-    //         }
-    //         const output = {
-    //             "@context": ["https://openactive.io/"],
-    //             "@id": "https://opportunity.example/event/1",
-    //             "@type": "Event",
-    //             "name": "An event",
-    //             "subEvent": [
-    //                 {
-    //                     "@id": "https://opportunity.example/event/2",
-    //                     "@type": "Event",
-    //                     "name": "A sub event"
-    //                 }
-    //             ]
-    //         }
-    //         let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
-    //         pipe.fixId();
-    //         assert.deepEqual(pipe.rawData, output);
-    //         done();
-    //     }catch(error){
-    //         done(error);
-    //     }
-    // });
+    it('should replace both top level type and type in nested array object with @type', function(done){
+        try{
+            const input = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "type": "Event",
+                "name": "An event",
+                "subEvent": [
+                    {
+                        "@id": "https://opportunity.example/event/2",
+                        "type": "Event",
+                        "name": "A sub event"
+                    }
+                ]
+            }
+            const output = {
+                "@context": ["https://openactive.io/"],
+                "@id": "https://opportunity.example/event/1",
+                "@type": "Event",
+                "name": "An event",
+                "subEvent": [
+                    {
+                        "@id": "https://opportunity.example/event/2",
+                        "@type": "Event",
+                        "name": "A sub event"
+                    }
+                ]
+            }
+            let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
+            pipe.fixType();
+            assert.deepEqual(pipe.rawData, output);
+            done();
+        }catch(error){
+            done(error);
+        }
+    });
 });
 
 describe('pipe-rawdata-lookup', function(){
