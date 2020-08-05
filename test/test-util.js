@@ -74,6 +74,7 @@ describe('getIdFromData', function(){
 
 describe('activities-cache', function(){
     it('should load the remote Activity List into the cache', async function(){
+        cache.activities = {};
         assert.equal(Object.keys(cache.activities).length, 0);
         try{
             await Utils.loadActivitiesJSONIntoCache();
