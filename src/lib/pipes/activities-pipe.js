@@ -16,6 +16,67 @@ class ActivitiesPipe extends Pipe {
       // Loop through the normalisedEvents
       for(let idx in this.normalisedEvents) {
 
+        // IDs from the OA activityList of activities to add
+        let activityIds = new Set();
+
+        // Activities we can't improve we should keep
+        // and add them back later
+        let unchangedActivities = [];
+
+        // For each value in `activity`
+        if(Array.isArray(this.normalisedEvents[idx].data.activity)){
+          for(let activity of this.normalisedEvents[idx].data.activity){
+
+            if(activity != undefined){
+              // If no inScheme, assume we want the main OA codelist
+              if(activity.inScheme == undefined || activity.inScheme == "https://openactive.io/activity-list"){
+
+                let id = this.getActivityId(activity);
+                if(id == undefined){
+                  // It is common for data not to have an id
+                  // Look through labels and add IDs from cache instead
+                  if(activity.prefLabel in cache.activities.byLabel){
+                    activityIds.add(cache.activities.byLabel[activity.prefLabel].id);
+                  }else{
+                    unchangedActivities.push(activity);
+                  }
+                }else{
+                  // Check ID is in cache
+                  if(id in cache.activities.byId){
+                    activityIds.add(id);
+                  }else{
+                    unchangedActivities.push(activity);
+                  }
+                }
+              }else{
+                unchangedActivities.push(activity);
+              }
+            }
+          }
+        }
+
+        // Add broader activities for all from OA ActivityList
+        let moreActivities = [];
+        moreActivities = this.getBroaderActivities([...activityIds]);
+
+        // Get more activities from cache using name and description
+        moreActivities = moreActivities.concat(this.extractActivities(this.normalisedEvents[idx]));
+
+        for(let a of moreActivities){
+          activityIds.add(a.id);
+        }
+
+        // Add any new activities back to the normalised event
+        this.normalisedEvents[idx].data.activity = unchangedActivities;
+        for(let id of activityIds){
+          let outputActivity = {
+            "@id": id,
+            "@type": "Concept",
+            "prefLabel": cache.activities.byId[id].prefLabel,
+            "inScheme": "https://openactive.io/activity-list"
+          }
+          this.normalisedEvents[idx].data.activity.push(outputActivity);
+        }
       }
 
       resolve(this.normalisedEvents);
@@ -33,13 +94,59 @@ class ActivitiesPipe extends Pipe {
     }
   }
 
+  getActivityId(activityObject){
+    if(activityObject.id != undefined){
+      return this.normaliseActivityId(activityObject.id);
+    }
+    if(activityObject["@id"] != undefined){
+      return this.normaliseActivityId(activityObject["@id"]);
+    }
+  }
+
   /**
+  Check for labels from the ActivityList in the name and description
+  fields of the event, and apply these activities if found.
+  **/
+  extractActivities(normalisedEvent){
+    let activityList = cache.activities.byId;
+    let additionalActivities = [];
+    let searchFields = ['name', 'description'];
+
+    for (const id in activityList) {
+
+      for (const field of searchFields){
+
+        if (normalisedEvent.data[field] !== undefined){
+          if(this.searchTextForActivity(normalisedEvent.data[field].toLowerCase(), activityList[id].prefLabel.toLowerCase())){
+            additionalActivities.push(activityList[id]);
+            additionalActivities = additionalActivities.concat(this.getBroaderActivities(id));
+          }
+
+          if (activityList[id].altLabel !== undefined){
+            for (const altLabel in activityList[id].altLabel){
+              if(this.searchTextForActivity(normalisedEvent.data[field].toLowerCase(), altLabel.toLowerCase())){
+                additionalActivities.push(activityList[id]);
+                additionalActivities = additionalActivities.concat(this.getBroaderActivities(id));
+              }
+
+            }
+          }
+        }
+      }
+
+    }
+
+    return additionalActivities;
+  }
+
+  /**
+  Given an ID, get the corresponding labels from the cache.
   Most activities in the ActivityList only have a prefLabel but some have
   altLabel so we should get this too.
   **/
   getActivityLabels(activityKey){
     let labels = [];
-    let activityList = cache.activities;
+    let activityList = cache.activities.byId;
       // Get the labels from the cached ActivityList
       labels.push(activityList[activityKey]['prefLabel']);
       if (activityList[activityKey]['altLabel'] !== undefined){
@@ -51,12 +158,19 @@ class ActivitiesPipe extends Pipe {
   }
 
   /**
+  Given a label, get the corresponding activity from the cache.
+  **/
+  getIdByLabel(activityLabel){
+    return cache.activities.byLabel[activityLabel];
+  }
+
+  /**
   Recursively checks activities in the ActivityList for broader field
-  and returns all labels of broader concepts. The broader field is an
+  and returns all broader concepts. The broader field is an
   array of ids that can also be found in the ActivityList.
   **/
   getBroaderActivities(activityKeys, activitiesSoFar = []){
-    let activityList = cache.activities;
+    let activityList = cache.activities.byId;
 
     if (!Array.isArray(activityKeys)){
       activityKeys = [activityKeys];
@@ -64,15 +178,13 @@ class ActivitiesPipe extends Pipe {
 
     for (let activityKey of activityKeys){
 
+      activityKey = this.normaliseActivityId(activityKey);
       let broaderKeys = activityList[activityKey]['broader'];
+
       if (broaderKeys !== undefined){
-        let broaderLabels = [];
         for (let broaderKey of broaderKeys){
-          let broaderLabel = this.getActivityLabels(this.normaliseActivityId(broaderKey));
-          broaderLabels = broaderLabels.concat(broaderLabel);
-          console.log(`ActivitiesPipe found broader activity: [${broaderLabel}]`);
+          activitiesSoFar.push(activityList[broaderKey]);
         }
-        activitiesSoFar = activitiesSoFar.concat(broaderLabels);
         return this.getBroaderActivities(broaderKeys, activitiesSoFar);
       }
 
