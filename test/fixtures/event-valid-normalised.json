@@ -10,7 +10,7 @@
     ],
     "@type": "Event",
     "organizer": {
-      "type": "Organization",
+      "@type": "Organization",
       "url": "http://www.goodgym.org/?utm_medium=openactive&utm_source=default",
       "name": "GoodGym",
       "telephone": "0203 432 3920",
@@ -39,15 +39,15 @@
     "endDate": "2014-09-23T20:40:00+01:00",
     "duration": "PT115M",
     "location": {
-      "type": "Place",
+      "@type": "Place",
       "address": {
-        "type": "PostalAddress",
+        "@type": "PostalAddress",
         "streetAddress": "Mile End Park ",
         "addressLocality": "London",
         "postalCode": "E3 4PL"
       },
       "geo": {
-        "type": "GeoCoordinates",
+        "@type": "GeoCoordinates",
         "latitude": 51.52462,
         "longitude": -0.0354348
       }
@@ -67,8 +67,8 @@
     "publicAccess": true,
     "beta:orderPostUrl": "http://www.goodgym.org/api/external_registrations",
     "offers": {
-      "type": "Offer",
-      "id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
+      "@type": "Offer",
+      "@id": "http://www.goodgym.org/api/happenings/hill-session-with-tom#offer",
       "price": "0"
     }
   }

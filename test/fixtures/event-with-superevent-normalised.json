@@ -32,7 +32,7 @@
       "url": "https://goteamup.com/p/280399-crossfit-fierce-spirit/",
       "logo": {
         "url": "https://teamupstatic.com/provider_logos/280399-2015_01_21_02_24_15.jpg",
-        "type": "ImageObject"
+        "@type": "ImageObject"
       },
       "name": "CrossFit Fierce Spirit",
       "@type": "Organization",
@@ -65,9 +65,9 @@
         "longitude": -2.2045996
       },
       "name": "CrossFit Fierce Spirit",
-      "type": "Place",
+      "@type": "Place",
       "address": {
-        "type": "PostalAddress",
+        "@type": "PostalAddress",
         "postalCode": "CW12 1QU",
         "addressRegion": "Cheshire",
         "streetAddress": "Unit 5B Thomas Street",
