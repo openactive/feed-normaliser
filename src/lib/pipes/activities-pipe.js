@@ -70,7 +70,7 @@ class ActivitiesPipe extends Pipe {
         }
 
         // Add any new activities back to the normalised event
-        if(unchangedActivities.length > 0 || activityIds.length > 0){
+        if(unchangedActivities.length > 0 || activityIds.size > 0){
           this.normalisedEvents[idx].data.activity = unchangedActivities;
 
           for(let id of activityIds){
