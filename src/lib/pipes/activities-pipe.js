@@ -11,6 +11,8 @@ class ActivitiesPipe extends Pipe {
   run(){
     return new Promise(async resolve => {
 
+      console.log(`Running ${this.normalisedEvents.length} normalised events through ${this.constructor.name}`);
+
       await this.updateActivitiesCache();
 
       // Loop through the normalisedEvents
@@ -23,8 +25,9 @@ class ActivitiesPipe extends Pipe {
         // and add them back later
         let unchangedActivities = [];
 
-        // For each value in `activity`
         if(Array.isArray(this.normalisedEvents[idx].data.activity)){
+
+          // For each value in `activity`
           for(let activity of this.normalisedEvents[idx].data.activity){
 
             if(activity != undefined){
@@ -67,15 +70,18 @@ class ActivitiesPipe extends Pipe {
         }
 
         // Add any new activities back to the normalised event
-        this.normalisedEvents[idx].data.activity = unchangedActivities;
-        for(let id of activityIds){
-          let outputActivity = {
-            "@id": id,
-            "@type": "Concept",
-            "prefLabel": cache.activities.byId[id].prefLabel,
-            "inScheme": "https://openactive.io/activity-list"
+        if(unchangedActivities.length > 0 || activityIds.length > 0){
+          this.normalisedEvents[idx].data.activity = unchangedActivities;
+
+          for(let id of activityIds){
+            let outputActivity = {
+              "@id": id,
+              "@type": "Concept",
+              "prefLabel": cache.activities.byId[id].prefLabel,
+              "inScheme": "https://openactive.io/activity-list"
+            }
+            this.normalisedEvents[idx].data.activity.push(outputActivity);
           }
-          this.normalisedEvents[idx].data.activity.push(outputActivity);
         }
       }
 
