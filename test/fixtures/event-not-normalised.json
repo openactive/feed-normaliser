@@ -44,11 +44,14 @@
         "latitude": 51.52462,
         "longitude": -0.0354348
       },
-      "areaServed": null,
+      "areaServed": "London",
       "beta:meetingPoint": "",
       "description": ""
     },
-    "toLocation": [],
+    "toLocation": {
+      "type": "Place",
+      "name": "Another Park"
+    },
     "remainingAttendeeCapacity": 22,
     "maximumAttendeeCapacity": 25,
     "leader": {
