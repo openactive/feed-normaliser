@@ -1,0 +1,1 @@
+ALTER TABLE publisher_feed ADD stats JSONB NULL;
