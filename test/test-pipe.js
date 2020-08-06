@@ -358,6 +358,63 @@ describe('pipe-fix-types', function(){
     });
 });
 
+describe('expand-activity', function(){
+    it('should make a string activity into proper objects', function(){
+        const input = {
+            "@type": "Event",
+            "activity": "Running"
+        };
+        const output = {
+            "@type": "Event",
+            "activity": [{
+                "@type": "Concept",
+                "prefLabel": "Running"
+            }]
+        };
+        let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
+        pipe.expandObjects();
+        assert.deepEqual(pipe.rawData, output);
+    });
+
+    it('should make multiple string activities into proper objects', function(){
+        const input = {
+            "@type": "Event",
+            "activity": ["Running", "Jogging"]
+        };
+        const output = {
+            "@type": "Event",
+            "activity": [{
+                "@type": "Concept",
+                "prefLabel": "Running"
+            },
+            {
+                "@type": "Concept",
+                "prefLabel": "Jogging"
+            }]
+        };
+        let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
+        pipe.expandObjects();
+        assert.deepEqual(pipe.rawData, output);
+    });
+
+    it('should make partial object activities into proper objects', function(){
+        const input = {
+            "@type": "Event",
+            "activity": [{"prefLabel": "Running"}]
+        };
+        const output = {
+            "@type": "Event",
+            "activity": [{
+                "@type": "Concept",
+                "prefLabel": "Running"
+            }]
+        };
+        let pipe = new NormaliseEventPipe({id: 1, data: input}, []);
+        pipe.expandObjects();
+        assert.deepEqual(pipe.rawData, output);
+    });
+});
+
 describe('pipe-rawdata-lookup', function(){
     it('should get one row from the raw_data table', async function(){
         const event = {
