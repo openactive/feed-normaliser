@@ -1,4 +1,4 @@
-# Live Hosting on Heroku \(recommended\)
+# Live Hosting on Heroku
 
 ## Initial Setup
 
@@ -12,9 +12,7 @@ If using production (>= standard-0) postgres addon plan you must also add and se
 
 Do a deploy. You must do this by setting up the heroku CLI tool and a "git push" operation. \(This is because we use submodules, and that only works with a push: [https://devcenter.heroku.com/articles/git-submodules\#git-submodules](https://devcenter.heroku.com/articles/git-submodules#git-submodules) \)
 
-Select More, Run Command and put in "node ./src/bin/migrate-database.js". Wait for this to finish.
-
-Select More, and "Restart all dynos". \(This is so the code starts again with the correct database structure\)
+From the App dashboard select "More", "Run Console" and run the command `node ./src/bin/migrate-database.js`. After this has completed, Select "More", and "Restart all dynos". \(This is so the code starts again with the correct database structure\)
 
 Go to Resources - the "worker" Dyno should be enabled.
 

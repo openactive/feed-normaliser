@@ -25,4 +25,4 @@ There are three kinds of pipes:
 
 * [Normalisation pipes](normalisation-pipes.md)
 * [Data cleaning pipe](data-cleaning-pipe.md)
-* Enhancement pipes
+* [Enhancement pipes](enhancement-pipes.md)

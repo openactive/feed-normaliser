@@ -4,6 +4,7 @@ import NormaliseSlotPipe from './normalise-slot-pipe.js';
 import NormaliseSchedulePipe from './normalise-schedule-pipe.js';
 import CleaningPipe from './cleaning-pipe.js';
 import GeoPipe from './geo-pipe.js';
+import ActivitiesPipe from './activities-pipe.js';
 
 export default [
   // Test pipe - uncomment for test events
@@ -15,5 +16,6 @@ export default [
   // Data cleaning pipe - removes empty and invalid attributes
   CleaningPipe,
   // Data enhancement pipes - turn these on and off as needed
-  GeoPipe
+  GeoPipe,
+  ActivitiesPipe
 ];

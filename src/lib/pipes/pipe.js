@@ -182,10 +182,20 @@ class Pipe {
   }
 
   expandActivity(activity){
-    if(activity !== 'undefined' && typeof activity === 'string'){
-      activity = {
-        "@type": "Concept",
-        "prefLabel": activity
+    if(activity !== 'undefined'){
+      if(typeof activity === 'string'){
+        activity = {
+          "@type": "Concept",
+          "prefLabel": activity
+        }
+      }else if(typeof activity === 'object' && !Array.isArray(activity)){
+        if(activity.type != undefined){
+          activity["@type"] = activity.type;
+          delete activity.type;
+        }
+        if(activity["@type"] == undefined){
+          activity["@type"] = "Concept";
+        }
       }
     }
     return activity;
