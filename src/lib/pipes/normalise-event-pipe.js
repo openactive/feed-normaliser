@@ -127,6 +127,7 @@ class NormaliseEventPipe extends Pipe {
                 // Any properties that are on both the subEvent and the parent will take the
                 // value from the subEvent
                 for (let sub of subEvent){
+
                     let normalisedEventData = {
                         ...parentEvent,
                         ...sub
@@ -137,9 +138,6 @@ class NormaliseEventPipe extends Pipe {
                         normalisedEventData["@type"] = "ScheduledSession";
                     }else if(type == "CourseInstance"){
                         normalisedEventData["@type"] = "CourseInstanceSubEvent";
-                    }else{
-                        // Event or OnDemandEvent
-                        normalisedEventData["@type"] = type;
                     }
 
                     let normalisedEvent = new NormalisedEvent(normalisedEventData, kind, undefined, errors);

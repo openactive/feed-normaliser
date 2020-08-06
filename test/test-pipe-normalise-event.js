@@ -23,52 +23,33 @@ describe('valid-normalise-event', function() {
     });
 });
 
-// describe('normalise-event', function() {
-//     it('should return a normalised Event object from data which contains invalid or empty fields', async function() {
+describe('on-demand-event', function(){
+    it('should return a normalised OnDemandEvent', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/on-demand-event.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/on-demand-event-normalised.json'));
+        input.data_kind = input.kind;
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
 
-//         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/event-not-normalised.json'));
-//         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/event-normalised.json'));
-//         input.data_kind = input.kind;
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data, output.data);
 
-//         let pipe = new NormaliseEventPipe(input, []);
-//         let results = await pipe.run();
+    });
+});
 
-//         assert.equal(results.length,1);
-//         assert.equal(results[0].kind, input.data_kind);
-//         assert.equal(typeof results[0].data.organizer, 'object');
-//         assert.equal(typeof results[0].data.activity, 'object');
-//         assert.deepEqual(results[0].data, output.data);
+describe('headline-event', function(){
+    it('should return a normalised HeadlineEvent', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/headline-event-with-subevents.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/headline-event-with-subevents-normalised.json'));
+        input.data_kind = input.kind;
 
-//     });
-// });
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
 
-// describe('on-demand-event', function(){
-//     it('should return a normalised OnDemandEvent', async function(){
-//         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/on-demand-event.json'));
-//         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/on-demand-event-normalised.json'));
-//         input.data_kind = input.kind;
-//         let pipe = new NormaliseEventPipe(input, []);
-//         let results = await pipe.run();
-
-//         assert.equal(results.length,1);
-//         assert.deepEqual(results[0].data, output.data);
-
-//     });
-// });
-
-// describe('headline-event', function(){
-//     it('should return a normalised HeadlineEvent', async function(){
-//         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/headline-event-with-subevents.json'));
-//         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/headline-event-with-subevents-normalised.json'));
-//         input.data_kind = input.kind;
-
-//         let pipe = new NormaliseEventPipe(input, []);
-//         let results = await pipe.run();
-
-//         assert.equal(results.length,1);
-//         assert.deepEqual(results[0].data, output);
-//     });
-// });
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data, output);
+    });
+});
 
 describe('empty-event', function(){
     it('should skip over an event with no data value without crashing', async function(){
@@ -79,17 +60,17 @@ describe('empty-event', function(){
     });
 });
 
-// describe('event-with-super', function(){
-//     it('should return a NormalisedEvent with data integrated from superEvent', async function(){
-//         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/event-with-superevent.json'));
-//         const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/event-with-superevent-normalised.json'));
-//         let pipe = new NormaliseEventPipe(input, []);
-//         let results = await pipe.run();
+describe('event-with-super', function(){
+    it('should return a NormalisedEvent with data integrated from superEvent', async function(){
+        const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/event-with-superevent.json'));
+        const output = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/event-with-superevent-normalised.json'));
+        let pipe = new NormaliseEventPipe(input, []);
+        let results = await pipe.run();
 
-//         assert.equal(results.length,1);
-//         assert.deepEqual(results[0].data, output.data);
-//     });
-// });
+        assert.equal(results.length,1);
+        assert.deepEqual(results[0].data, output.data);
+    });
+});
 
 describe('session-with-sub', function(){
     it('should return a NormalisedEvent from data in SessionSeries and ScheduledSession', async function(){

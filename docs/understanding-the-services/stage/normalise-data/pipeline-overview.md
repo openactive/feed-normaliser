@@ -24,5 +24,5 @@ When adding new pipes, don't forget to import them from their respective files.
 There are three kinds of pipes:
 
 * [Normalisation pipes](normalisation-pipes.md)
-* Cleaning pipes
+* [Data cleaning pipe](data-cleaning-pipe.md)
 * [Enhancement pipes](enhancement-pipes.md)

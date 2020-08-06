@@ -8,7 +8,7 @@
     "activity": [
       {
         "@type": "Concept",
-        "id": "https://openactive.io/activity-list#c4e6c711-66fc-438e-b206-1dfdddc2d912",
+        "@id": "https://openactive.io/activity-list#c4e6c711-66fc-438e-b206-1dfdddc2d912",
         "prefLabel": "Triathlon",
         "inScheme": "https://openactive.io/activity-list"
       }
@@ -49,7 +49,7 @@
         "activity": [
           {
             "@type": "Concept",
-            "id": "https://openactive.io/activity-list#72ddb2dc-7d75-424e-880a-d90eabe91381",
+            "@id": "https://openactive.io/activity-list#72ddb2dc-7d75-424e-880a-d90eabe91381",
             "prefLabel": "Running",
             "inScheme": "https://openactive.io/activity-list"
           }
@@ -68,7 +68,7 @@
         "activity": [
           {
             "@type": "Concept",
-            "id": "https://openactive.io/activity-list#4a19873e-118e-43f4-b86e-05acba8fb1de",
+            "@id": "https://openactive.io/activity-list#4a19873e-118e-43f4-b86e-05acba8fb1de",
             "prefLabel": "Cycling",
             "inScheme": "https://openactive.io/activity-list"
           }
@@ -87,7 +87,7 @@
         "activity": [
           {
             "@type": "Concept",
-            "id": "https://openactive.io/activity-list#4a19873e-118e-43f4-b86e-05acba8fb1de",
+            "@id": "https://openactive.io/activity-list#4a19873e-118e-43f4-b86e-05acba8fb1de",
             "prefLabel": "Cycling",
             "inScheme": "https://openactive.io/activity-list"
           }
