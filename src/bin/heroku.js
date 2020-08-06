@@ -4,6 +4,7 @@ import download_raw_all_publisher_feeds from '../lib/download-raw.js';
 import normalise_data_all_publisher_feeds from '../lib/normalise-data.js';
 import validate_raw_data_all from '../lib/validate-raw-data.js';
 import profile_normalised_data_all from '../lib/profile-normalised-data.js';
+import PublisherFeedStats from '../lib/publisher-feed-stats.js';
 import Settings from '../lib/settings.js';
 import tls from 'tls';
 import Utils from '../lib/utils.js';
@@ -21,6 +22,7 @@ download_raw_all_publisher_feeds();
 validate_raw_data_all();
 normalise_data_all_publisher_feeds();
 profile_normalised_data_all();
+PublisherFeedStats.updateAll();
 
 // When a Heroku worker ends, Heroku starts a new one. https://devcenter.heroku.com/articles/dynos#restarting
 // When there is no work to be done, we don't want the worker to be constantly checking as the worker starts, ends, starts, ends, etc in a loop
