@@ -1,0 +1,1 @@
+CREATE INDEX ON normalised_data USING btree (raw_data_id, raw_data_parent_id);
