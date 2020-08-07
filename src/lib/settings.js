@@ -42,9 +42,9 @@ const Settings = {
 
   "dataProfiles": ["core", "accessibility", "socialrx"],
 
-  "normaliseDataLoadWorkLimit": 1000,
-  "profileNormalisedDataLoadWorkLimit": 1000,
-  "validateRawDataLoadWorkLimit": 1000
+  "normaliseDataLoadWorkLimit": 100,
+  "profileNormalisedDataLoadWorkLimit": 100,
+  "validateRawDataLoadWorkLimit": 100
 
 }
 
