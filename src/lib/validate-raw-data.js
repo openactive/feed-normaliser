@@ -53,6 +53,7 @@ async function validate_raw_data_all() {
 
         // Step 2 - process each item of data we got
         for (var raw_data of rows) {
+            console.log("validating:", raw_data.id)
             await validate_raw_data(raw_data);
         }
 
@@ -65,22 +66,25 @@ async function validate_raw_data_all() {
 async function validate_raw_data(raw_data) {
 
 
-    const client = await database_pool.connect();
     let result;
 
     try {
         result = await validator.validate(raw_data.data, validate_options);
     } catch (error) {
+        const client = await database_pool.connect();
         console.error("ERROR validator.validate");
         console.error(error);
 
         await client.query(
             'UPDATE raw_data SET validation_done=TRUE, validation_results=$1, validation_passed=FALSE WHERE id=$2',
-            [JSON.stringify({validator_exception: error}), raw_data.id]
+            [JSON.stringify({validator_exception: error.toString() }), raw_data.id]
         );
+
+        client.release();
         return;
     }
 
+    const client = await database_pool.connect();
     try {
         const result_filtered = result.filter(r => r.severity === "failure");
 
