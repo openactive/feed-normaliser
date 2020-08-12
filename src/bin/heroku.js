@@ -8,6 +8,8 @@ import PublisherFeedStats from '../lib/publisher-feed-stats.js';
 import Settings from '../lib/settings.js';
 import tls from 'tls';
 import Utils from '../lib/utils.js';
+import Sentry from '@sentry/node';
+
 
 tls.DEFAULT_MIN_VERSION = Settings.tlsDefaultMinimumVersion;
 
@@ -17,8 +19,12 @@ tls.DEFAULT_MIN_VERSION = Settings.tlsDefaultMinimumVersion;
 // This means we can start all our work processes and not worry about stopping them ourselves - Heroku will do that for us!
 // So lets start all processes:
 
+if (process.env.SENTRY_DSN){
+  Sentry.init({ dsn: process.env.SENTRY_DSN });
+}
 
 (async() => {
+
   console.log("-- Starting spider --");
   await spider(Settings.spiderDataCatalogStartURL);
   console.log("-- Done spider --");
