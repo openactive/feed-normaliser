@@ -1,0 +1,1 @@
+CREATE INDEX on raw_data (id) WHERE validation_done=FALSE AND data_deleted=FALSE;
