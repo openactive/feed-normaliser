@@ -31,7 +31,7 @@ async function validate_raw_data_all() {
         const client = await database_pool.connect();
         try {
             const res_find_raw_data = await client.query(
-                'SELECT * FROM raw_data WHERE validation_done = \'f\' AND data_deleted=\'f\' ORDER BY updated_at ASC LIMIT '+Settings.validateRawDataLoadWorkLimit
+                'SELECT * FROM raw_data WHERE validation_done = \'f\' AND data_deleted=\'f\' LIMIT '+Settings.validateRawDataLoadWorkLimit
             );
             if (res_find_raw_data.rows.length == 0) {
                 break;
