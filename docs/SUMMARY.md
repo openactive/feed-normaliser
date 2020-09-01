@@ -12,6 +12,7 @@
 * [Developers' Overview](developing-the-services/developers-overview.md)
 * [Dev hosting with Docker](developing-the-services/docker-for-dev.md)
 * [Dev hosting on Heroku](developing-the-services/heroku-for-testing.md)
+* [Better Performance](developing-the-services/better-performance.md)
 
 ## Understanding the Services
 
