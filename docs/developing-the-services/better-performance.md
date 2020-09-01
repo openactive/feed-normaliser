@@ -6,14 +6,14 @@ and this document discusses way this could be sped up in the future.
 Currently the system on Heroku is designed to run one worker dyno only. 
 If more than one is run it won't actually help because both will try and do the same tasks.
 
-## What are you optomising for?
+## What are you optimising for?
 
-Are you optomising for:
+Are you optimising for:
 
 * The total time it takes to process all data in the system? ("Total Time")
 * The time it takes from when a publisher publishes a new bit of data and we notice, download it and fully process it? ("Time from publish to processed")
 
-Note that these may require different strategies. If the latter, we'd suggest jumping straight to a message que.
+Note that these may require different strategies. If the latter, we'd suggest jumping straight to a message queue.
 
 ## Increase specs of worker dyno
 
@@ -21,7 +21,7 @@ A "Standard 2X" dyno or higher may help.
 
 Cons:
 * This strategy in itself does not take advantage of Node event loop.
-* In heroku, there is a setting to say how many dyno's of a particular worker type should be run. This can't be used and must remain at 1.
+* In Heroku, there is a setting to say how many dyno's of a particular worker type should be run. This can't be used and must remain at 1.
 
 ## Run processes together in one worker
 
@@ -35,7 +35,7 @@ Pros:
 
 Cons:
 * This may make the "Time from publish to processed" metric worse, as it will take longer for the system to notice that work can be done as a bit of data progresses through the system.
-* In heroku, there is a setting to say how many dyno's of a particular worker type should be run. This can't be used and must remain at 1.
+* In Heroku, there is a setting to say how many dyno's of a particular worker type should be run. This can't be used and must remain at 1.
 
 ## Run more than one worker
 
@@ -64,7 +64,7 @@ Pros:
 
 Cons:
 
-* In heroku, there is a setting to say how many dyno's of a particular worker type should be run. This can't be used and must remain at 1.
+* In Heroku, there is a setting to say how many dyno's of a particular worker type should be run. This can't be used and must remain at 1.
 * The number of worker dynos is locked to the number of stages. This is very inflexible.
 * You'll end up running a worker dynos just to Spider the Data Catalog, which will be sitting idle most of the time. 
   Consider merging the Spider the Data Catalog and the Download Raw data stage into one Dyno, maybe?
@@ -98,19 +98,19 @@ Pros:
 
 Cons:
 
-* In heroku, there is a setting to say how many dyno's of a particular worker type should be run. This can't be used and must remain at 1.
+* In Heroku, there is a setting to say how many dyno's of a particular worker type should be run. This can't be used and must remain at 1.
 * While this may process data faster, the system may still be slow to realise new data has arrived that it should process
 
-### Add a message que
+### Add a message queue
 
-Adding a message que would involve much more refactoring, but provides a very neat and flexible solution.
+Adding a message queue would involve much more refactoring, but provides a very neat and flexible solution.
 
 This system would essentially involve 3 new components:
 
-* A "Trigger" component: Something to run the "Spider Data Catalog stage" stage on a cron sytem. This could be a worker by itself, or some external system. 
-  In any case, when a publisher record has been updated, a message should be sent to the message que asking the worker to get raw data from that publisher.
-* A message que. Ones that Heroku provides are good first ones to consider.
-* A "Workers" component: Dyno Nodes run a workers that take messages from the que and do the work. After each data is processing, new messages are generated for more work. Eg
+* A "Trigger" component: Something to run the "Spider Data Catalog stage" stage on a cron system. This could be a worker by itself, or some external system. 
+  In any case, when a publisher record has been updated, a message should be sent to the message queue asking a worker to get raw data from that publisher.
+* A message queue. Ones that Heroku provides are good first ones to consider.
+* A "Workers" component: Dyno Nodes run workers that take messages from the queue and do the work. After each item is processing, new messages are generated for more work. Eg
     * After a piece of raw data is downloaded from a publisher, messages are generated to:
         * Validate it
         * Normalise it
@@ -119,21 +119,21 @@ This system would essentially involve 3 new components:
 
 Considerations: 
 * You may see one stage as more important than other stages. 
-  If so, you may want different ques for different types of messages. 
-  Alternatively, you may be using a message que system that allows setting importance on messages.
+  If so, you may want different queues for different types of messages. 
+  Alternatively, you may be using a message queue system that allows setting importance on messages.
 * One worker dyno can run several workers, and thus take advantage of Node's event loop.
 
 Pros:
-* In heroku, there is a setting to say how many dyno's of a particular worker type should be run. 
+* In Heroku, there is a setting to say how many dyno's of a particular worker type should be run. 
   This can finally be used; it can be turned up when a system is first live or when important data is about to be published, than turned down for normal use.
   This provides easy flexibility.
-* Easy monitoring of message ques to see how much work remains to be done; it may even be possible to use auto scale solutions here.
+* Easy monitoring of message queues to see how much work remains to be done; it may even be possible to use auto scale solutions here.
 * This really helps with the "Time from publish to processed" metric.
 
 Cons:
 * More complex to set up
 * Requires another service
-* Be careful of backpressure problems; if a cron service generates messages asking to download raw data faster than raw data can be downloaded there may be issues.
+* Be careful of back-pressure problems; if a cron service generates messages asking to download raw data faster than raw data can be downloaded there may be issues.
   You don't want more than one worker to try and download a raw data source at the same time. 
   Consider if the download raw data stage should be handled in the "Trigger" component.
 
