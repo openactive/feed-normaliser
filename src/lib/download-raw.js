@@ -1,7 +1,10 @@
 import fetch from 'node-fetch';
+import md5 from 'md5';
+
 import { database_pool } from './database.js';
 import Utils from './utils.js';
 import Settings from './settings.js';
+
 
 async function download_raw_all_publisher_feeds() {
 
@@ -47,18 +50,33 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
                     (activityItem.state == 'updated'?'f':'t'),
                     activityItem.kind,
                     activityItem.modified,
-                    activityItem.data
+                    activityItem.data,
+                    md5(activityItem.data ? JSON.stringify(activityItem.data) : 'NULL'),
                 ];
 
+                const existsRes = await client.query(
+                    `SELECT id FROM raw_data WHERE data_hash=$1`,
+                    /* MD5 hash */
+                    [query_data[7]]
+                );
+
+                /* This allows us to bail out early before a possible unnecessary insert/update/conflict */
+                if (existsRes.rows.length > 0) {
+                    console.log("Skipping existing data:",  activityItem.id, publisher_feed.id);
+                    continue;
+                }
+
                 const resRawDataRes = await client.query(
-                    `INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data, normalised)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, FALSE)
+                    `INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data, normalised, data_hash)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, FALSE, $8)
                     ON CONFLICT (publisher_feed_id, rpde_id) DO UPDATE SET
                     data_id=$3, data_deleted=$4, data_modified=$6, data=$7, updated_at=(now() at time zone 'utc'),
                     normalised=FALSE, normalisation_errors=NULL, validation_done=FALSE, validation_passed=FALSE, validation_results=NULL
                     RETURNING id`,
                     query_data
                 );
+
+                console.log("Inserting new/updated data:", activityItem.id, publisher_feed.id, activityItem.state);
 
                 // (We only need to do the following queries on UPDATE not INSERT but we can't tell the difference)
 
@@ -80,7 +98,7 @@ async function store_raw_callback(publisher_feed, data, nextURL) {
                 );
 
             } else {
-                // TODO
+                console.warn("Unknown raw data state type");
             }
 
         }
