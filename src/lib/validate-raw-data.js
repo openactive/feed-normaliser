@@ -14,6 +14,30 @@ async function set_up_for_validation() {
     }
 }
 
+async function validateRawDataForPublisher(publisherId){
+  await set_up_for_validation();
+  const client = await database_pool.connect();
+/* TODO get rid of subquery */
+  while(true){
+     const rawDataRes = await client.query(
+         `SELECT * FROM raw_data
+          WHERE
+          validation_done=FALSE AND
+          data_deleted=FALSE AND
+          publisher_feed_id IN (select id from publisher_feed WHERE publisher_id = $1)
+          LIMIT $2`,
+        [publisherId, Settings.validateRawDataLoadWorkLimit]);
+
+    if (!rawDataRes.rows.length){
+        break;
+    }
+
+    for (let rawData of rawDataRes.rows){
+      await validate_raw_data(rawData);
+    }
+  }
+}
+
 /*
  * TODO This will run only one check at a time - add something so it runs several at once!
  * But I want to discuss with others best way to do that first
@@ -53,7 +77,6 @@ async function validate_raw_data_all() {
 
         // Step 2 - process each item of data we got
         for (var raw_data of rows) {
-            console.log("validating:", raw_data.id)
             await validate_raw_data(raw_data);
         }
 
@@ -65,6 +88,7 @@ async function validate_raw_data_all() {
 
 async function validate_raw_data(raw_data) {
 
+    console.log("validating:", raw_data.id)
 
     let result;
 
@@ -107,6 +131,7 @@ async function validate_raw_data(raw_data) {
 
 export {
   validate_raw_data_all,
+  validateRawDataForPublisher,
 };
 
 export default validate_raw_data_all;

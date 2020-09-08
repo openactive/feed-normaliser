@@ -24,6 +24,14 @@ async function normalise_data_all_publisher_feeds() {
 
 }
 
+async function normaliseDataForPublisher(publisherId){
+  const client = await database_pool.connect();
+  const feedsRes = await client.query('SELECT * FROM publisher_feed WHERE publisher_id=$1', [publisherId]);
+  for (let feed of feedsRes.rows){
+      await normalise_data_publisher_feed(feed, pipes);
+  }
+}
+
 async function store_normalised_callback(raw_data_id, normalised_events, errors) {
 
     const client = await database_pool.connect();
@@ -135,6 +143,7 @@ async function normalise_data_publisher_feed(publisher_feed, pipes_to_call) {
 export {
   normalise_data_all_publisher_feeds,
   normalise_data_publisher_feed,
+  normaliseDataForPublisher,
 };
 
 export default normalise_data_all_publisher_feeds;

@@ -5,6 +5,17 @@ import { database_pool } from './database.js';
 import Utils from './utils.js';
 import Settings from './settings.js';
 
+async function downloadPublisherFeedRawData(publisherId) {
+  const client = await database_pool.connect();
+  const feedsRes = await client.query('SELECT * FROM publisher_feed WHERE publisher_id = $1', [publisherId]);
+
+  for (let i in feedsRes.rows) {
+    if (Settings.sleepWhileDownloadRawSeconds) {
+      await Utils.sleep("throttle", Settings.sleepWhileDownloadRawSeconds);
+    }
+    await download_raw_publisher_feed(feedsRes.rows[i], store_raw_callback);
+  }
+}
 
 async function download_raw_all_publisher_feeds() {
 
@@ -185,6 +196,7 @@ async function download_raw_error(url, error, publisher_feed_id) {
 export {
   store_raw_callback,
   download_raw_all_publisher_feeds,
+  downloadPublisherFeedRawData,
 };
 
 export default download_raw_all_publisher_feeds;
