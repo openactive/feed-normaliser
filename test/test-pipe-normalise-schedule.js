@@ -5,22 +5,37 @@ import NormaliseSchedulePipe from '../src/lib/pipes/normalise-schedule-pipe.js';
 
 
 describe('course-schedule', function() {
-    // This test removed for now as it was failing on live!
-    // https://github.com/openactive/conformance-services/runs/1056783968?check_suite_focus=true
-    //it('should generate two events from a Course with eventSchedule', async function() {
+    it('should generate two events from a Course with eventSchedule between certain dates', async function() {
 
-    //    const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/course-with-schedule.json'));
-    //    let pipe = new NormaliseSchedulePipe(input, []);
-    //    let results = await pipe.run();
+       const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/course-with-schedule.json'));
+       let pipe = new NormaliseSchedulePipe(input, []);
 
-    //    assert.equal(results.length,2);
+       // Mock eventsFrom and eventsUntil in pipe so it always returns a fixed date, since the dates are hardcoded in 'output' json
+       pipe.eventsFrom = function(){
+            return new Date("2020-04-30T00:00:00.000Z");
+        }
+        pipe.eventsUntil = function(){
+            return new Date("2020-05-14T00:00:00.000Z");
+        }
 
-    //});
+       let results = await pipe.run();
+       assert.equal(results.length,2);
+
+    });
 
     it('should generate the correct kind and type for subevents from a Course with eventSchedule', async function(){
         const input = await Utils.readJson(path.resolve(path.resolve(), './test/fixtures/course-with-schedule.json'));
         input.data_kind = input.kind;
         let pipe = new NormaliseSchedulePipe(input, []);
+
+        // Mock eventsFrom and eventsUntil in pipe so it always returns a fixed date, since the dates are hardcoded in 'output' json
+        pipe.eventsFrom = function(){
+            return new Date("2020-04-30T00:00:00.000Z");
+        }
+        pipe.eventsUntil = function(){
+            return new Date("2020-05-14T00:00:00.000Z");
+        }
+
         let results = await pipe.run();
         assert.equal(results[0].kind, "CourseInstanceSubEvent");
         assert.equal(results[0].data["@type"], "Event");
