@@ -2,8 +2,6 @@
 
 A suite of tools to discover, download, normalise, enhance and republish data that uses the OpenActive specification.
 
-See the [docs](./) folder for more information.
-
 ## Quick Start
 
 ### Prepare
