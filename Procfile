@@ -1,2 +1,3 @@
 web: node ./src/bin/web-server.js
-worker: node ./src/bin/heroku.js
+validator-worker: node ./src/bin/heroku-validator.js
+normaliser-worker: node ./src/bin/heroku-normaliser.js
