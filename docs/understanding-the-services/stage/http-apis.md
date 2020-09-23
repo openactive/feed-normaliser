@@ -14,13 +14,18 @@ RPDE APIs are meant to be called directly by users. They are:
 
 * `/normalised_data/all` - call to get all processed data in system.
 
-Publisher status information:
+Publishers status information:
 
 * `/publishers/status`
 
-<<<<<<< HEAD:docs/http-apis.md
+Publisher information:
+
+* `/publisher/<csPublisherId>`
+
+Publisher feed errors:
+
+* `/publisher/<csPublisherId>/feed/<csFeedId>/errors`
+
 Normalised data - if you have a piece of normalised data and you want to see the raw data that generated it, you can call:
 
 * `/normalised_data/item/<ID>`
-=======
->>>>>>> GitBook: [restructure-docs] 34 pages and 4 assets modified:docs/understanding-the-services/stage/http-apis.md
