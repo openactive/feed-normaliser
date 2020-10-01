@@ -342,13 +342,13 @@ describe('augment-activities', function(){
     const inputActivity = [
       {
         "@type": "Concept",
-        "prefLabel": "Jogging"
+        "prefLabel": "Ambling along"
       }
     ];
     const outputActivity = [
       {
         "@type": "Concept",
-        "prefLabel": "Jogging"
+        "prefLabel": "Ambling along"
       },
       {
         "@id": "https://openactive.io/activity-list#72ddb2dc-7d75-424e-880a-d90eabe91381",
@@ -396,7 +396,7 @@ describe('augment-activities', function(){
     const inputActivity = [
       {
         "@type": "Concept",
-        "prefLabel": "Jogging"
+        "prefLabel": "Ambling along"
       },
       {
         "id": "https://openactive.io/activity-list#90346371-03e3-47c8-a25d-07e976b4a4c8",
@@ -406,7 +406,7 @@ describe('augment-activities', function(){
     const outputActivity = [
       {
         "@type": "Concept",
-        "prefLabel": "Jogging"
+        "prefLabel": "Ambling along"
       },
       {
         "@id": "https://openactive.io/activity-list#90346371-03e3-47c8-a25d-07e976b4a4c8",
