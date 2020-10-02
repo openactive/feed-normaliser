@@ -21,8 +21,5 @@ if (process.env.SENTRY_DSN){
   console.log("-- Done spider --");
 
   console.log("-- Starting download raw data --");
-  await download_raw_all_publisher_feeds();
-  console.log("-- Done download raw data --");
-
-  process.exit(0);
+  download_raw_all_publisher_feeds();
 })();
