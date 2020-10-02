@@ -36,10 +36,29 @@ async function delete_database() {
     }
 }
 
+/* Remove old and stale items from the database */
+async function clean_up_database() {
+    let client;
+
+    client = await database_pool.connect();
+    try {
+        /* Current date - max days
+         * The DB driver doesn't seem to parse sql version of this:
+         * select count(id) from raw_data where updated_at > (date (now() at time zone 'utc') - integer '14')
+         */
+        const date = new Date();
+        date.setHours(-1* (date.getHours() + (Settings.maxDataAgeDays * 24)));
+        await client.query("DELETE FROM raw_data WHERE updated_at < $1", [date]);
+    } finally {
+        await client.end();
+    }
+}
+
 export {
   database_pool,
   migrate_database,
   delete_database,
+  clean_up_database,
 };
 
 export default migrate_database;

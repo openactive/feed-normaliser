@@ -44,7 +44,9 @@ const Settings = {
 
   "normaliseDataLoadWorkLimit": process.env.NORMALISE_LOAD_LIMIT || 1000,
   "profileNormalisedDataLoadWorkLimit": process.env.PROFILE_NORMALISED_LOAD_LIMIT || 1000,
-  "validateRawDataLoadWorkLimit": process.env.VALIDATOR_LOAD_LIMIT || 1000
+  "validateRawDataLoadWorkLimit": process.env.VALIDATOR_LOAD_LIMIT || 1000,
+
+  "maxDataAgeDays": process.env.MAX_DATA_AGE_DAYS || 14,
 
 }
 
