@@ -26,6 +26,8 @@ Publisher feed errors:
 
 * `/publisher/<csPublisherId>/feed/<csFeedId>/errors`
 
+_cs id prefix indicates conformance-services internal ids, not to be confused with ids as defined in OpenActive standards_
+
 Normalised data - if you have a piece of normalised data and you want to see the raw data that generated it, you can call:
 
 * `/normalised_data/item/<ID>`
