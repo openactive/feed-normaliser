@@ -29,7 +29,7 @@ async function spider_data_catalog(url, url_history) {
                     await Utils.sleep("spider_data_catalog", Settings.sleepWhileSpiderDataCatalogSeconds);
                 }
                 // not await - we want several spidering operations to run at once.
-                spider_data_catalog(json['hasPart'][idx], new_url_history);
+                await spider_data_catalog(json['hasPart'][idx], new_url_history);
             }
         }
 
@@ -39,7 +39,7 @@ async function spider_data_catalog(url, url_history) {
                     await Utils.sleep("spider_data_catalog", Settings.sleepWhileSpiderDataCatalogSeconds);
                 }
                 // not await - we want several spidering operations to run at once.
-                spider_data_set(json['dataset'][idx], new_url_history);
+                await spider_data_set(json['dataset'][idx], new_url_history);
             }
         }
     } catch(error) {
