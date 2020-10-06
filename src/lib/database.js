@@ -48,7 +48,7 @@ async function clean_up_database() {
          */
         const date = new Date();
         date.setHours(-1* (date.getHours() + (Settings.maxDataAgeDays * 24)));
-        await client.query("DELETE FROM raw_data WHERE updated_at < $1", [date]);
+        await client.query("DELETE FROM raw_data WHERE updated_at < $1 AND data_deleted=TRUE", [date]);
     } finally {
         await client.end();
     }
