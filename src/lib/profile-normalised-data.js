@@ -17,7 +17,7 @@ async function profile_normalised_data_all_for_profile(profile_name) {
         'LEFT JOIN normalised_data_profile_results '+
         'ON normalised_data_profile_results.normalised_data_id = normalised_data.id AND normalised_data_profile_results.profile_name=$1 '+
         'WHERE normalised_data_profile_results.normalised_data_id IS NULL AND normalised_data.data_deleted=FALSE '+
-        'ORDER BY normalised_data.updated_at ASC LIMIT '+ Settings.profileNormalisedDataLoadWorkLimit;
+        'LIMIT '+ Settings.profileNormalisedDataLoadWorkLimit;
 
     while(true) {
 
