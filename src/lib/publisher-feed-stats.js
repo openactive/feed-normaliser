@@ -32,7 +32,8 @@ class  PublisherFeedStats {
     /* The length of the array in JSONB results is 1 error message per array item */
     const profileStatQuery = `
       SELECT
-        ROUND(SUM(JSONB_ARRAY_LENGTH(normalised_data_profile_results.results)) / COUNT(*)) as score
+        normalised_data_profile_results.results as results,
+        COUNT(*) as total
        FROM normalised_data_profile_results
          LEFT JOIN normalised_data ON normalised_data_profile_results.normalised_data_id=normalised_data.id
          LEFT JOIN raw_data on normalised_data.raw_data_id = raw_data.id
