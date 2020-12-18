@@ -4,7 +4,7 @@ OA Conformance Services have been designed with developers in mind in two ways:
 
 ## Improving the Services
 
-Over time, multiple groups of developers will be working on building up the services code; this documentation is intended to help developers get familiar with the systems, code and structures so that they can start work as quickly as possible.
+Over time, multiple groups of developers will be working on building up the services code; this documentation is intended to help developers get familiar with the systems, code and structures so that they can start work as quickly as possible.  
 
 ## Adapting the code for other products
 
