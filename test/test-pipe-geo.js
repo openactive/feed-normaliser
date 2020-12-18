@@ -166,7 +166,7 @@ describe('geo-enhancement', function() {
             },
             "geo": {
               "@type": "GeoCoordinates",
-              "latitude": 51.381502,
+              "latitude": 51.381612,
               "longitude": -2.353642
             }
           }
