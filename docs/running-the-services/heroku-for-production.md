@@ -1,4 +1,4 @@
-# Live Hosting on Heroku
+# Live Hosting on Heroku \(recommended\)
 
 ## Initial Setup
 
@@ -8,7 +8,7 @@ Add the "Heroku Postgres" addition. The free level only has 10,000 rows - we rec
 
 Make sure the database is set as "Attach as DATABASE". If you go to "Settings" and "Reveal Config Vars" you should see details for it as "DATABASE\_URL".
 
-If using production (>= standard-0) postgres addon plan you must also add and set the Config var `DATABASE_USE_SSL` to "true".
+If using production \(&gt;= standard-0\) postgres addon plan you must also add and set the Config var `DATABASE_USE_SSL` to "true".
 
 Do a deploy. You must do this by setting up the heroku CLI tool and a "git push" operation. \(This is because we use submodules, and that only works with a push: [https://devcenter.heroku.com/articles/git-submodules\#git-submodules](https://devcenter.heroku.com/articles/git-submodules#git-submodules) \)
 

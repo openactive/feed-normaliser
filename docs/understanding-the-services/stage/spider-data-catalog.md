@@ -10,7 +10,7 @@ To run this:
 
 It can be stopped at any time and it will not leave the database in a bad state. Only records being processed at that particular moment in time would be lost.
 
-When restarted, it will always start at the beginning again; there's no way to pause it. 
+When restarted, it will always start at the beginning again; there's no way to pause it.
 
 ## Errors
 
@@ -38,6 +38,4 @@ DELETE FROM publisher_feed;
 DELETE FROM publisher;
 DELETE FROM spider_data_catalog_error;
 ```
-
-## 
 

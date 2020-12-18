@@ -24,12 +24,11 @@ The tool will automatically set up the Postgres database structure.
 
 `$ node ./src/bin/migrate-database.js`
 
-
 ## Configuration tweaks
 
-The validation, normalise data and profile normalised data processes run on defined chunks of data called Load Limits. This is in order to scale the service to the available memory.
-To set these values use the following environment variables.
+The validation, normalise data and profile normalised data processes run on defined chunks of data called Load Limits. This is in order to scale the service to the available memory. To set these values use the following environment variables.
 
-* `NORMALISE_LOAD_LIMIT` (default: 1000)
-* `PROFILE_NORMALISED_LOAD_LIMIT` (default: 1000)
-* `VALIDATOR_LOAD_LIMIT` (default: 1000)
+* `NORMALISE_LOAD_LIMIT` \(default: 1000\)
+* `PROFILE_NORMALISED_LOAD_LIMIT` \(default: 1000\)
+* `VALIDATOR_LOAD_LIMIT` \(default: 1000\)
+

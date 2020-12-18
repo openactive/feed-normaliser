@@ -31,7 +31,7 @@ Run each of these in turn to run the full pipeline. See
 * `$ node ./src/bin/download-raw.js` [Download raw data](understanding-the-services/stage/download-raw-data.md)
 * `$ node ./src/bin/validate-raw-data.js` [Validate Raw data](understanding-the-services/stage/validate-raw-data.md)
 * `$ node ./src/bin/normalise-data.js` [Create normalised version of raw data](understanding-the-services/stage/normalise-data/)
-* `$ node ./src/bin/profile-normalised-data.js` [Profile normalised data](understanding-the-services/stage/profile-normalised-data.md)  (make sure the git submodule [conformance-profiles](https://github.com/openactive/conformance-profiles) is up to date before running this)
+* `$ node ./src/bin/profile-normalised-data.js` [Profile normalised data](understanding-the-services/stage/profile-normalised-data.md)  \(make sure the git submodule [conformance-profiles](https://github.com/openactive/conformance-profiles) is up to date before running this\)
 
 ### Webserver
 

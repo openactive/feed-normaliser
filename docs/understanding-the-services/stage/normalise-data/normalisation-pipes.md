@@ -24,27 +24,25 @@ They all mainuplate the `rawData` object of the pipe that is running directly.
 
 This pipe will generate normalised events from raw data with the following types:
 
-* `Event` (or its `subEvents` if relevent)
-* `OnDemandEvent` (or its `subEvents` if relevent)
+* `Event` \(or its `subEvents` if relevent\)
+* `OnDemandEvent` \(or its `subEvents` if relevent\)
 * `ScheduledSession`
 * `CourseInstanceSubEvent`
 * `SessionSeries` so long as it has `subEvent` with one of the above types
 * `EventSeries` so long as it has `subEvent` with one of the above types
 * `CourseInstance` so long as it has `subEvent` with one of the above types
 * `HeadlineEvent` so long as it has `subEvent` with one of the above types
-
-1. If object has Event, OnDemandEvent, ScheduledSession, CourseInstanceSubEvent type:
-   * Do data cleanup
-   * Check for a `superEvent`
-     * If so, merge data from `superEvent`
-   * Generate NormalisedEvent
-
-2. Else if object has a `subEvent`:
-   * Get subEvents which have Event, OnDemandEvent, ScheduledSession types
-   * If so, do data cleanup
-   * For each subEvent:
-     * Merge data from parent
-     * Generate NormalisedEvent
+* If object has Event, OnDemandEvent, ScheduledSession, CourseInstanceSubEvent type:
+  * Do data cleanup
+  * Check for a `superEvent`
+    * If so, merge data from `superEvent`
+  * Generate NormalisedEvent
+* Else if object has a `subEvent`:
+  * Get subEvents which have Event, OnDemandEvent, ScheduledSession types
+  * If so, do data cleanup
+  * For each subEvent:
+    * Merge data from parent
+    * Generate NormalisedEvent
 
 ## Normalise Slot pipe
 
@@ -52,28 +50,27 @@ This pipe will generate normalised events from raw data objects with the followi
 
 * `FacilityUse`
 * `IndividualFacilityUse`
-* `Slot` (todo)
-
-1. If object has Slot type:
-   * Do data cleanup
-   * Get `facilityUse` and merge data from it
-   * Generate NormalisedEvent
-2. If object has IndividiualFacilityUse type:
-   * Do data cleanup
-   * If object has `aggregateFacilityUse`:
-     * Get FacilityUse
-     * Merge FU and IFU
-     * Go to 4
-3. If object has FacilityUse type:
-   * If object has `individualFacilityUse`:
-     * For each IndividualFacilityUse
-       * Generate event with data from FU and IFU
-       * Go to 4
-4. Get array of values from `event`
-   * For each event:
-     * (need cleanup)
-     * Merge data from parent
-     * Generate NormalisedEvent
+* `Slot` \(todo\)
+* If object has Slot type:
+  * Do data cleanup
+  * Get `facilityUse` and merge data from it
+  * Generate NormalisedEvent
+* If object has IndividiualFacilityUse type:
+  * Do data cleanup
+  * If object has `aggregateFacilityUse`:
+    * Get FacilityUse
+    * Merge FU and IFU
+    * Go to 4
+* If object has FacilityUse type:
+  * If object has `individualFacilityUse`:
+    * For each IndividualFacilityUse
+      * Generate event with data from FU and IFU
+      * Go to 4
+* Get array of values from `event`
+  * For each event:
+    * \(need cleanup\)
+    * Merge data from parent
+    * Generate NormalisedEvent
 
 ## Normalise Schedule pipe
 
@@ -93,7 +90,7 @@ Events are often related to each other using `subEvent`, `superEvent`, `facility
 
 In the cases of `superEvent` and `facilityUse`, the related object may exist in another feed, and the value of the property is a URL. Eg:
 
-```json
+```javascript
 "superEvent": "https://opportunities.example/event/1"
 ```
 
@@ -103,7 +100,7 @@ The properties that relate events to one another each have inverse versions. Eg.
 
 That is to say, if we start with:
 
-```json
+```javascript
 {
     "@id": "/event1",
     "subEvent": [
@@ -114,7 +111,7 @@ That is to say, if we start with:
 
 So we fetch `/subeventA`:
 
-```json
+```javascript
 {
     "@id": "/subeventA",
     "superEvent": "/event1"
