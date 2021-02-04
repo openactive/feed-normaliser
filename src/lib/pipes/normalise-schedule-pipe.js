@@ -21,6 +21,7 @@ class NormaliseSchedulePipe extends Pipe {
             this.doCleanup();
             // There is a schedule, we need to parse it out into events.
             let {eventSchedule, ...parent} = this.rawData;
+            eventSchedule = Array.isArray(eventSchedule) ? eventSchedule : [eventSchedule];
 
             for (let schedule of eventSchedule){
 
