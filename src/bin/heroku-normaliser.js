@@ -13,10 +13,23 @@ if (process.env.SENTRY_DSN){
   Sentry.init({ dsn: process.env.SENTRY_DSN });
 }
 
-console.log("-- Starting normalise raw data --");
-normalise_data_all_publisher_feeds();
+(async() => {
+  while(true){
+    try {
+      console.log("-- Starting normalise raw data --");
+      await normalise_data_all_publisher_feeds();
 
-console.log("-- Starting profile normalised data --");
-profile_normalised_data_all();
+      console.log("-- Starting profile normalised data --");
+      await profile_normalised_data_all();
+    } catch (error){
+      console.log("An unrecoverable exception occurred:");
+      console.log(error);
+    } finally {
 
-Utils.sleep("Heroku", 60*60*Settings.herokuWorkerMinimumCycleHours);
+      console.log("Sleeping zzzz");
+      await Utils.sleep("Heroku", 60*60*Settings.herokuWorkerMinimumCycleHours);
+
+    }
+
+  }
+})();
