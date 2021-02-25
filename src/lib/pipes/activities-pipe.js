@@ -8,85 +8,83 @@ hierarchy of activities in the OA Activity List as well
 as string matching in names and descriptions.
 **/
 class ActivitiesPipe extends Pipe {
-  run(){
-    return new Promise(async resolve => {
+  async run(){
 
-      console.log(`Running ${this.normalisedEvents.length} normalised events through ${this.constructor.name}`);
+    console.log(`Running ${this.normalisedEvents.length} normalised events through ${this.constructor.name}`);
 
-      await this.updateActivitiesCache();
+    await this.updateActivitiesCache();
 
-      // Loop through the normalisedEvents
-      for(let idx in this.normalisedEvents) {
+    // Loop through the normalisedEvents
+    for(let idx in this.normalisedEvents) {
 
-        // IDs from the OA activityList of activities to add
-        let activityIds = new Set();
+      // IDs from the OA activityList of activities to add
+      let activityIds = new Set();
 
-        // Activities we can't improve we should keep
-        // and add them back later
-        let unchangedActivities = [];
+      // Activities we can't improve we should keep
+      // and add them back later
+      let unchangedActivities = [];
 
-        if(Array.isArray(this.normalisedEvents[idx].data.activity)){
+      if(Array.isArray(this.normalisedEvents[idx].data.activity)){
 
-          // For each value in `activity`
-          for(let activity of this.normalisedEvents[idx].data.activity){
+        // For each value in `activity`
+        for(let activity of this.normalisedEvents[idx].data.activity){
 
-            if(activity != undefined){
-              // If no inScheme, assume we want the main OA codelist
-              if(activity.inScheme == undefined || activity.inScheme == "https://openactive.io/activity-list"){
+          if(activity != undefined){
+            // If no inScheme, assume we want the main OA codelist
+            if(activity.inScheme == undefined || activity.inScheme == "https://openactive.io/activity-list"){
 
-                let id = this.getActivityId(activity);
-                if(id == undefined){
-                  // It is common for data not to have an id
-                  // Look through labels and add IDs from cache instead
-                  if(activity.prefLabel in cache.activities.byLabel){
-                    activityIds.add(cache.activities.byLabel[activity.prefLabel].id);
-                  }else{
-                    unchangedActivities.push(activity);
-                  }
+              let id = this.getActivityId(activity);
+              if(id == undefined){
+                // It is common for data not to have an id
+                // Look through labels and add IDs from cache instead
+                if(activity.prefLabel in cache.activities.byLabel){
+                  activityIds.add(cache.activities.byLabel[activity.prefLabel].id);
                 }else{
-                  // Check ID is in cache
-                  if(id in cache.activities.byId){
-                    activityIds.add(id);
-                  }else{
-                    unchangedActivities.push(activity);
-                  }
+                  unchangedActivities.push(activity);
                 }
               }else{
-                unchangedActivities.push(activity);
+                // Check ID is in cache
+                if(id in cache.activities.byId){
+                  activityIds.add(id);
+                }else{
+                  unchangedActivities.push(activity);
+                }
               }
+            }else{
+              unchangedActivities.push(activity);
             }
-          }
-        }
-
-        // Add broader activities for all from OA ActivityList
-        let moreActivities = [];
-        moreActivities = this.getBroaderActivities([...activityIds]);
-
-        // Get more activities from cache using name and description
-        moreActivities = moreActivities.concat(this.extractActivities(this.normalisedEvents[idx]));
-
-        for(let a of moreActivities){
-          activityIds.add(a.id);
-        }
-
-        // Add any new activities back to the normalised event
-        if(unchangedActivities.length > 0 || activityIds.size > 0){
-          this.normalisedEvents[idx].data.activity = unchangedActivities;
-
-          for(let id of activityIds){
-            let outputActivity = {
-              "@id": id,
-              "@type": "Concept",
-              "prefLabel": cache.activities.byId[id].prefLabel,
-              "inScheme": "https://openactive.io/activity-list"
-            }
-            this.normalisedEvents[idx].data.activity.push(outputActivity);
           }
         }
       }
 
-      resolve(this.normalisedEvents);
-    });
+      // Add broader activities for all from OA ActivityList
+      let moreActivities = [];
+      moreActivities = this.getBroaderActivities([...activityIds]);
+
+      // Get more activities from cache using name and description
+      moreActivities = moreActivities.concat(this.extractActivities(this.normalisedEvents[idx]));
+
+      for(let a of moreActivities){
+        activityIds.add(a.id);
+      }
+
+      // Add any new activities back to the normalised event
+      if(unchangedActivities.length > 0 || activityIds.size > 0){
+        this.normalisedEvents[idx].data.activity = unchangedActivities;
+
+        for(let id of activityIds){
+          let outputActivity = {
+            "@id": id,
+            "@type": "Concept",
+            "prefLabel": cache.activities.byId[id].prefLabel,
+            "inScheme": "https://openactive.io/activity-list"
+          }
+          this.normalisedEvents[idx].data.activity.push(outputActivity);
+        }
+      }
+    }
+
+    return this.normalisedEvents;
   }
 
   async updateActivitiesCache(){

@@ -18,12 +18,8 @@ class Pipe {
   }
 
   /* Override this function */
-  run(){
-    return new Promise(async resolve => {
-      log(`Running pipe ${this.constructor.name}`);
-      /* Do stuff to the raw data here */
-      resolve(this.normalisedEvents);
-    });
+  async run(){
+    throw ("Override this function");
   }
 
   getType(event){
