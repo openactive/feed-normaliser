@@ -42,9 +42,9 @@ const Settings = {
 
   "dataProfiles": ["core", "accessibility", "socialrx"],
 
-  "normaliseDataLoadWorkLimit": process.env.NORMALISE_LOAD_LIMIT || 1000,
-  "profileNormalisedDataLoadWorkLimit": process.env.PROFILE_NORMALISED_LOAD_LIMIT || 1000,
-  "validateRawDataLoadWorkLimit": process.env.VALIDATOR_LOAD_LIMIT || 1000,
+  "normaliseDataLoadWorkLimit": process.env.NORMALISE_LOAD_LIMIT || 10,
+  "profileNormalisedDataLoadWorkLimit": process.env.PROFILE_NORMALISED_LOAD_LIMIT || 10,
+  "validateRawDataLoadWorkLimit": process.env.VALIDATOR_LOAD_LIMIT || 10,
 
   "maxDataAgeDays": process.env.MAX_DATA_AGE_DAYS || 14,
 
