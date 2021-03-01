@@ -32,7 +32,7 @@ const Settings = {
   "betaContextJsonld": "https://www.openactive.io/ns-beta/oa.jsonld",
 
   // Activity List
-  "activityListJSONLD": "https://www.openactive.io/activity-list/activity-list.jsonld",
+  "activityListJSONLD": "https://openactive.io/activity-list/activity-list.jsonld",
 
   // TLS Setting
   // Some publishers may only support older versions
