@@ -16,7 +16,10 @@ class PipeLine {
         // TODO let the pipeline pass errors back, add them to errors
       } catch (error) {
         console.log(`Error running data through pipe ${pipeSection.constructor.name} \n ${error}`);
+        console.log(error.stack);
         errors.push({ 'error':error, 'pipe':pipeSection.constructor.name});
+
+        console.log("Saved as done and error saved");
       }
     }
 
