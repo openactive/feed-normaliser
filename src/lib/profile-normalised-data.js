@@ -38,6 +38,8 @@ async function profile_normalised_data_all_for_profile(profile_name) {
         } catch(error) {
             console.error("ERROR profile_normalised_data_all_for_profile");
             console.error(error);
+            console.error(error.stack);
+            client.release()
             break;
         } finally {
             client.release()
