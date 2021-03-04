@@ -19,6 +19,11 @@ class NormaliseSchedulePipe extends Pipe {
       // There is a schedule, we need to parse it out into events.
       let { eventSchedule, ...parent } = this.rawData;
 
+      /* If we only have one schedule item wrap this in an array to re-use the same code path */
+      if (eventSchedule.length === undefined){
+        eventSchedule = [eventSchedule];
+      }
+
       for (let schedule of eventSchedule) {
 
         let childKind;
@@ -71,6 +76,8 @@ class NormaliseSchedulePipe extends Pipe {
           }
 
           const rruleSet = new RRule.RRuleSet();
+          console.log("rrule options");
+          console.log(rruleOptions);
           const rule = new RRule.RRule(rruleOptions);
           rruleSet.rrule(rule);
 
