@@ -12,6 +12,7 @@
       "duration": "PT30M",
       "endTime": "15:00",
       "startTime": "14:30",
+      "scheduleTimezone": "Europe/London",
       "startDate": "2020-05-01T14:30:00.000Z",
       "endDate": "2020-05-01T15:00:00.000Z",
       "identifier": 311870,
