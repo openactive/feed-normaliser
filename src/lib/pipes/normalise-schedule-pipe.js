@@ -46,73 +46,67 @@ class NormaliseSchedulePipe extends Pipe {
         eventDataBase.endTime = schedule.endTime;
 
         // Get schedule properties used to calculate the series
-        try {
-          let { freq, interval } = this.freq(schedule);
-          let byDay = this.byWeekDay(schedule);
-          let byMonth = this.byMonth(schedule);
-          let byMonthDay = this.byMonthDay(schedule);
-          let dtStart = this.dtStart(schedule);
-          let until = this.until(schedule);
-          let count = this.count(schedule);
 
-          let rruleOptions = { freq: freq, interval: interval }; // this is the only required one
-          if (typeof (byDay) !== 'undefined') {
-            rruleOptions.byweekday = byDay;
-          }
-          if (typeof (byMonth) !== 'undefined') {
-            rruleOptions.bymonth = byMonth;
-          }
-          if (typeof (byMonthDay) !== 'undefined') {
-            rruleOptions.bymonthday = byMonthDay;
-          }
-          if (typeof (dtStart) !== 'undefined') {
-            rruleOptions.dtstart = dtStart;
-          }
-          if (typeof (until) !== 'undefined') {
-            rruleOptions.until = until;
-          }
-          if (typeof (count) !== 'undefined') {
-            rruleOptions.count = count;
-          }
+        let { freq, interval } = this.freq(schedule);
+        let byDay = this.byWeekDay(schedule);
+        let byMonth = this.byMonth(schedule);
+        let byMonthDay = this.byMonthDay(schedule);
+        let dtStart = this.dtStart(schedule);
+        let until = this.until(schedule);
+        let count = this.count(schedule);
 
-          const rruleSet = new RRule.RRuleSet();
-          console.log("rrule options");
-          console.log(rruleOptions);
-          const rule = new RRule.RRule(rruleOptions);
-          rruleSet.rrule(rule);
+        let rruleOptions = { freq: freq, interval: interval }; // this is the only required one
+        if (typeof (byDay) !== 'undefined') {
+          rruleOptions.byweekday = byDay;
+        }
+        if (typeof (byMonth) !== 'undefined') {
+          rruleOptions.bymonth = byMonth;
+        }
+        if (typeof (byMonthDay) !== 'undefined') {
+          rruleOptions.bymonthday = byMonthDay;
+        }
+        if (typeof (dtStart) !== 'undefined') {
+          rruleOptions.dtstart = dtStart;
+        }
+        if (typeof (until) !== 'undefined') {
+          rruleOptions.until = until;
+        }
+        if (typeof (count) !== 'undefined') {
+          rruleOptions.count = count;
+        }
 
-          // Add dates to exclude if present
-          // TODO: this only excludes exact matches, including time.
-          //       It should also let input be yyyy-mm-dd and exclude any events that
-          //       start in that 24 hour period.
-          if (schedule.exceptDate != undefined) {
-            const exceptDates = Utils.ensureArray(schedule.exceptDate);
-            for (let exDate of exceptDates) {
-              rruleSet.exdate(new Date(exDate));
-            }
+        const rruleSet = new RRule.RRuleSet();
+        console.log("rrule options");
+        console.log(rruleOptions);
+        const rule = new RRule.RRule(rruleOptions);
+        rruleSet.rrule(rule);
+
+        // Add dates to exclude if present
+        // TODO: this only excludes exact matches, including time.
+        //       It should also let input be yyyy-mm-dd and exclude any events that
+        //       start in that 24 hour period.
+        if (schedule.exceptDate != undefined) {
+          const exceptDates = Utils.ensureArray(schedule.exceptDate);
+          for (let exDate of exceptDates) {
+            rruleSet.exdate(new Date(exDate));
           }
+        }
 
-          // Only generate events two weeks from NOW (or until schedule ends, whichever is sooner)
-          // aka this does not generates events that would have start dates in the past.
-          let occurrences = rruleSet.between(this.eventsFrom(), this.eventsUntil(until));
-          console.log(`Generating events ${rule.toText()} (${occurrences.length} occurrences between ${this.eventsFrom()} and  ${this.eventsUntil(until)})`);
+        // Only generate events two weeks from NOW (or until schedule ends, whichever is sooner)
+        // aka this does not generates events that would have start dates in the past.
+        let occurrences = rruleSet.between(this.eventsFrom(), this.eventsUntil(until));
+        console.log(`Generating events ${rule.toText()} (${occurrences.length} occurrences between ${this.eventsFrom()} and  ${this.eventsUntil(until)})`);
 
-          if (occurrences.length > 0) {
-            // Generate a NormalisedEvent for every occurrence date generated
-            for (let occurrenceDate of occurrences) {
-              let eventData = { ...eventDataBase };
-              eventData.startDate = occurrenceDate.toISOString();
-              eventData.endDate = this.calculateEndDate(occurrenceDate, schedule.endTime, schedule.duration).toISOString();
-              // TODO idTemplate and urlTemplate
-              let normalisedEvent = new NormalisedEvent(eventData, childKind);
-              this.normalisedEvents.push(normalisedEvent);
-            }
-
+        if (occurrences.length > 0) {
+          // Generate a NormalisedEvent for every occurrence date generated
+          for (let occurrenceDate of occurrences) {
+            let eventData = { ...eventDataBase };
+            eventData.startDate = occurrenceDate.toISOString();
+            eventData.endDate = this.calculateEndDate(occurrenceDate, schedule.endTime, schedule.duration).toISOString();
+            // TODO idTemplate and urlTemplate
+            let normalisedEvent = new NormalisedEvent(eventData, childKind);
+            this.normalisedEvents.push(normalisedEvent);
           }
-        } catch (error) {
-          console.log(`Error generating schedule`);
-          console.log(error);
-          console.log(schedule);
         }
       }
     }
