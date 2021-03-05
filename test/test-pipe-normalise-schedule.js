@@ -97,6 +97,12 @@ describe('session-schedule', function() {
             return new Date("2020-08-05T00:00:00.000Z");
         }
 
+        // // We are now correcting for timezone in the rrule, so set the time in the fixture to the correct timezone
+        // for (const schedule in output) {
+        //     console.info(schedule)
+        //     schedule.data.startDate = new Date(schedule.data.startDate).toLocaleString("en-GB", {timezone: "Europe/London"})
+        // }
+
         let results = await pipe.run();
         assert.equal(results.length,1);
         assert.deepEqual(results[0].data, output[0].data);

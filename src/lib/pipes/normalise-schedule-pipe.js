@@ -43,6 +43,7 @@ class NormaliseSchedulePipe extends Pipe {
                 eventDataBase.endDate = schedule.endDate;
                 eventDataBase.startTime = schedule.startTime;
                 eventDataBase.endTime = schedule.endTime;
+                eventDataBase.scheduleTimezone = schedule.scheduleTimezone;
 
                 // Get schedule properties used to calculate the series
                 try{
@@ -53,6 +54,7 @@ class NormaliseSchedulePipe extends Pipe {
                     let dtStart = this.dtStart(schedule);
                     let until = this.until(schedule);
                     let count = this.count(schedule);
+                    let scheduleTimezone = this.scheduleTimezone(schedule);
 
                     let rruleOptions = {freq: freq, interval: interval}; // this is the only required one
                     if(typeof(byDay) !== 'undefined'){
@@ -72,6 +74,9 @@ class NormaliseSchedulePipe extends Pipe {
                     }
                     if(typeof(count) !== 'undefined'){
                         rruleOptions.count = count;
+                    }
+                    if (typeof(scheduleTimezone) !== 'undefined'){
+                        rruleOptions.tzid = scheduleTimezone
                     }
 
                     const rruleSet = new RRule.RRuleSet();
@@ -178,6 +183,10 @@ class NormaliseSchedulePipe extends Pipe {
     if(typeof schedule.endDate !== 'undefined'){
         return this.makeDate(schedule.endDate, schedule.endTime);
     }
+  }
+
+  scheduleTimezone(schedule){
+      return schedule.scheduleTimezone;
   }
 
   freq(schedule){
