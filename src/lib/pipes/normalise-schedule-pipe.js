@@ -10,7 +10,7 @@ import NormalisedEvent from '../normalised-event.js';
 class NormaliseSchedulePipe extends Pipe {
   run(){
 
-    return new Promise(async resolve => {
+    return new Promise(async (resolve, reject) => {
 
         let id = this.getId();
         let type = this.getType();
@@ -21,7 +21,9 @@ class NormaliseSchedulePipe extends Pipe {
             this.doCleanup();
             // There is a schedule, we need to parse it out into events.
             let {eventSchedule, ...parent} = this.rawData;
-            eventSchedule = Array.isArray(eventSchedule) ? eventSchedule : [eventSchedule];
+            if (!Array.isArray(eventSchedule)) {
+                reject('eventSchedule is not an array.');
+            }
 
             for (let schedule of eventSchedule){
 
