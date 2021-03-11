@@ -37,7 +37,12 @@ async function delete_database() {
 }
 
 /* Remove old and stale items from the database */
-async function clean_up_database() {
+async function clean_up_database(onlyDeleted) {
+    /* This keeps backward compatibility */
+    if (onlyDeleted === undefined){
+        onlyDeleted = true;
+    }
+
     let client;
 
     client = await database_pool.connect();
@@ -48,7 +53,11 @@ async function clean_up_database() {
          */
         const date = new Date();
         date.setHours(-1* (date.getHours() + (Settings.maxDataAgeDays * 24)));
-        await client.query("DELETE FROM raw_data WHERE updated_at < $1 AND data_deleted=TRUE", [date]);
+        if (onlyDeleted){
+            await client.query("DELETE FROM raw_data WHERE updated_at < $1 AND data_deleted=TRUE", [date]);
+        } else {
+            await client.query("DELETE FROM raw_data WHERE updated_at < $1", [date]);
+        }
     } finally {
         await client.end();
     }
