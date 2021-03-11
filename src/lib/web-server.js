@@ -4,7 +4,8 @@ import RPDEQuery from './web-rpde-query.js';
 import PublisherStatus from './web-publisher-status.js';
 import PublisherInfo from './web-publisher-info.js';
 import FeedInfo from './web-feed-info.js';
-import NormalisedDataInfo from './web-normalised-data-info.js'
+import NormalisedDataInfo from './web-normalised-data-info.js';
+import WebDeveloperApi from './web-developer-api.js';
 
 const web_server_app = express()
 
@@ -76,6 +77,15 @@ web_server_app.get('/normalised_data/item/:data_id', async (req, res) => {
     res.json(dataInfo);
 });
 
+web_server_app.get('/normalised_data/forages/', async (req, res) => {
+    const results = await WebDeveloperApi.getLatestEventsForAge(req.query.min, req.query.max, req.query.page);
+
+    if (results === false){
+        return internalServerError(res);
+    }
+
+    res.json(results);
+});
 
 async function start_web_server() {
     web_server_app.listen(Settings.webServerPort, () => { console.log("started http://localhost:" + Settings.webServerPort); } );
