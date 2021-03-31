@@ -16,7 +16,12 @@ describe('normalise data', function() {
         client = await database_pool.connect();
         let publisher_feed;
         try {
+            /* Reset the database state in case of stale data from other tests */
+            await client.query('DELETE FROM raw_data');
+            await client.query('DELETE FROM publisher_feed');
+            await client.query('DELETE FROM publisher');
             // Publisher
+
             const res_add_publisher = await client.query('INSERT INTO publisher (name, url) VALUES ($1, $2) RETURNING id', ["Test", "http://test.com"]);
             const publisher_id = res_add_publisher.rows[0].id;
             // Publisher Feed
@@ -25,11 +30,12 @@ describe('normalise data', function() {
             const res_select_publisher_feed = await client.query('SELECT * FROM publisher_feed');
             publisher_feed = res_select_publisher_feed.rows[0];
             // Raw data
-            const res_add_raw = await client.query('INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data) VALUES ($1, $2, $3, $4, $5, $6, $7)', [publisher_feed_id, "D1","https://example.org/test/1",false, "CATS", "1", {test:true}]);
+            await client.query('INSERT INTO raw_data (publisher_feed_id, rpde_id, data_id, data_deleted, data_kind, data_modified, data) VALUES ($1, $2, $3, $4, $5, $6, $7)', [publisher_feed_id, "D1","https://example.org/test/1",false, "CATS", "1", {test:true}]);
 
         } catch(error) {
-            console.error("ERROR in test");
+            console.error("ERROR setting up for test");
             console.error(error);
+            console.error(error.stack);
 
         } finally {
             // Make sure to release the client before any error handling,
@@ -38,6 +44,8 @@ describe('normalise data', function() {
         }
 
         //--------------------------------------------------- Process!
+        console.log(publisher_feed)
+        assert(publisher_feed)
         await normalise_data_publisher_feed(publisher_feed, [TestPipe]);
 
         //--------------------------------------------------- Check Results
@@ -49,6 +57,7 @@ describe('normalise data', function() {
         } catch(error) {
             console.error("ERROR in test");
             console.error(error);
+            console.error(error.stack);
         } finally {
             // Make sure to release the client before any error handling,
             // just in case the error handling itself throws an error.
@@ -70,6 +79,7 @@ describe('normalise data', function() {
         } catch(error) {
             console.error("ERROR in test");
             console.error(error);
+            console.error(error.stack);
         } finally {
             // Make sure to release the client before any error handling,
             // just in case the error handling itself throws an error.

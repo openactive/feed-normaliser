@@ -20,6 +20,10 @@ describe('normalise deleted raw data', function() {
         client = await database_pool.connect();
         let publisher_feed;
         try {
+            await client.query('DELETE FROM raw_data');
+            await client.query('DELETE FROM publisher_feed');
+            await client.query('DELETE FROM publisher');
+
             // Publisher
             const res_add_publisher = await client.query('INSERT INTO publisher (name, url) VALUES ($1, $2) RETURNING id', ["Test", "http://test.com"]);
             const publisher_id = res_add_publisher.rows[0].id;
