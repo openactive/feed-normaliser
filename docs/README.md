@@ -37,3 +37,10 @@ Run each of these in turn to run the full pipeline. See
 
 * `$ npm run start-webserver` Runs webserver providing JSON output of certain data for use by [status](https://github.com/openactive/conformance-status-page)
 
+## Running the tests
+
+**Note : Tests are destructive to any existing data. Create a dedicated database before running them.**
+
+To run the tests:
+
+`$ DATABASE_URL=postgres://test:test@localhost/testing ./node_modules/mocha/bin/mocha`
