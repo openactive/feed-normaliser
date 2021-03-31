@@ -11,3 +11,5 @@ There is a utility called `clean-up-database.js` this will delete all data from 
 The database is set up so that these deletes will cascade e.g. A normalised event item which is from a raw data item will be deleted if the raw data item is deleted.
 
 It is recommended that `clean-up-database.js` is scheduled to run once a day.
+
+To include data that has not been marked by it's publisher's RPDE feed as "DELETED" use `clean-up-database.js all`

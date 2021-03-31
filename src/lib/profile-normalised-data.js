@@ -38,6 +38,7 @@ async function profile_normalised_data_all_for_profile(profile_name) {
         } catch(error) {
             console.error("ERROR profile_normalised_data_all_for_profile");
             console.error(error);
+            console.error(error.stack);
             break;
         } finally {
             client.release()
@@ -62,12 +63,12 @@ async function profile_normalised_data_for_item_for_profile(normalised_data, pro
     try {
         if (results.done) {
             await client.query(
-                "INSERT INTO normalised_data_profile_results (normalised_data_id, profile_name, checked, results) VALUES ($1, $2, TRUE, $3)",
+                "INSERT INTO normalised_data_profile_results (normalised_data_id, profile_name, checked, results) VALUES ($1, $2, TRUE, $3) ON CONFLICT ON CONSTRAINT normalised_data_profile_results_pkey DO UPDATE SET checked=TRUE, result=$3",
                 [normalised_data.id, profile_name, JSON.stringify(results.results)]
             );
         } else {
             await client.query(
-                "INSERT INTO normalised_data_profile_results (normalised_data_id, profile_name, checked, error_checking_message) VALUES ($1, $2, FALSE, $3)",
+                "INSERT INTO normalised_data_profile_results (normalised_data_id, profile_name, checked, error_checking_message) VALUES ($1, $2, FALSE, $3) ON CONFLICT ON CONSTRAINT normalised_data_profile_results_pkey DO UPDATE SET checked=FALSE, error_checking_message=$3",
                 [normalised_data.id, profile_name, results.error]
             );
         }

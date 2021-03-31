@@ -10,6 +10,8 @@ or start in developer mode \(auto reloads on changes\)
 
 `$ npm run start-webserver-dev`
 
+# JSON HTTP API
+
 RPDE APIs are meant to be called directly by users. They are:
 
 * `/normalised_data/all` - call to get all processed data in system.

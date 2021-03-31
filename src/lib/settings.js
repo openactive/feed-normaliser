@@ -1,7 +1,7 @@
 import path from 'path';
 
 const Settings = {
-  "spiderDataCatalogStartURL": process.env.SPIDER_DATA_CATALOG_START_URL || 'https://www.openactive.io/data-catalogs/data-catalog-collection.jsonld',
+  "spiderDataCatalogStartURL": process.env.SPIDER_DATA_CATALOG_START_URL || 'https://openactive.io/data-catalogs/data-catalog-collection.jsonld',
 
   "postgresURL": process.env.DATABASE_URL || 'postgres://app:app@localhost:5432/app',
   "postgresSSL": process.env.DATABASE_USE_SSL ? true : false,
@@ -32,21 +32,21 @@ const Settings = {
   "betaContextJsonld": "https://www.openactive.io/ns-beta/oa.jsonld",
 
   // Activity List
-  "activityListJSONLD": "https://www.openactive.io/activity-list/activity-list.jsonld",
+  "activityListJSONLD": "https://openactive.io/activity-list/activity-list.jsonld",
 
   // TLS Setting
   // Some publishers may only support older versions
   "tlsDefaultMinimumVersion": "TLSv1",
 
-  "herokuWorkerMinimumCycleHours": 3,
+  "herokuWorkerMinimumCycleHours": process.env.WORKER_SLEEP || 3,
 
   "dataProfiles": ["core", "accessibility", "socialrx"],
 
-  "normaliseDataLoadWorkLimit": process.env.NORMALISE_LOAD_LIMIT || 1000,
-  "profileNormalisedDataLoadWorkLimit": process.env.PROFILE_NORMALISED_LOAD_LIMIT || 1000,
-  "validateRawDataLoadWorkLimit": process.env.VALIDATOR_LOAD_LIMIT || 1000,
+  "normaliseDataLoadWorkLimit": process.env.NORMALISE_LOAD_LIMIT || 10,
+  "profileNormalisedDataLoadWorkLimit": process.env.PROFILE_NORMALISED_LOAD_LIMIT || 10,
+  "validateRawDataLoadWorkLimit": process.env.VALIDATOR_LOAD_LIMIT || 10,
 
-  "maxDataAgeDays": process.env.MAX_DATA_AGE_DAYS || 14,
+  "maxDataAgeDays": process.env.MAX_DATA_AGE_DAYS || 30,
 
 }
 

@@ -13,17 +13,14 @@ This pipe uses the openactive data model validator to strip out:
    - these are moved to an `invalidAttribute` property at the top level
 **/
 class CleaningPipe extends Pipe {
-  run(){
-    return new Promise(async resolve => {
+  async run(){
+    console.log(`Running ${this.normalisedEvents.length} normalised events through ${this.constructor.name}`);
+    for(let idx in this.normalisedEvents){
+      const fixedData = await this.fixInvalidData(this.normalisedEvents[idx].data);
+      this.normalisedEvents[idx].data = fixedData;
+    }
 
-      console.log(`Running ${this.normalisedEvents.length} normalised events through ${this.constructor.name}`);
-      for(let idx in this.normalisedEvents){
-        const fixedData = await this.fixInvalidData(this.normalisedEvents[idx].data);
-        this.normalisedEvents[idx].data = fixedData;
-      }
-
-      resolve(this.normalisedEvents);
-    });
+    return this.normalisedEvents;
   }
 
   async fixInvalidData(normalisedEventData){

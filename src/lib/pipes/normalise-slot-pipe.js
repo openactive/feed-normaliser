@@ -7,103 +7,99 @@ import NormalisedEvent from '../normalised-event.js';
 //  * IndividualFacilityUse
 //  * Slot
 class NormaliseSlotPipe extends Pipe {
-  run(){
+  async run() {
+    let id = this.getId();
+    let type = this.getType();
+    let kind = this.getKind();
+    let parentId;
+    let errors = [];
+    console.log(`Running ${id} (${type}) through ${this.constructor.name}`);
+    // console.log(this.rawData);
+    if (type == "FacilityUse"
+      || type == "IndividualFacilityUse") {
+      // The top level event is the [Individual]FacilityUse
 
-    return new Promise(async resolve => {
+      this.doCleanup();
 
-        let id = this.getId();
-        let type = this.getType();
-        let kind = this.getKind();
-        let parentId;
-        let errors = [];
-        console.log(`Running ${id} (${type}) through ${this.constructor.name}`);
-        // console.log(this.rawData);
-        if (type == "FacilityUse"
-         || type == "IndividualFacilityUse"){
-            // The top level event is the [Individual]FacilityUse
+      if (typeof this.rawData.aggregateFacilityUse == 'object') {
+        // It has a parent FacilityUse which we can get more data from
+        let updatedParent = this.combineIfuWithParent(this.rawData);
+        this.combineSlotAndParent(updatedParent);
 
-            this.doCleanup();
-
-            if (typeof this.rawData.aggregateFacilityUse == 'object'){
-                // It has a parent FacilityUse which we can get more data from
-                let updatedParent = this.combineIfuWithParent(this.rawData);
-                this.combineSlotAndParent(updatedParent);
-
-            }else
-            if (typeof this.rawData.event == 'object'){
-                // It has event property, which is where Slots live
-                this.combineSlotAndParent(this.rawData);
-            }
-
-            if (typeof this.rawData.individualFacilityUse == 'object'){
-                // It has individualFacilityUse (Slots can live on these)
-                this.extractIndividualFacilityUse(this.rawData);
-            }
-        }else if(type == "Slot"){
-            // The top level is an individual Slot
-            // Which MUST link by reference to a FacilityUse
-            let normalisedEventData;
-            let parentId;
-
-            this.doCleanup();
-
-            let { facilityUse, ...slot } = this.rawData;
-            if(typeof facilityUse == 'string' && facilityUse.includes("http")){
-                let facilityUseResult = this.selectRawByDataId(facilityUse);
-                let facilityUseData = facilityUseResult.data;
-                parentId = facilityUseResult.id;
-                if (facilityUseData != undefined){
-
-                    facilityUseData = this.fixIdInData(this.fixTypeInData(facilityUseData));
-
-                    // unset facilityUse ids in case they are not overriden by event
-                    delete facilityUseData.identifier;
-                    delete facilityUseData["@id"];
-                    // drop hoursAvailable because it doesn't make sense on Slot
-                    delete facilityUseData.hoursAvailable;
-                    // drop event because it contains Slots
-                    delete facilityUseData.event;
-
-                    // merge arrays that we want to keep both from, rather than override
-                    if(facilityUseData.activity != undefined && slot.activity != undefined){
-                        slot.activity = [...facilityUseData.activity, ...slot.activity];
-                    }
-                    if(facilityUseData.category != undefined && slot.category != undefined){
-                        slot.category = [...facilityUseData.category, ...slot.category];
-                    }
-                    if(facilityUseData.offers != undefined && slot.offers != undefined){
-                        slot.offers = [...facilityUseData.offers, ...slot.offers];
-                    }
-
-                    // Merge contexts if FU has extra ones
-                    if(Array.isArray(facilityUseData["@context"])){
-                        for (let context of facilityUseData["@context"]){
-                            if(!slot["@context"].includes(context)){
-                                slot["@context"].push(context);
-                            }
-                        }
-                    }
-
-                    normalisedEventData = {
-                        ...facilityUseData,
-                        ...slot
-                    };
-                }else{
-                    normalisedEventData = slot;
-                    errors.push({ missingFacilityUse: `No raw_data with data_id [${facilityUse}]` });
-                }
-            }else{
-                // facilityUse is invalid but we'll store the Slot data anyway
-                normalisedEventData = slot;
-                errors.push({ invalidFacilityUse: `Can't process facilityUse value [${facilityUse}]` });
-            }
-
-            let normalisedEvent = new NormalisedEvent(normalisedEventData, kind, parentId, errors);
-            this.normalisedEvents.push(normalisedEvent);
+      } else
+        if (typeof this.rawData.event == 'object') {
+          // It has event property, which is where Slots live
+          this.combineSlotAndParent(this.rawData);
         }
 
-        resolve(this.normalisedEvents);
-    });
+      if (typeof this.rawData.individualFacilityUse == 'object') {
+        // It has individualFacilityUse (Slots can live on these)
+        this.extractIndividualFacilityUse(this.rawData);
+      }
+    } else if (type == "Slot") {
+      // The top level is an individual Slot
+      // Which MUST link by reference to a FacilityUse
+      let normalisedEventData;
+      let parentId;
+
+      this.doCleanup();
+
+      let { facilityUse, ...slot } = this.rawData;
+      if (typeof facilityUse == 'string' && facilityUse.includes("http")) {
+        let facilityUseResult = this.selectRawByDataId(facilityUse);
+        let facilityUseData = facilityUseResult.data;
+        parentId = facilityUseResult.id;
+        if (facilityUseData != undefined) {
+
+          facilityUseData = this.fixIdInData(this.fixTypeInData(facilityUseData));
+
+          // unset facilityUse ids in case they are not overriden by event
+          delete facilityUseData.identifier;
+          delete facilityUseData["@id"];
+          // drop hoursAvailable because it doesn't make sense on Slot
+          delete facilityUseData.hoursAvailable;
+          // drop event because it contains Slots
+          delete facilityUseData.event;
+
+          // merge arrays that we want to keep both from, rather than override
+          if (facilityUseData.activity != undefined && slot.activity != undefined) {
+            slot.activity = [...facilityUseData.activity, ...slot.activity];
+          }
+          if (facilityUseData.category != undefined && slot.category != undefined) {
+            slot.category = [...facilityUseData.category, ...slot.category];
+          }
+          if (facilityUseData.offers != undefined && slot.offers != undefined) {
+            slot.offers = [...facilityUseData.offers, ...slot.offers];
+          }
+
+          // Merge contexts if FU has extra ones
+          if (Array.isArray(facilityUseData["@context"])) {
+            for (let context of facilityUseData["@context"]) {
+              if (!slot["@context"].includes(context)) {
+                slot["@context"].push(context);
+              }
+            }
+          }
+
+          normalisedEventData = {
+            ...facilityUseData,
+            ...slot
+          };
+        } else {
+          normalisedEventData = slot;
+          errors.push({ missingFacilityUse: `No raw_data with data_id [${facilityUse}]` });
+        }
+      } else {
+        // facilityUse is invalid but we'll store the Slot data anyway
+        normalisedEventData = slot;
+        errors.push({ invalidFacilityUse: `Can't process facilityUse value [${facilityUse}]` });
+      }
+
+      let normalisedEvent = new NormalisedEvent(normalisedEventData, kind, parentId, errors);
+      this.normalisedEvents.push(normalisedEvent);
+    }
+
+   return this.normalisedEvents;
   }
 
   combineSlotAndParent(slotAndParent){

@@ -11,50 +11,48 @@ The GeoPipe adds more location data given a postcode:
   - country
 */
 class GeoPipe extends Pipe {
-  run(){
-    return new Promise(async resolve => {
+  async run(){
 
-      for(let idx in this.normalisedEvents) {
+    for(let idx in this.normalisedEvents) {
 
-        let postcode = this.getPostcode(this.normalisedEvents[idx].data.location);
-        if (postcode != undefined) {
+      let postcode = this.getPostcode(this.normalisedEvents[idx].data.location);
+      if (postcode != undefined) {
 
-          let postcodeData;
+        let postcodeData;
 
-          if (!cache.postcodes[postcode]){
-            let lookupError = await this.lookupPostcode(postcode);
+        if (!cache.postcodes[postcode]){
+          let lookupError = await this.lookupPostcode(postcode);
 
-            if(lookupError != undefined){
-              // error with lookup
-              if(this.normalisedEvents[idx].errors == undefined){
-                this.normalisedEvents[idx].errors = [];
-              }
-              this.normalisedEvents[idx].errors.push(lookupError);
-            }else{
-              postcodeData = cache.postcodes[postcode];
+          if(lookupError != undefined){
+            // error with lookup
+            if(this.normalisedEvents[idx].errors == undefined){
+              this.normalisedEvents[idx].errors = [];
             }
-          }else{
-            console.log(`Geopipe getting [${postcode}] from cache`);
+            this.normalisedEvents[idx].errors.push(lookupError);
+          } else {
             postcodeData = cache.postcodes[postcode];
           }
-
-          if(postcodeData != undefined){
-            this.addLocationData(this.normalisedEvents[idx], postcodeData);
-          }
-
+        } else {
+          console.log(`Geopipe getting [${postcode}] from cache`);
+          postcodeData = cache.postcodes[postcode];
         }
-      }
 
-      resolve(this.normalisedEvents);
-    });
+        if(postcodeData != undefined){
+          this.addLocationData(this.normalisedEvents[idx], postcodeData);
+        }
+
+      }
+    }
+
+    return this.normalisedEvents;
   }
 
   getPostcode(location){
-    if(location != undefined && 'address' in location){
-      if ('postalCode' in location.address){
-        return location.address.postalCode;
-      }
+    if(location != undefined && location.hasOwnProperty("address") && location.address.hasOwnProperty("postalCode")){
+      return location.address.postalCode;
     }
+
+    return undefined;
   }
 
   async lookupPostcode(postcode){
