@@ -12,7 +12,7 @@ On the dokku server run:
 
 ```
 $ dokku apps:create conformance-services
-$ ddkku config:set conformance-services DATABASE_URL=postgres://example_user:example_pass@example_host/example_databasename
+$ dokku config:set conformance-services DATABASE_URL=postgres://example_user:example_pass@example_host/example_databasename
 ```
 
 Once complete you will now need to push the conformance-services code to the dokku application.
@@ -44,7 +44,7 @@ To optionally log the output of these redirect the output to a file. For example
 
 ## Scaling the number of workers
 
-The number of worker processes by default is one per worker, this will result in one validator, downloader, normaliser and web worker as defined in the `Procfile`.Depending on the resources available it may be beneficial to scale these up.
+The number of worker processes by default is one per worker, this will result in one validator, downloader, normaliser and web worker as defined in the `Procfile`. Depending on the resources available it may be beneficial to scale these up.
 
 To change the number of worker processes, on the dokku server run:
 
